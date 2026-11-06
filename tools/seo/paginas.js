@@ -5,7 +5,7 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..', '..');
-const SITE = 'https://trbs-aldl.github.io/nutridl-app/';
+const SITE = 'https://trbsaldl.github.io/FitDL/';
 const OUT = path.join(root, 'alimentos');
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -77,7 +77,7 @@ const page = ({ title, desc, canonical, body, ld }) => `<!DOCTYPE html>
 <body>
 <main>
 ${body}
-    <p class="note">nutriDL es una herramienta educativa y orientativa: no sustituye el consejo de un médico o dietista-nutricionista. Los fabricantes cambian sus recetas: comprueba siempre la etiqueta. <a href="../privacidad.html">Privacidad</a> · <a href="../terminos.html">Términos</a></p>
+    <p class="note">FitDL es una herramienta educativa y orientativa: no sustituye el consejo de un médico o dietista-nutricionista. Los fabricantes cambian sus recetas: comprueba siempre la etiqueta. <a href="../privacidad.html">Privacidad</a> · <a href="../terminos.html">Términos</a></p>
 </main>
 </body>
 </html>
@@ -131,7 +131,7 @@ for (const f of list) {
         ['Grasas', `${num(f.f)} g`, `${num(f.f * r)} g`], ['Fibra', `${num(f.fib)} g`, `${num(f.fib * r)} g`]];
     const src = source(f), crumb = f.brand ? f.brand : CAT[f.cat] || 'Alimentos';
     const title = `Calorías de ${name}: ${num(k, 0)} kcal por 100 ${unit}`;
-    const desc = `${name} tiene ${num(k, 0)} kcal por 100 ${unit}: ${num(f.p)} g de proteína, ${num(f.c)} g de hidratos y ${num(f.f)} g de grasa. 1 ${s1} (${sg} ${unit}) son ${num(k * r, 0)} kcal. Apúntalo gratis en nutriDL.`;
+    const desc = `${name} tiene ${num(k, 0)} kcal por 100 ${unit}: ${num(f.p)} g de proteína, ${num(f.c)} g de hidratos y ${num(f.f)} g de grasa. 1 ${s1} (${sg} ${unit}) son ${num(k * r, 0)} kcal. Apúntalo gratis en FitDL.`;
     const body = `    <a class="back" href="./">← Calorías de los alimentos</a>
     <h1>Calorías de ${esc(name)}</h1>
     <p class="meta">${esc(crumb)}${f.raw ? ' · valores en crudo' : ''}</p>
@@ -144,11 +144,11 @@ for (const f of list) {
     <table><thead><tr><th>Nutriente</th><th>Por 100 ${unit}</th><th>Por ${esc(s1)} (${sg} ${unit})</th></tr></thead>
     <tbody>${rows.map(([a, b, c]) => `<tr><td>${esc(a.trim())}</td><td>${b}</td><td>${c}</td></tr>`).join('')}</tbody></table>
     <p class="meta">Fuente: ${src.u ? `<a href="${src.u}" rel="nofollow noopener">${esc(src.t)}</a>` : esc(src.t)}. Hidratos sin fibra, como en las etiquetas de la UE.</p>
-    <a class="cta" href="../?alimento=${encodeURIComponent(f.id)}">Apunta ${esc(f.name)} en nutriDL · gratis y sin anuncios</a>
+    <a class="cta" href="../?alimento=${encodeURIComponent(f.id)}">Apunta ${esc(f.name)} en FitDL · gratis y sin anuncios</a>
     ${related(f).length ? `<h2>Parecidos${f.brand ? ` de ${esc(f.brand)}` : ''}</h2>
     <ul class="rel">${related(f).map(x => `<li><a href="${x._slug}.html">${esc(fullName(x))}<span>${num(kcal100(x), 0)} kcal/100 ${x.ml ? 'ml' : 'g'}</span></a></li>`).join('')}</ul>` : ''}`;
     fs.writeFileSync(path.join(OUT, f._slug + '.html'), page({ title, desc, canonical: url, body,
-        ld: crumbs([['nutriDL', SITE], ['Calorías de los alimentos', SITE + 'alimentos/'], [name, url]]) }));
+        ld: crumbs([['FitDL', SITE], ['Calorías de los alimentos', SITE + 'alimentos/'], [name, url]]) }));
 }
 
 // Rankings con datos reales (playbook «curación»): búsquedas tipo «productos Mercadona con más proteína»
@@ -177,14 +177,14 @@ for (const R of RANKINGS) {
     R.count = items.length; if (!items.length) continue;
     const url = `${SITE}alimentos/ranking-${R.slug}.html`;
     fs.writeFileSync(path.join(OUT, `ranking-${R.slug}.html`), page({
-        title: `${R.title} · nutriDL`, desc: `${R.intro} Top ${items.length} con calorías y fuente de cada dato.`, canonical: url,
-        ld: crumbs([['nutriDL', SITE], ['Calorías de los alimentos', SITE + 'alimentos/'], [R.title, url]]),
+        title: `${R.title} · FitDL`, desc: `${R.intro} Top ${items.length} con calorías y fuente de cada dato.`, canonical: url,
+        ld: crumbs([['FitDL', SITE], ['Calorías de los alimentos', SITE + 'alimentos/'], [R.title, url]]),
         body: `    <a class="back" href="./">← Calorías de los alimentos</a>
     <h1>${esc(R.title)}</h1>
     <p>${esc(R.intro)}</p>
     <ol class="rel">${items.map(x => `<li><a href="${x._slug}.html">${esc(fullName(x))}<span>${R.show(x)} · ${num(kcal100(x), 0)} kcal/100 ${x.ml ? 'ml' : 'g'}</span></a></li>`).join('')}</ol>
-    <p class="meta">Calculado con los ${list.filter(R.pick).length} alimentos de la base de nutriDL que cumplen el criterio (${TODAY}). Cada ficha enlaza a su fuente. No es una lista de todo el supermercado.</p>
-    <a class="cta" href="../">Calcula tu plan y apunta lo que comes en nutriDL · gratis y sin anuncios</a>` }));
+    <p class="meta">Calculado con los ${list.filter(R.pick).length} alimentos de la base de FitDL que cumplen el criterio (${TODAY}). Cada ficha enlaza a su fuente. No es una lista de todo el supermercado.</p>
+    <a class="cta" href="../">Calcula tu plan y apunta lo que comes en FitDL · gratis y sin anuncios</a>` }));
 }
 
 // Índice: marcas (de más a menos productos) y alimentos genéricos por grupo
@@ -196,13 +196,13 @@ const sec = ([g, l]) => { const t = g.startsWith('b:') ? g.slice(2) : CAT[g.slic
 const secs = [...cats, ...brands].map(sec);
 const idxTitle = `Calorías de ${list.length.toLocaleString('es-ES')} alimentos y productos de supermercado`;
 fs.writeFileSync(path.join(OUT, 'index.html'), page({
-    title: `${idxTitle} · nutriDL`,
+    title: `${idxTitle} · FitDL`,
     desc: `Calorías, proteína, hidratos y grasas de ${list.length.toLocaleString('es-ES')} alimentos: productos Hacendado, marcas de supermercado, comida rápida y alimentos básicos. Datos con su fuente.`,
     canonical: SITE + 'alimentos/',
-    ld: crumbs([['nutriDL', SITE], ['Calorías de los alimentos', SITE + 'alimentos/']]),
-    body: `    <a class="back" href="../">← nutriDL</a>
+    ld: crumbs([['FitDL', SITE], ['Calorías de los alimentos', SITE + 'alimentos/']]),
+    body: `    <a class="back" href="../">← FitDL</a>
     <h1>${esc(idxTitle)}</h1>
-    <p>Valores por 100 g (o 100 ml) con la fuente de cada dato: la etiqueta del producto, el USDA o la información oficial del restaurante. Para llevar la cuenta de tu día, <a href="../">usa nutriDL gratis</a>.</p>
+    <p>Valores por 100 g (o 100 ml) con la fuente de cada dato: la etiqueta del producto, el USDA o la información oficial del restaurante. Para llevar la cuenta de tu día, <a href="../">usa FitDL gratis</a>.</p>
     <h2>Listas</h2>
     <ul class="rel">${RANKINGS.filter(R => R.count).map(R => `<li><a href="ranking-${R.slug}.html">${esc(R.title)}<span>top ${R.count}</span></a></li>`).join('')}</ul>
     <nav class="toc" aria-label="Secciones">${secs.map(s => `<a href="#${s.id}">${esc(s.t)}</a>`).join('')}</nav>

@@ -1,8 +1,8 @@
-# Publicar nutriDL en Google Play (paso a paso)
+# Publicar FitDL en Google Play (paso a paso)
 
 La app de Play es la misma web metida en una app Android (Trusted Web Activity, TWA, una app Android que muestra la web a pantalla completa). Cada vez que se sube un cambio a GitHub, la app de Play también se actualiza sola, sin volver a publicar en la tienda.
 
-**Sin pagos por ahora.** Al abrir desde la app de Play (`?src=play`), nutriDL oculta los precios, el botón «Hazte PRO» y el campo de códigos, porque Google Play tiene sus propias normas de pago (ver `IN_PLAY` en `js/plans.js`). La prueba gratis de 7 días se mantiene.
+**Sin pagos por ahora.** Al abrir desde la app de Play (`?src=play`), FitDL oculta los precios, el botón «Hazte PRO» y el campo de códigos, porque Google Play tiene sus propias normas de pago (ver `IN_PLAY` en `js/plans.js`). La prueba gratis de 7 días se mantiene.
 
 ## Lo que necesitas
 | Qué | Coste | Nota |
@@ -12,7 +12,7 @@ La app de Play es la misma web metida en una app Android (Trusted Web Activity, 
 | Un móvil Android | — | Para las capturas y la prueba |
 
 ## Paso 1 · El archivo que une la web con la app (assetlinks)
-Android solo abre la app a pantalla completa (sin barra del navegador) si la web tiene el archivo `/.well-known/assetlinks.json` **en la raíz del dominio**. La app vive en `trbs-aldl.github.io/nutridl-app/`, así que la raíz es `trbs-aldl.github.io`:
+Android solo abre la app a pantalla completa (sin barra del navegador) si la web tiene el archivo `/.well-known/assetlinks.json` **en la raíz del dominio**. La app vive en `trbsaldl.github.io/FitDL/`, así que la raíz es `trbsaldl.github.io`:
 1. En GitHub, crea un repositorio público llamado exactamente **`Trbs-ALDL.github.io`**.
 2. Dentro, crea el archivo `.well-known/assetlinks.json` con el contenido de `tools/play/assetlinks.json` (las huellas se rellenan en el paso 3).
 3. En ese repositorio, añade un archivo vacío llamado `.nojekyll` (si no, GitHub oculta las carpetas que empiezan por punto).
@@ -21,11 +21,11 @@ Android solo abre la app a pantalla completa (sin barra del navegador) si la web
 Con dominio propio (por ejemplo `nutridl.es`) sería `nutridl.es/.well-known/assetlinks.json` y este paso es más sencillo.
 
 ## Paso 2 · Crear el paquete Android con PWABuilder (sin instalar nada)
-1. Abre **pwabuilder.com**, pega `https://trbs-aldl.github.io/nutridl-app/` y pulsa Start.
+1. Abre **pwabuilder.com**, pega `https://trbsaldl.github.io/FitDL/` y pulsa Start.
 2. Package for stores → **Android** → Generate Package. Opciones:
    - **Package ID:** `com.nutridl.app` (no se puede cambiar nunca después).
-   - **App name:** `nutriDL` · **Launcher name:** `nutriDL`
-   - **Start URL:** `/nutridl-app/?src=play`
+   - **App name:** `FitDL` · **Launcher name:** `FitDL`
+   - **Start URL:** `/FitDL/?src=play`
    - **Theme / background color:** `#110f0d`
    - **Signing key:** «Create new».
 3. Descarga el zip. Dentro hay: el `.aab` (lo que se sube a Play), el `.apk` (para probar en tu móvil), **la llave de firma (`signing.keystore`) y sus contraseñas (`signing-key-info.txt`)**, y un `assetlinks.json`.
@@ -39,13 +39,13 @@ Con dominio propio (por ejemplo `nutridl.es`) sería `nutridl.es/.well-known/ass
 - Si la app se abre con la barra del navegador arriba, la causa casi siempre es una huella que falta o está mal.
 
 ## Paso 4 · Crear la app en Play Console
-1. Crear app → nombre `nutriDL: Calorías y Macros` · idioma español (España) · App · Gratis.
+1. Crear app → nombre `FitDL: Calorías y Macros` · idioma español (España) · App · Gratis.
 2. **Ficha de Play Store** (textos más abajo):
    - Icono 512×512: `icons/icon-512.png`
    - Gráfico destacado 1024×500: `tools/play/grafico-destacado.png`
    - Capturas del móvil (mínimo 2, mejor 6): hazlas en tu móvil con datos reales. Orden recomendado: 1) «Hoy» con el anillo de calorías, 2) buscador con productos Hacendado, 3) Coach respondiendo «¿Qué como?», 4) Progreso con la racha, 5) Gym, 6) tu plan.
 3. **Contenido de la app** (respuestas):
-   - Política de privacidad: `https://trbs-aldl.github.io/nutridl-app/privacidad.html`
+   - Política de privacidad: `https://trbsaldl.github.io/FitDL/privacidad.html`
    - Acceso a la app: todas las funciones están disponibles sin iniciar sesión.
    - Anuncios: **No**.
    - Clasificación de contenido: categoría «Utilidad / productividad»; sin violencia, sexo, drogas, apuestas ni compras.
@@ -62,13 +62,13 @@ Con dominio propio (por ejemplo `nutridl.es`) sería `nutridl.es/.well-known/ass
 5. Pasados los 14 días: Panel → **Solicitar acceso a producción** → responde el cuestionario → publica.
 
 ## Textos de la ficha (copiar y pegar)
-**Nombre (29/30):** nutriDL: Contador de Calorías
+**Nombre (29/30):** FitDL: Contador de Calorías
 
 **Descripción breve (73/80):** Cuenta calorías y macros gratis y sin anuncios. Escáner, gym y Hacendado.
 
 **Descripción completa:**
 ```
-nutriDL es un contador de calorías y macros gratis y sin anuncios: te dice cuántas calorías y cuánta proteína necesitas para adelgazar, ganar músculo o mantenerte, qué comer ahora y cómo vas. Sin crear cuenta.
+FitDL es un contador de calorías y macros gratis y sin anuncios: te dice cuántas calorías y cuánta proteína necesitas para adelgazar, ganar músculo o mantenerte, qué comer ahora y cómo vas. Sin crear cuenta.
 
 LO BÁSICO, GRATIS DE VERDAD
 Nuestra promesa: el escáner, las macros, el diario, el Coach básico, el progreso y el gym seguirán siendo gratis. Lo que hoy es gratis no pasará a ser de pago.
@@ -112,7 +112,7 @@ PRIVACIDAD DE VERDAD
 • Tus datos se quedan en tu móvil; puedes exportar tu plan en PDF, hacer copia o borrarlo todo
 • En español e inglés
 
-nutriDL es una herramienta educativa y orientativa: no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años ni trastornos de la conducta alimentaria.
+FitDL es una herramienta educativa y orientativa: no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años ni trastornos de la conducta alimentaria.
 ```
 
 ## Cuando quieras cobrar (más adelante)

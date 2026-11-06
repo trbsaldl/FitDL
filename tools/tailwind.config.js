@@ -1,4 +1,4 @@
-// Configuración de Tailwind (colores de nutriDL: marrón y beige)
+// Configuración de Tailwind (colores de FitDL: marrón y beige)
 module.exports = {
   "content": [
     "./index.html",

@@ -1,7 +1,7 @@
 # Negocio: Gratis / PRO, métricas y primeros usuarios
 
 ## Posicionamiento
-**nutriDL, tu entrenador nutricional personal.** No es otro contador de calorías: responde a «¿qué hago ahora para acercarme a mi objetivo?». Diferencia: nutrición + Coach + objetivo físico + acompañamiento diario + privacidad (sin cuentas, sin anuncios).
+**FitDL, tu entrenador nutricional personal.** No es otro contador de calorías: responde a «¿qué hago ahora para acercarme a mi objetivo?». Diferencia: nutrición + Coach + objetivo físico + acompañamiento diario + privacidad (sin cuentas, sin anuncios).
 
 ## Cómo funciona PRO hoy (3.1)
 - Las funciones PRO (voz, foto, nevera, menú del día, compra inteligente, análisis avanzado) **solo se usan con PRO activo** en el dispositivo.

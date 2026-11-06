@@ -8,7 +8,7 @@
 // Mensual y anual se enseñan como lo que son: lo que habrá cuando el pago esté dentro de la app.
 const PRO_PRICE = { month: 4.99, year: 39.99, life: 24.99 };
 // PARA COBRAR DENTRO DE LA APP (cuando quieras):
-//  1. Entra en stripe.com → Pagos → Enlaces de pago → crea uno de 24,99 € («nutriDL PRO para siempre»).
+//  1. Entra en stripe.com → Pagos → Enlaces de pago → crea uno de 24,99 € («FitDL PRO para siempre»).
 //  2. Copia la dirección que te da (empieza por https://buy.stripe.com/...) y pégala aquí entre las comillas.
 //  3. Al pagar, Stripe te avisa por correo: le mandas a esa persona uno de los códigos de
 //     «Nutri versions/nutriDL-codigos-PRO.txt» (cada código vale para un cliente y no caduca).

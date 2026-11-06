@@ -1,4 +1,4 @@
-﻿// nutriDL · Entender lo que comes en lenguaje natural («200 g de pollo, un plátano y una ensalada»)
+﻿// FitDL · Entender lo que comes en lenguaje natural («200 g de pollo, un plátano y una ensalada»)
 // Lo usan el registro por voz, el Coach y la foto. Siempre se muestra una confirmación antes de guardar.
 'use strict';
 

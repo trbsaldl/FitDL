@@ -1,4 +1,4 @@
-﻿// nutriDL · Medición de uso SOLO en este dispositivo (nada se envía a ningún servidor)
+﻿// FitDL · Medición de uso SOLO en este dispositivo (nada se envía a ningún servidor)
 // Sirve para ver en «Informe de errores» si la app engancha: primer día, días activos, retención y la métrica clave
 // (personas que apuntan comidas y vuelven al menos 7 días). Si en el futuro se activa un servicio de estadísticas
 // sin cookies (Plausible, Umami…), su dirección iría en ANALYTICS_ENDPOINT y solo se usaría con consentimiento.

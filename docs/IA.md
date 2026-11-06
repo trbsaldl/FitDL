@@ -1,4 +1,4 @@
-# IA en nutriDL
+# IA en FitDL
 
 ## Hoy (3.0): Coach en el dispositivo
 

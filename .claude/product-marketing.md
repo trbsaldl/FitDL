@@ -1,10 +1,10 @@
-# nutriDL · contexto de producto y marketing
+# FitDL · contexto de producto y marketing
 
 > Lo leen las skills de marketing (aso, onboarding, paywalls, pricing, cro, copywriting, referrals, churn-prevention, programmatic-seo). Hechos, no deseos. Estado técnico y plan: `docs/ESTADO.md`. Modelo de negocio: `docs/NEGOCIO.md`.
 
 ## Producto
 - **Qué es:** «Tu entrenador nutricional personal». App web instalable (PWA) de calorías, macros, comidas, gym y progreso, con un Coach que dice qué comer. Funciona sin conexión.
-- **Web:** https://trbs-aldl.github.io/nutridl-app/ · páginas SEO «Calorías de…» en `/alimentos/` (unas 1.900, una por alimento con fuente).
+- **Web:** https://trbsaldl.github.io/FitDL/ · páginas SEO «Calorías de…» en `/alimentos/` (unas 1.900, una por alimento con fuente).
 - **Idiomas:** español e inglés (selector ES/EN).
 - **Estado:** publicada, sin analítica todavía (no se sabe cuántos usuarios hay). Google Play preparado, sin publicar (falta cuenta y 12 testers).
 - **Creador:** Ángel, en solitario, sin presupuesto de anuncios (plan inicial ~500 €).

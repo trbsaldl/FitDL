@@ -1,10 +1,10 @@
-# nutriDL 3.4 · Revisión de seguridad, calidad y requisitos para publicar en tiendas
+# FitDL 3.4 · Revisión de seguridad, calidad y requisitos para publicar en tiendas
 
 Fecha: 14 de octubre de 2026 · Versión revisada: 3.4.0
 
 ## Cómo es la app (y por qué algunos puntos no aplican)
 
-nutriDL es una **PWA sin servidor**:
+FitDL es una **PWA sin servidor**:
 - **Sin servidor propio:** no hay base de datos, cuentas ni inicio de sesión, y los pagos no están conectados.
 - **Datos:** todo lo que apuntas se guarda en el navegador de cada persona (localStorage).
 - **Peticiones externas:** la única que hace la app es a **Open Food Facts**, para buscar un código de barras.
@@ -36,8 +36,8 @@ Forma recomendada: **Trusted Web Activity (TWA)** con Bubblewrap o PWABuilder (e
 
 - [ ] Cuenta de desarrollador de Google Play (pago único de 25 $).
 - [ ] Generar el paquete con PWABuilder/Bubblewrap.
-- [ ] Publicar `assetlinks.json` (con la huella del certificado de firma) para que la app se abra sin barra de navegador. **Ojo:** tiene que estar en la raíz del dominio (`https://trbs-aldl.github.io/.well-known/assetlinks.json`), no dentro de `/nutridl-app/`. Hay que crear el repositorio `Trbs-ALDL.github.io` solo con ese archivo, o usar un dominio propio.
-- [x] **Política de privacidad pública** con contacto: `https://trbs-aldl.github.io/nutridl-app/privacidad.html`.
+- [ ] Publicar `assetlinks.json` (con la huella del certificado de firma) para que la app se abra sin barra de navegador. **Ojo:** tiene que estar en la raíz del dominio (`https://trbsaldl.github.io/.well-known/assetlinks.json`), no dentro de `/FitDL/`. Hay que crear el repositorio `Trbs-ALDL.github.io` solo con ese archivo, o usar un dominio propio.
+- [x] **Política de privacidad pública** con contacto: `https://trbsaldl.github.io/FitDL/privacidad.html`.
 - [ ] Formulario **Seguridad de los datos**: «No se recogen datos» (todo queda en el dispositivo); el código de barras va a Open Food Facts sin datos personales; la voz la procesa el servicio del sistema.
 - [ ] **Apps de salud**: declarar en la Consola que es una app de salud/fitness; incluir el aviso de que no sustituye a un profesional (ya está en la app).
 - [ ] Clasificación de contenido (cuestionario IARC) y público objetivo **18+** (la app ya lo indica).
@@ -123,8 +123,8 @@ Ejecutado hoy, de principio a fin:
 **Legal, lo que se ha añadido (términos v2.0 y privacidad v4.3)**
 
 - **Aviso legal**: quién está detrás de la app, con nombre y correo (lo pide la LSSI-CE art. 10). En `terminos.html` y `terms.html` hay una línea preparada con `hidden` para el NIF y el domicilio: **hay que quitar la palabra `hidden` y rellenarla en cuanto se empiece a cobrar**.
-- **Condiciones de nutriDL PRO**: qué incluye, que hoy **no se cobra nada**, que no hay suscripción ni renovación automática, que los códigos no caducan ni se revenden, y qué se informará cuando se active el pago (precio con impuestos, 14 días de desistimiento y garantía legal de los contenidos digitales).
-- **Licencias**: USDA (dominio público), Open Food Facts (**ODbL 1.0**, y la base derivada de nutriDL se ofrece bajo la misma licencia citando el origen) y datos oficiales de las cadenas, cuyas marcas son de sus titulares y se usan solo para identificar el producto.
+- **Condiciones de FitDL PRO**: qué incluye, que hoy **no se cobra nada**, que no hay suscripción ni renovación automática, que los códigos no caducan ni se revenden, y qué se informará cuando se active el pago (precio con impuestos, 14 días de desistimiento y garantía legal de los contenidos digitales).
+- **Licencias**: USDA (dominio público), Open Food Facts (**ODbL 1.0**, y la base derivada de FitDL se ofrece bajo la misma licencia citando el origen) y datos oficiales de las cadenas, cuyas marcas son de sus titulares y se usan solo para identificar el producto.
 - **Edad mínima 18**, ley aplicable española, derechos del consumidor de la UE y cómo reclamar (correo, oficina de consumo o Junta Arbitral; **la plataforma europea de resolución de litigios en línea cerró en julio de 2025, así que no se enlaza**).
 - **Cookies**: se dice expresamente que no hay ninguna, ni propias ni de terceros. Lo que se guarda en el navegador es lo que hace funcionar la app que la persona ha pedido usar, así que no hace falta ventana de consentimiento. Si algún día se añade analítica, habrá que revisarlo.
 - **Privacidad**: se explica que los productos que escaneas y guardas quedan en tu dispositivo con su código, y que la cámara no envía imágenes a ningún sitio.

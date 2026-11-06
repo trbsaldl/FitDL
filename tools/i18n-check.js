@@ -102,7 +102,6 @@ function scanJS(src) {
 // ---------------------------------------------------------------------
 // ¿Parece texto en español que alguien vería en pantalla?
 // ---------------------------------------------------------------------
-const ES = /[áéíóúñÁÉÍÓÚÑ¿¡]|\b(?:de|del|la|el|los|las|tu|tus|que|para|con|sin|por|una|uno|más|al|se|te|ya|hoy|y|o|en|es|no|si|mi|mis|su|sus|lo|le|les|un|como|cuando|qué|muy|todo|nada)\b/i;
 function visible(txt) {
     // Fuera etiquetas, entidades y clases de Tailwind / iconos. Una clase lleva guion («p-3», «mt-2», «fa-fire»)
     // o es una utilidad conocida escrita entera; así no se come palabras normales como «para» o «músculo».

@@ -1,4 +1,4 @@
-﻿// nutriDL · Lectura de códigos de barras sin depender del navegador
+﻿// FitDL · Lectura de códigos de barras sin depender del navegador
 // ---------------------------------------------------------------------
 // Muchos móviles (iPhone con Safari, Firefox…) no traen BarcodeDetector, así que aquí va un lector
 // propio de EAN-13, EAN-8 y UPC (los códigos de la comida en todo el mundo). Lee una línea de la

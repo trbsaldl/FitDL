@@ -7,7 +7,7 @@
 const KCAL_PER_KG = 7700;
 const STORAGE_KEY = 'nutridl_v2';
 const PROFILES_KEY = 'nutridl_profiles';
-const APP_VERSION = '3.27.0';
+const APP_VERSION = '3.28.0';
 const ERR_KEY = 'nutridl_errors', USAGE_KEY = 'nutridl_usage';
 // Estado de la persona activa (se guarda en su perfil)
 const DEFAULT_STATE = {
@@ -21,7 +21,7 @@ const DEFAULT_STATE = {
 };
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
 let calc = {};
-// Seguridad: nadie puede meter nutriDL dentro de su web (clickjacking). GitHub Pages no deja poner
+// Seguridad: nadie puede meter FitDL dentro de su web (clickjacking). GitHub Pages no deja poner
 // cabeceras y «frame-ancestors» no vale dentro de una etiqueta <meta>, así que se comprueba aquí.
 // Las apps de tienda (TWA, Capacitor) no son marcos: no les afecta.
 (function () {

@@ -1,4 +1,4 @@
-# Ejecuta las pruebas automáticas en cada cambio que se sube a GitHub
+# Ejecuta la revisión de código y las pruebas automáticas (incluida la de navegador) en cada cambio que se sube a GitHub
 name: Pruebas
 on:
   push:
@@ -14,4 +14,8 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
+      # ESLint y Playwright solo se necesitan aquí; no se añaden al proyecto
+      - run: npm install --no-save eslint@10 playwright@1
+      - run: npx playwright install --with-deps chromium
+      - run: npx eslint js tests tools eslint.config.js
       - run: node --test

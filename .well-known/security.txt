@@ -1,8 +1,8 @@
-# Cómo avisar de un fallo de seguridad en nutriDL (formato RFC 9116)
+# Cómo avisar de un fallo de seguridad en FitDL (formato RFC 9116)
 # Lo ideal es que este archivo esté en la raíz del dominio; en GitHub Pages el sitio
-# cuelga de /nutridl-app/, así que esta es su dirección canónica.
+# cuelga de /FitDL/, así que esta es su dirección canónica.
 Contact: mailto:aannggeelltrabajos@gmail.com
 Expires: 2027-10-27T00:00:00.000Z
 Preferred-Languages: es, en
-Canonical: https://trbs-aldl.github.io/nutridl-app/.well-known/security.txt
-Policy: https://trbs-aldl.github.io/nutridl-app/terminos.html
+Canonical: https://trbsaldl.github.io/FitDL/.well-known/security.txt
+Policy: https://trbsaldl.github.io/FitDL/terminos.html

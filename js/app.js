@@ -86,7 +86,7 @@ function openReport() {
 }
 function copyReport() { if (navigator.clipboard) navigator.clipboard.writeText(reportText()).then(() => toast('Informe copiado'), () => toast('No se pudo copiar')); }
 function clearReport() { try { localStorage.removeItem(ERR_KEY); } catch (e) { } openReport(); toast('Registro vaciado'); }
-// Borrar TODO lo de nutriDL en este dispositivo (derecho de supresión)
+// Borrar TODO lo de FitDL en este dispositivo (derecho de supresión)
 async function wipeAll() {
     closeProfileMenu();
     if (!(await askConfirm('¿Borrar TODOS los datos de FitDL en este dispositivo? Perfiles, diario, pesos, medidas y entrenos. No se puede deshacer: si quieres, guarda antes una copia de seguridad.', 'Continuar'))) return;

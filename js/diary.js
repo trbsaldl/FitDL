@@ -1,4 +1,4 @@
-﻿// nutriDL · Diario de comidas, escáner y comidas guardadas
+﻿// FitDL · Diario de comidas, escáner y comidas guardadas
 'use strict';
 
 // =====================================================================
@@ -509,8 +509,7 @@ function fsOpen(id, editId) {
 }
 function fsRenderDetail() {
     const f = fs.food, units = unitsOf(f), u = units.find(x => x.key === fs.unit) || units[0];
-    const g = u.g * (num(fs.n) || 0), m = macrosOf(f, g);
-    const k = kcal100(f) || 1, pct = v => Math.round(v / (m.kcal || 1) * 100);
+    const k = kcal100(f) || 1;
     $('fs-body').innerHTML = `<div class="space-y-5">
         <div>
             <div class="text-xl font-extrabold text-neutral-100 leading-tight">${emo(f)} ${esc(f.name)}</div>

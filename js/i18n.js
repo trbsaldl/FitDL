@@ -1,4 +1,4 @@
-﻿// nutriDL · Idioma de la app (español / inglés)
+﻿// FitDL · Idioma de la app (español / inglés)
 // La clave del diccionario es el propio texto en español. Si falta una traducción se ve en español:
 // así nunca aparece un hueco vacío ni se rompe la pantalla.
 'use strict';
@@ -6,7 +6,7 @@
 const LANGS = { es: 'Español', en: 'English' };
 // Mientras la traducción al inglés no esté terminada, el selector no se enseña:
 // media app en inglés y media en español es peor que dejarlo en español.
-// Lo vigila tests/v311.test.js: no se puede poner en true si queda algo sin traducir.
+// Lo vigila tests/idioma.test.js: no se puede poner en true si queda algo sin traducir.
 const I18N_READY = true;
 const LANG_KEY = 'nutridl_lang';
 const LOCALES = { es: 'es-ES', en: 'en-GB' };

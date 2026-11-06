@@ -35,7 +35,8 @@ js/kitchen.js         Mi nevera y compra inteligente
 js/plans.js           Gratis / PRO (prueba, códigos, enlace de pago)          js/analytics.js  medición de uso (solo en el dispositivo)
 js/main.js            arranque, instalación como app y modo sin conexión (se carga el último)
 sw.js                 service worker (generado)
-tests/                pruebas automáticas
+tests/                pruebas automáticas (por tema) y prueba de humo en navegador
+eslint.config.js      reglas de ESLint
 tools/                herramientas (ver abajo)
 ```
 
@@ -48,16 +49,22 @@ npm install          # una vez: instala Tailwind, Font Awesome y subset-font
 npm start            # servidor local en http://localhost:8766 (sin caché)
 npm run build        # tras cambiar clases o iconos: regenera iconos, CSS y sw.js
 npm test             # pruebas automáticas (también se ejecutan en GitHub en cada cambio)
+npm run lint         # revisión de código con ESLint (npm i --no-save eslint)
+npm run check        # lint + pruebas
 node tools/bundle.js "C:/ruta/copia.html"   # copia de la app en un solo archivo (se abre sin internet)
 ```
 
-Antes de subir cambios: `npm run build` y `npm test`. Sube también la versión en `js/core.js` (`APP_VERSION`), `package.json` y [CHANGELOG.md](CHANGELOG.md).
+Antes de subir cambios: `npm run build`, `npm run lint` y `npm test`. La prueba de navegador (`tests/humo.test.js`) necesita Playwright (`npm i --no-save playwright && npx playwright install chromium`); sin él se salta con aviso. Sube también la versión en `js/core.js` (`APP_VERSION`), `package.json` y [CHANGELOG.md](CHANGELOG.md).
 
 En local el modo sin conexión está desactivado para no ver versiones antiguas; para probarlo abre `http://localhost:8766/?sw=1`.
 
 ### Productos de marca
 
 `tools/marcas/`: `off_fetch.js` → `off_fetch2.js` (descargan de Open Food Facts a `cache_off/`) → `off_build.js` (elige y **valida** cada producto) → `off_embed.js` (los mete en `js/data/foods.js`). Para añadir un producto, añade una línea `t(...)` en `off_build.js` y repite los dos últimos pasos.
+
+## Nombres antiguos
+
+La app se llamó nutriDL. Las claves de `localStorage` que empiezan por `nutridl_` y la sal de las huellas de los códigos PRO se mantienen **a propósito**: cambiarlas borraría los datos de quien ya usa la app e invalidaría los códigos vendidos.
 
 ## Documentación
 

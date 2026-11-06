@@ -1,4 +1,4 @@
-﻿// nutriDL · Panel de inicio del perfil
+﻿// FitDL · Panel de inicio del perfil
 'use strict';
 
 // =====================================================================

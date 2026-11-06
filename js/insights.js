@@ -1,4 +1,4 @@
-﻿// nutriDL · Rachas, logros, resumen semanal y mensajes que interpretan tu progreso
+﻿// FitDL · Rachas, logros, resumen semanal y mensajes que interpretan tu progreso
 // Solo se usan tus datos guardados; nunca se diagnostica nada.
 'use strict';
 

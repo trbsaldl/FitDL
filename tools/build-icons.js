@@ -36,7 +36,7 @@ const faDir = path.join(root, 'node_modules', '@fortawesome', 'fontawesome-free'
     // Fuentes recortadas: sólida (900) y normal (400, para los iconos fa-regular)
     const text = [...solid].map(c => String.fromCodePoint(c)).join('');
     let total = 0;
-    for (const [file, w] of [['fa-solid-900.woff2', 900], ['fa-regular-400.woff2', 400]]) {
+    for (const file of ['fa-solid-900.woff2', 'fa-regular-400.woff2']) {
         const buf = await subsetFont(fs.readFileSync(path.join(faDir, 'webfonts', file)), text, { targetFormat: 'woff2' });
         fs.writeFileSync(path.join(root, 'fonts', file), buf); total += buf.length;
     }

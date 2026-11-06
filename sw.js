@@ -1,7 +1,7 @@
 // FitDL · service worker (generado por tools/build-sw.js; no editar a mano)
 // Se abre al instante con la copia guardada y se refresca desde la red por detrás. Sin internet: la copia guardada.
 // Las consultas a Open Food Facts no pasan por aquí.
-const CACHE = 'fitdl-31a64fa151';
+const CACHE = 'fitdl-68e43ecf09';
 const FILES = [
   "./css/app.css",
   "./css/fonts.css",

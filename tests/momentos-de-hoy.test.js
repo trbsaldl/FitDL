@@ -23,7 +23,6 @@ function loadApp() {
     const json = code => JSON.parse(run(`JSON.stringify(${code})`));
     return { run, json, store };
 }
-const setupDay = run => run(`state.gym = { myDays: 1, plan: [{ name: 'Pierna', ex: [{ id: 'sq_barra', n: 'Sentadilla', s: [{ kg: '100', r: '8' }, { kg: '80', r: '10', t: 'drop', d: [{ kg: '60', r: '8' }, { kg: '40', r: '6' }] }] }] }] }; state.workouts = []; gymDay = 0;`);
 
 
 // Reloj de mentira: cada prueba fija su hora y su día para no depender de cuándo se ejecute

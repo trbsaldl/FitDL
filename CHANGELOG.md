@@ -1,5 +1,16 @@
 # Cambios de nutriDL
 
+## 3.28.0 · 6 de noviembre de 2026
+
+**Revisión de calidad: direcciones, código y pruebas (sin cambios para quien usa la app)**
+
+- **Una sola dirección pública**: el sitemap, las 4.163 páginas «Calorías de…», los textos legales, `security.txt` y la licencia apuntaban a la dirección antigua (`trbs-aldl.github.io/nutridl-app/`). Ahora todo usa `trbsaldl.github.io/FitDL/`, y las páginas públicas dicen «FitDL» en vez de «nutriDL».
+- **Política de seguridad más estricta**: `script-src` ya no admite `'unsafe-inline'`; solo los atributos `onclick` y similares siguen permitidos (`script-src-attr`). Un `<script>` inyectado ya no se ejecuta.
+- **Revisión de código con ESLint** (`npm run lint`, también en GitHub) y limpieza de código muerto que encontró.
+- **Pruebas en navegador real** (`tests/humo.test.js`): abre la app en móvil y escritorio, hace clic en cada pestaña, comprueba accesibilidad básica y que la app abre con el almacenamiento bloqueado o lleno.
+- Pruebas renombradas por tema (antes por versión). 90 pruebas en total.
+- Se conservan a propósito las claves `nutridl_*` del almacenamiento y la sal de los códigos PRO: cambiarlas borraría datos y códigos.
+
 ## 3.27.0 · 28 de octubre de 2026
 
 **La app abre antes, con los mismos 4.532 alimentos**
@@ -144,7 +155,7 @@ Editar todo rápido y paleta mixta (elegida por Ángel).
 - **Diario**: al tocar un alimento apuntado, nuevo botón «Cambiar nombre o macros» (conserva cantidad y comida). En «solo calorías», si dejas las kcal vacías se calculan solas con las macros (4·P + 4·HC + 9·G). «Quitar» también desde ese editor.
 - **Mis alimentos**: ya se pueden **editar** (mismo formulario, relleno) y **borrar** (con Deshacer). Lo ya apuntado no cambia.
 - **Gym**: tocar el nombre de un ejercicio para **cambiarlo** (opción de cambiarlo también en tus otros días y entrenos guardados, sin perder «Última vez» ni tus récords); flechas para **subir/bajar** ejercicios; «Editar» en «Tus ejercicios» para quitar los que ya no usas (vuelven si los usas otra vez).
-- 4 pruebas nuevas (`tests/v317.test.js`): 72 en total.
+- 4 pruebas nuevas (`tests/edicion-diario-y-gym.test.js`): 72 en total.
 
 ## 3.16.0 · 23 de octubre de 2026
 
@@ -158,7 +169,7 @@ Auditoría de seguridad, datos y Coach (modelo de amenazas completo en `docs/SEG
 - Aviso prudente si el peso objetivo queda por debajo del rango saludable (IMC < 18,5).
 - Los avisos largos se quedan más tiempo en pantalla (hasta 7 s) para poder leerlos.
 - Privacidad: la política explica que Open Food Facts puede ver la IP y el navegador al escanear; `no-referrer` en todas las páginas y CSP estricta (sin scripts) en las páginas legales.
-- 8 pruebas nuevas (`tests/v316.test.js`): 68 en total.
+- 8 pruebas nuevas (`tests/coach-ordenes-y-lector.test.js`): 68 en total.
 
 ## 3.15.0 · 22 de octubre de 2026
 
@@ -175,7 +186,7 @@ Los puntos débiles que salieron de las reseñas de la competencia y de la revis
 - **Portada nueva**: titular «Cuenta calorías gratis de verdad» (el anterior queda encima como subtítulo) y **promesa pública**: el escáner, las macros, el diario, el Coach básico, el progreso y el gym seguirán siendo gratis. También en las preguntas frecuentes y en la ficha de Google Play.
 - **Nuevo objetivo: recomposición corporal** (perder grasa y ganar músculo a la vez): déficit pequeño de 2,5 / 5 / 7,5 % y proteína a 2,2 g/kg (Barakat 2020, Morton 2018). En el asistente, en «Mi plan», en «Hoy» y en el PDF.
 - **Macros a mano** en «Mi plan»: pones proteína, hidratos y grasas y las calorías salen solas; botón para volver al cálculo automático. Avisa (sin bloquear) si quedan por debajo del mínimo seguro. Los valores se limpian (solo números, de 0 a 600 g).
-- 6 pruebas nuevas (`tests/v313.test.js`): 60 en total.
+- 6 pruebas nuevas (`tests/recomposicion-y-pro.test.js`): 60 en total.
 
 ## 3.13.0 · 22 de octubre de 2026
 

@@ -165,7 +165,7 @@ button.w-5.h-5::after, button.w-6.h-6::after, button.w-7.h-7::after { content: '
 
 
 /* =====================================================================
-   nutriDL 3.0 · Identidad: oscuro cálido, beige y marrón, tarjetas sobrias, una sola acción principal por bloque
+   FitDL 3.0 · Identidad: oscuro cálido, beige y marrón, tarjetas sobrias, una sola acción principal por bloque
    ===================================================================== */
 :root { --nd-card: rgba(26, 23, 20, .92); --nd-line: rgba(255, 240, 220, .08); --nd-brand: #9a6b40; --nd-brand-hi: #7a5230; --nd-sand: #dcc19c; }
 
@@ -307,7 +307,7 @@ button.w-5.h-5::after, button.w-6.h-6::after, button.w-7.h-7::after { content: '
 .nd-quick .nd-lock i { font-size: 9px; color: #fcd34d; }
 
 /* =====================================================================
-   nutriDL 3.2 · Acabado profesional
+   FitDL 3.2 · Acabado profesional
    Grises cálidos en toda la app, titulares con serifa (Newsreader), menos negrita,
    etiquetas en minúscula normal y superficies sobrias (sin brillos de colores)
    ===================================================================== */
@@ -386,7 +386,7 @@ h1 { line-height: 1.06; }
 .shadow-2xl { --tw-shadow: 0 2px 6px rgba(8, 5, 2, .5), 0 18px 36px -18px rgba(8, 5, 2, .85); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow); } /* ventanas: sombra cálida y más corta */
 
 /* =====================================================================
-   nutriDL 3.3 · Sistema visual profesional
+   FitDL 3.3 · Sistema visual profesional
    Ideas de apps de datos serias, adaptadas a nuestra paleta: listas antes que tarjetas,
    cifras protagonistas, un solo acento, iconos de línea (nunca emojis) y controles de un solo tamaño.
    ===================================================================== */

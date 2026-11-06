@@ -1,4 +1,4 @@
-﻿// nutriDL · Motor de comidas: «¿Qué como?», menú del día, recetas y lista de la compra
+﻿// FitDL · Motor de comidas: «¿Qué como?», menú del día, recetas y lista de la compra
 // Todo se calcula en el dispositivo con la base de alimentos (USDA / BEDCA): nada se inventa ni se envía.
 'use strict';
 

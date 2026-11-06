@@ -1,4 +1,4 @@
-﻿// nutriDL · Gym: tus días, ejercicios, pesos, récords, progreso y descanso
+﻿// FitDL · Gym: tus días, ejercicios, pesos, récords, progreso y descanso
 'use strict';
 
 // =====================================================================

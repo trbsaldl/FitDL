@@ -1,6 +1,6 @@
-# Auditoría y plan de nutriDL 3.0
+# Auditoría y plan de FitDL 3.0
 
-Fecha: 8 de octubre de 2026. Punto de partida: nutriDL 2.1.4 (copia guardada en `Escritorio/web/appdura 6.0.html`).
+Fecha: 8 de octubre de 2026. Punto de partida: FitDL 2.1.4 (copia guardada en `Escritorio/web/appdura 6.0.html`).
 
 ## 1. Qué había y funcionaba (se conserva todo)
 

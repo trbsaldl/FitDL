@@ -1,4 +1,4 @@
-﻿// nutriDL · Calculadora: datos, calorías (Mifflin-St Jeor), objetivo, IMC (OMS) y macros
+﻿// FitDL · Calculadora: datos, calorías (Mifflin-St Jeor), objetivo, IMC (OMS) y macros
 'use strict';
 
 // =====================================================================
@@ -253,7 +253,6 @@ function compute() {
 // =====================================================================
 function renderResults() {
     const c = calc;
-    const FNAME = { mifflin: 'Mifflin-St Jeor', katch: 'Katch-McArdle', hb: 'Harris-Benedict rev.' };
     $('res-bmr').innerText = fmt(c.bmr);
     $('res-tdee').innerText = fmt(c.tdee);
     $('res-target-kcal').innerText = fmt(c.target);

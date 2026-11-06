@@ -17,7 +17,7 @@
 
 **Peticiones concretas que se repiten:** exportar el historial (PDF/Excel), objetivo de **recomposición corporal**, fijar macros a mano, más de 3 comidas, que al dejar de pagar se pueda seguir apuntando.
 **Lo que más se valora (reseñas positivas):** escáner de código de barras, que sea fácil y rápido, gran base de alimentos, ver la evolución.
-**Aviso responsable:** una usuaria cuenta que contar calorías le llevó a un TCA. El aviso de nutriDL ya lo menciona; mantenerlo visible y sin presión.
+**Aviso responsable:** una usuaria cuenta que contar calorías le llevó a un TCA. El aviso de FitDL ya lo menciona; mantenerlo visible y sin presión.
 
 ## 2. Palabras de los usuarios (para textos de tienda y portada)
 - Problema: «todo es de pago», «cada vez se puede hacer menos», «te obliga a pagar», «anuncios invasivos», «la última actualización lo mató», «los datos no se sabe de dónde los saca».
@@ -30,14 +30,14 @@
 | Debilidad | Funciones gratis recortadas, «Fitia Coins», IA forzada | Muro de pago + anuncios agresivos, gamificación | Escáner de pago, actualizaciones que empeoran, fallos | Interfaz anticuada, anuncios | No ves el progreso |
 | Precio | Premium; reseñas citan ~12 €/mes y ~35 €/año en oferta | ~5-7 €/mes, ~30 €/año (según fuente) | Premium de pago | Gratis con anuncios | 0 € |
 
-## 4. Dónde gana nutriDL (comprobado en el código)
+## 4. Dónde gana FitDL (comprobado en el código)
 1. **Lo básico gratis de verdad y para siempre**: escáner, macros, diario sin límite de comidas, gym, progreso. Sin anuncios.
 2. **Datos con fuente** (etiqueta, USDA, web oficial) y casi 500 productos Hacendado.
 3. **Exportar**: PDF del plan para compartir y copia completa de los datos.
 4. **Privacidad**: sin cuenta; los datos en el móvil.
 5. Coach por reglas que responde al instante (sin «créditos»).
 
-**Huecos honestos de nutriDL** (recomposición y macros a mano: HECHOS en la 3.14.0): no está en Play Store, base más pequeña (2.280 vs millones), sin fotos con IA reconocedora, sin exportar a Excel/CSV, sin sincronizar con relojes.
+**Huecos honestos de FitDL** (recomposición y macros a mano: HECHOS en la 3.14.0): no está en Play Store, base más pequeña (2.280 vs millones), sin fotos con IA reconocedora, sin exportar a Excel/CSV, sin sincronizar con relojes.
 
 ## 5. Posicionamiento recomendado
 **Competir en otro eje: confianza y libertad, no en IA.** Mensaje: *«La app de calorías que no te cobra por lo básico»*: escáner, macros y comidas ilimitadas gratis, sin anuncios, con datos de verdad de tu supermercado.
