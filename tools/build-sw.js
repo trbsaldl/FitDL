@@ -17,7 +17,7 @@ const fontsCss = fs.readFileSync(path.join(root, 'css', 'fonts.css'), 'utf8').tr
 idx = idx.replace(/<link rel="stylesheet" href="css\/fonts\.css(?:\?v=[0-9a-f]+)?">|<style id="fonts-inline">[\s\S]*?<\/style>/,
     () => `<style id="fonts-inline">${fontsCss}</style>`);
 // La base de marcas se carga desde JavaScript, así que su versión va en la <meta> que la nombra
-idx = idx.replace(/(<meta name="nutridl-marcas" content=")((?:js)\/[^"?]+)(?:\?v=[0-9a-f]+)?(")/,
+idx = idx.replace(/(<meta name="fitdl-marcas" content=")((?:js)\/[^"?]+)(?:\?v=[0-9a-f]+)?(")/,
     (m, a, file, b) => `${a}${file}?v=${hashOf(fs.readFileSync(path.join(root, file)))}${b}`);
 fs.writeFileSync(idxPath, idx);
 
@@ -32,17 +32,17 @@ const h = crypto.createHash('sha256');
 files.forEach(f => h.update(f).update(fs.readFileSync(path.join(root, f))));
 const version = h.digest('hex').slice(0, 10);
 
-const sw = `// nutriDL · service worker (generado por tools/build-sw.js; no editar a mano)
+const sw = `// FitDL · service worker (generado por tools/build-sw.js; no editar a mano)
 // Se abre al instante con la copia guardada y se refresca desde la red por detrás. Sin internet: la copia guardada.
 // Las consultas a Open Food Facts no pasan por aquí.
-const CACHE = 'nutridl-${version}';
+const CACHE = 'fitdl-${version}';
 const FILES = ${JSON.stringify(files.map(f => './' + f), null, 2)};
 
 self.addEventListener('install', e => {
     e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', ...FILES].map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
-    e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('nutridl-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+    e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('fitdl-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', e => {
     const req = e.request, url = new URL(req.url);

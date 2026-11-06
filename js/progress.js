@@ -1,4 +1,4 @@
-// nutriDL · Mi progreso: peso y medidas corporales
+﻿// FitDL · Mi progreso: peso y medidas corporales
 'use strict';
 
 // =====================================================================
@@ -302,13 +302,13 @@ function exportCSV(tipo) {
 
 // Semana de calendario (lunes a domingo): lo que llevas de esta semana
 // =====================================================================
-//  COMPARTIR MI SEMANA (3.19): una tarjeta de la que dé gusto presumir y que explique qué es nutriDL a quien la vea.
+//  COMPARTIR MI SEMANA (3.19): una tarjeta de la que dé gusto presumir y que explique qué es FitDL a quien la vea.
 //  · Vista previa antes de compartir · formato Historia (9:16, Instagram/WhatsApp) o Publicación (4:5)
 //  · El titular sale de lo MEJOR de tu semana (siempre un dato real) · calendario con tus días en verde
 //  · Invitación clara para quien la recibe («gratis, sin anuncios» = la promesa pública de la app)
 //  Por privacidad NUNCA lleva peso ni medidas. Se dibuja en el propio móvil, sin servidores ni librerías.
 // =====================================================================
-const SHARE_URL = 'trbs-aldl.github.io/nutridl-app';
+const SHARE_URL = 'trbsaldl.github.io/FitDL';
 let shareFmt = 'story', shareBlob = null, shareImg = null, shareSeq = 0;
 function weekShareData() {
     const S = streakInfo(), W = calWeekStats(), c = calc, t0 = todayISO();
@@ -324,7 +324,7 @@ function weekHero(D) {
     if (D.workouts >= 2) return { n: String(D.workouts), t: tr('entrenos esta semana'), s: D.vol ? tr('{k} kg levantados en total', { k: fmt(D.vol) }) : '' };
     if (D.protOk >= 2) return { n: String(D.protOk), t: tr('días con mi proteína cumplida'), s: '' };
     if (D.logged) return { n: `${D.logged}/${D.past}`, t: tr('días apuntados esta semana'), s: '' };
-    return { n: '', t: tr('Empiezo a cuidarme con nutriDL'), s: '' };
+    return { n: '', t: tr('Empiezo a cuidarme con FitDL'), s: '' };
 }
 const weekRange = D => {
     const a = new Date(D.W.days[0] + 'T12:00:00'), b = new Date(D.W.days[6] + 'T12:00:00'), o = { day: 'numeric', month: 'short' };
@@ -336,7 +336,7 @@ function weekShareText(D) {
     if (D.protOk) bits.push(tr(D.protOk === 1 ? 'proteína cumplida {k} día' : 'proteína cumplida {k} días', { k: D.protOk }));
     if (D.workouts) bits.push(tr(D.workouts === 1 ? '{k} entreno' : '{k} entrenos', { k: D.workouts }));
     if (D.S.cur >= 2) bits.push(tr('racha de {k} días', { k: D.S.cur }));
-    return (bits.length ? tr('Mi semana: {x}.', { x: bits.join(' · ') }) + ' ' : '') + tr('Lo llevo con nutriDL: calorías, macros, escáner y gym, gratis y sin anuncios. Calcula tu plan en 2 minutos: {u}', { u: `https://${SHARE_URL}/` });
+    return (bits.length ? tr('Mi semana: {x}.', { x: bits.join(' · ') }) + ' ' : '') + tr('Lo llevo con FitDL: calorías, macros, escáner y gym, gratis y sin anuncios. Calcula tu plan en 2 minutos: {u}', { u: `https://${SHARE_URL}/` });
 }
 const loadImg = src => new Promise(res => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
 async function drawWeekCard(fmtKey, D) {
@@ -477,3 +477,4 @@ function calWeekStats() {
         workouts: state.workouts.filter(w => w.d >= mon && w.d <= t0).length,
     };
 }
+

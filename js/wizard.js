@@ -1,4 +1,4 @@
-// nutriDL · Asistente para crear el perfil
+﻿// nutriDL · Asistente para crear el perfil
 'use strict';
 
 // =====================================================================
@@ -174,3 +174,4 @@ function renderWz() {
     const firstInput = $('wz-body').querySelector('input[type=number]');
     if (firstInput && window.innerWidth >= 640) firstInput.focus();
 }
+

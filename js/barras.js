@@ -1,4 +1,4 @@
-// nutriDL · Lectura de códigos de barras sin depender del navegador
+﻿// nutriDL · Lectura de códigos de barras sin depender del navegador
 // ---------------------------------------------------------------------
 // Muchos móviles (iPhone con Safari, Firefox…) no traen BarcodeDetector, así que aquí va un lector
 // propio de EAN-13, EAN-8 y UPC (los códigos de la comida en todo el mundo). Lee una línea de la
@@ -158,3 +158,4 @@ function barrasUpcE(c) {
 const BARRAS_FORMATOS = ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'itf', 'code_128', 'code_39', 'code_93', 'codabar', 'databar', 'data_matrix', 'qr_code'];
 
 if (typeof module !== 'undefined' && module.exports) module.exports = { barrasCheck, barrasLeerLinea, barrasLeerGris, barrasVariantes, barrasUpcE, BARRAS_FORMATOS };
+

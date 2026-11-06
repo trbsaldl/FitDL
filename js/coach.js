@@ -1,4 +1,4 @@
-// nutriDL · Coach: conversación, «¿Qué como?», menú del día, lista de la compra, voz y foto
+﻿// FitDL · Coach: conversación, «¿Qué como?», menú del día, lista de la compra, voz y foto
 // Funciona en el dispositivo con tus datos y la base de alimentos. Cada respuesta indica si es un dato tuyo,
 // una estimación o una recomendación. No diagnostica ni sustituye a un profesional.
 'use strict';
@@ -141,7 +141,7 @@ function renderChat(scroll) {
     renderCoachCtx();
     const log = $('chat-log'); if (!log) return;
     const L = state.chat || [];
-    const hello = `<div class="nd-msg-c">${tagPill('rec')}<p>${profiles.current ? tr('Hola, {n}.', { n: esc(profiles.list[profiles.current].name) }) : tr('Hola.')} ${tr('Soy tu Coach. Dime lo que has comido y lo apunto, pregúntame qué comer o cómo vas. Respondo con tus datos de nutriDL.')}</p></div>`;
+    const hello = `<div class="nd-msg-c">${tagPill('rec')}<p>${profiles.current ? tr('Hola, {n}.', { n: esc(profiles.list[profiles.current].name) }) : tr('Hola.')} ${tr('Soy tu Coach. Dime lo que has comido y lo apunto, pregúntame qué comer o cómo vas. Respondo con tus datos de FitDL.')}</p></div>`;
     log.innerHTML = (L.length ? '' : hello) + L.map(msgHtml).join('');
     $('chat-sugg').innerHTML = chatSuggestions().map(s => `<button type="button" onclick="coachAsk(${esc(JSON.stringify(s))})" class="shrink-0 px-3.5 py-2 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-bold text-neutral-200 hover:border-mint-500/50">${esc(tr(s))}</button>`).join('');
     // La respuesta nueva se ve desde su principio (sin quedar detrás de la caja de texto)
@@ -285,7 +285,7 @@ function coachReply(raw) {
     let q = norm(raw).replace(/(\d)\.(\d{3})\b/g, '$1$2'); // «1.200 kcal» → 1200
     const fu = followUp(q); // «¿y de cena?», «otra», «sí»: se completan con lo último que hablasteis
     if (fu) { q = fu; raw = fu; }
-    if (RX.safety.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('En tu situación las necesidades cambian y conviene que lo valore un profesional sanitario: tu médico o un dietista-nutricionista. nutriDL es orientativa y no puede adaptar un plan con seguridad en ese caso.')}</p><p class="mt-2">${tr('Sí puedo ayudarte a apuntar lo que comes para que lo compartas con tu profesional.')}</p>` };
+    if (RX.safety.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('En tu situación las necesidades cambian y conviene que lo valore un profesional sanitario: tu médico o un dietista-nutricionista. FitDL es orientativa y no puede adaptar un plan con seguridad en ese caso.')}</p><p class="mt-2">${tr('Sí puedo ayudarte a apuntar lo que comes para que lo compartas con tu profesional.')}</p>` };
     if (RX.tooLow.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('Comer tan poco no es seguro sin supervisión médica: aumenta la pérdida de músculo y el riesgo de déficit de nutrientes. Tu plan nunca baja de {k} kcal. Si quieres avanzar más rápido, suma pasos y entrenamiento de fuerza.', { k: fmt(calc.male ? 1500 : 1200) })}</p>` };
     if (!calc.target && !RX.logged.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('Para responderte con tus números necesito tu plan (2 minutos): objetivo, datos y actividad.')}</p><button onclick="${profiles.current ? "showTab('calc')" : 'newProfile()'}" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Completar mi plan')}</button>` };
     // Dolor o lesión: primero la seguridad
@@ -441,7 +441,7 @@ function replyFridge(raw, q) {
     if (!opts.length) return { r: 'c', tags: ['rec'], html: `<p>${tr('Con {x} no me sale un plato completo. Añade alguna proteína (huevos, pollo, atún, legumbres…) y algún hidrato (arroz, pasta, patata, pan…).', { x: esc(ids.map(id => foodName(getFood(id)).toLowerCase()).join(', ')) })}</p>` };
     return { r: 'c', tags: ['rec', 'base'], slot, opts, html: `<p>${tr('Con lo que tienes, para {x} (≈ <b>{k} kcal</b> y <b>{p} g de proteína</b>):', { x: slotArt(slot), k: fmt(tg.kcal), p: fmt(tg.p) })}</p>` };
 }
-const proReply = feature => ({ r: 'c', tags: ['rec'], html: `<p>${tr('{n} es de nutriDL PRO: {w}', { n: '<b>' + esc(tr(PRO_FEATURES[feature][0])) + '</b>', w: esc(tr(PRO_FEATURES[feature][1]).toLowerCase()) })}</p><button onclick="openPaywall('${feature}')" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${proData().trialUsed ? tr('Ver nutriDL PRO') : tr('Probar 7 días gratis')}</button>` });
+const proReply = feature => ({ r: 'c', tags: ['rec'], html: `<p>${tr('{n} es de FitDL PRO: {w}', { n: '<b>' + esc(tr(PRO_FEATURES[feature][0])) + '</b>', w: esc(tr(PRO_FEATURES[feature][1]).toLowerCase()) })}</p><button onclick="openPaywall('${feature}')" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${proData().trialUsed ? tr('Ver FitDL PRO') : tr('Probar 7 días gratis')}</button>` });
 function slotFromText(q) {
     if (/desayun|breakfast/.test(q)) return 'B';
     if (/media manana|almuerz|mid morning/.test(q)) return planSlots().includes('M') ? 'M' : 'S';
@@ -555,7 +555,7 @@ function replyInfo(q) {
 const macroWords = m => tr('proteína {p} g · hidratos {c} g · grasa {f} g', { p: fmt(m.p, 1), c: fmt(m.c, 1), f: fmt(m.f, 1) });
 // ---------- 3.9: respuestas a las preguntas que antes no entendía ----------
 function replyQuien() {
-    return { r: 'c', tags: ['dato'], html: `<p>${tr('Soy el Coach de nutriDL. Para que lo sepas de verdad: <b>no soy una inteligencia artificial conectada a internet</b>. Funciono con reglas y con tus propios datos: tu plan, tu diario, tus entrenos y una base de {k} alimentos.', { k: fmt(FOODS.length) })}</p>
+    return { r: 'c', tags: ['dato'], html: `<p>${tr('Soy el Coach de FitDL. Para que lo sepas de verdad: <b>no soy una inteligencia artificial conectada a internet</b>. Funciono con reglas y con tus propios datos: tu plan, tu diario, tus entrenos y una base de {k} alimentos.', { k: fmt(FOODS.length) })}</p>
         <p class="mt-2">${tr('Eso tiene dos ventajas: <b>funciono sin cobertura</b> y <b>tus datos no salen de tu móvil</b>, nunca se envían a ningún servidor.')}</p>
         <p class="mt-2 text-neutral-300">${tr('Lo que no sé hacer: charlar de cualquier tema ni entender preguntas muy abiertas. Para lo tuyo (comer, apuntar y progresar) voy sobrado.')}</p>` };
 }
@@ -1004,7 +1004,7 @@ function renderMenuView() {
                 <button onclick="coachView('shop')" class="nd-mbtn"><i class="fa-solid fa-basket-shopping"></i> ${tr('Compra')}</button>
             </div>
         </div>
-        ${!proMenu ? `<div class="nd-card p-4 flex items-center gap-3"><span class="nd-ic shrink-0">${icon('👑')}</span><div class="min-w-0"><p class="text-sm text-neutral-200">${tr('Tu último menú se queda aquí para consultarlo y apuntarlo. Para crear uno nuevo necesitas PRO.')}</p><button type="button" onclick="openPaywall('menu')" class="mt-1 text-sm font-extrabold text-mint-300 underline">${tr('Ver nutriDL PRO')}</button></div></div>` : ''}
+        ${!proMenu ? `<div class="nd-card p-4 flex items-center gap-3"><span class="nd-ic shrink-0">${icon('👑')}</span><div class="min-w-0"><p class="text-sm text-neutral-200">${tr('Tu último menú se queda aquí para consultarlo y apuntarlo. Para crear uno nuevo necesitas PRO.')}</p><button type="button" onclick="openPaywall('menu')" class="mt-1 text-sm font-extrabold text-mint-300 underline">${tr('Ver FitDL PRO')}</button></div></div>` : ''}
         ${mn.meals.map((ml, i) => mealCard(ml, { key: 'mn' + i + ml.id, slotLabel: tr(SLOT_NAME[ml.slot]), swap: proMenu ? `menuSwap(${i})` : '', add: `menuAdd(${i})`, added: (mn.added || []).includes(i) })).join('')}
         <p class="text-[11px] text-neutral-500">${tr('Generado el {d}. Cantidades en crudo salvo que se indique. Calculado con la base de alimentos; las etiquetas pueden variar.', { d: new Date(mn.at || Date.now()).toLocaleDateString(locale(), { day: 'numeric', month: 'long' }) })}</p>`;
 }
@@ -1073,7 +1073,7 @@ function askVoiceConsent(then) {
     if (consent('voice')) return then();
     openSheet('<i class="fa-solid fa-microphone text-mint-400"></i> ' + tr('Usar el micrófono'), `<div class="space-y-4 text-sm text-neutral-300">
         <p>${tr('Para convertir tu voz en texto, tu navegador usa su propio servicio de dictado. En Chrome el audio se procesa en los servidores de Google, y en Safari, en los de Apple.')}</p>
-        <p>${tr('nutriDL no guarda ni envía el audio: solo recibe el texto, que se procesa en tu dispositivo.')}</p>
+        <p>${tr('FitDL no guarda ni envía el audio: solo recibe el texto, que se procesa en tu dispositivo.')}</p>
         <div class="grid grid-cols-2 gap-2"><button onclick="closeSheet();openVoiceLog(true)" class="py-3 rounded-xl border border-neutral-700 font-bold">${tr('Prefiero escribir')}</button><button id="vc-ok" class="py-3 rounded-xl bg-mint-600 text-white font-extrabold">${tr('Aceptar y hablar')}</button></div></div>`);
     $('vc-ok').onclick = () => { setConsent('voice', true); closeSheet(); then(); };
 }
@@ -1217,9 +1217,10 @@ function downloadReminder() {
     const [h, m] = ($('rm-time').value || '21:00').split(':').map(Number);
     const d = todayISO().replace(/-/g, ''), t = `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}00`;
     const end = `${String((h + (m + 10 >= 60 ? 1 : 0)) % 24).padStart(2, '0')}${String((m + 10) % 60).padStart(2, '0')}00`;
-    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//nutriDL//ES', 'BEGIN:VEVENT', `UID:nutridl-${Date.now()}@nutridl`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`,
-        `DTSTART:${d}T${t}`, `DTEND:${d}T${end}`, 'RRULE:FREQ=DAILY', 'SUMMARY:nutriDL · ' + tr('Apunta tus comidas de hoy'), 'DESCRIPTION:' + tr('Abre nutriDL y revisa tu día.'), 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:nutriDL', 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
-    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'nutridl-recordatorio.ics'; // i18n-ignore (nombre de archivo)
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//FitDL//ES', 'BEGIN:VEVENT', `UID:nutridl-${Date.now()}@nutridl`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`,
+        `DTSTART:${d}T${t}`, `DTEND:${d}T${end}`, 'RRULE:FREQ=DAILY', 'SUMMARY:FitDL · ' + tr('Apunta tus comidas de hoy'), 'DESCRIPTION:' + tr('Abre FitDL y revisa tu día.'), 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:FitDL', 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'fitdl-recordatorio.ics'; // i18n-ignore (nombre de archivo)
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     closeSheet(); toast('Abre el archivo para añadirlo a tu calendario'); track('reminder'); ev('reminder_set');
 }
+

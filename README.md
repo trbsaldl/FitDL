@@ -1,8 +1,8 @@
-# nutriDL
+﻿# FitDL
 
-**Tu entrenador nutricional personal.** Calorías, macros, comidas y progreso en un solo lugar, con un Coach que te dice qué comer. Se instala en el móvil como una app, funciona sin conexión y los datos se quedan en el dispositivo.
+**Tu entrenador de fitness personal.** Calorías, macros, comidas y progreso en un solo lugar, con un Coach que te dice qué comer. Se instala en el móvil como una app, funciona sin conexión y los datos se quedan en el dispositivo.
 
-**Web:** https://trbs-aldl.github.io/nutridl-app/
+**Web:** https://trbsaldl.github.io/FitDL/
 
 ## Qué incluye
 
@@ -73,4 +73,5 @@ En local el modo sin conexión está desactivado para no ver versiones antiguas;
 
 ## Aviso
 
-nutriDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista.
+FitDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista.
+

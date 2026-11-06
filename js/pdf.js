@@ -1,4 +1,4 @@
-// nutriDL · PDF del plan e impresión
+﻿// FitDL · PDF del plan e impresión
 'use strict';
 
 // =====================================================================
@@ -41,7 +41,7 @@ function triggerPrintReport() {
                 <div class="p-2 border rounded-xl"><div class="font-bold">${tr('Hidratos')}</div><div class="font-extrabold text-sm">${c.carbs} g</div></div>
                 <div class="p-2 border rounded-xl"><div class="font-bold">${tr('Fibra')}</div><div class="font-extrabold text-sm">≥ ${c.fiber} g</div></div>
             </div>
-            <div class="border-t pt-3 text-[10px] text-neutral-400 text-center">${tr('Documento orientativo generado por nutriDL. No sustituye el consejo de un profesional sanitario. Pesos de cereales, legumbre seca y carnes en crudo.')}</div>
+            <div class="border-t pt-3 text-[10px] text-neutral-400 text-center">${tr('Documento orientativo generado por FitDL. No sustituye el consejo de un profesional sanitario. Pesos de cereales, legumbre seca y carnes en crudo.')}</div>
         </div>`;
     window.print();
 }
@@ -138,7 +138,7 @@ function pdfDoc() {
                 objs[ci] = `<< /Length ${body.length} >>\nstream\n${body}\nendstream`;
             });
             objs[2] = `<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${N} >>`;
-            objs.push(`<< /Title (${enc(meta.title)}) /Producer (nutriDL) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)}) >>`);
+            objs.push(`<< /Title (${enc(meta.title)}) /Producer (FitDL) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)}) >>`);
             const info = objs.length - 1;
             let out = '%PDF-1.4\n%\xe2\xe3\xcf\xd3\n'; const off = [];
             for (let i = 1; i < objs.length; i++) { off[i] = out.length; out += `${i} 0 obj\n${objs[i]}\nendobj\n`; }
@@ -214,8 +214,8 @@ function buildPlanPdf(opt) {
     }
     d.gap(10); d.ensure(40);
     d.line(d.M, d.y, d.M + d.cw, d.y, '#cccccc'); d.gap(6);
-    d.para(tr('Documento orientativo generado con nutriDL. No sustituye el consejo de un médico o dietista-nutricionista. No indicado en embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria u otras patologías sin supervisión profesional.'), { size: 7.5, color: '#8a8a8a' });
-    return d.build({ title: `${opt.title} - ${name}`, footer: `${opt.title} · ${name} · nutriDL · ${SHARE_URL}` });
+    d.para(tr('Documento orientativo generado con FitDL. No sustituye el consejo de un médico o dietista-nutricionista. No indicado en embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria u otras patologías sin supervisión profesional.'), { size: 7.5, color: '#8a8a8a' });
+    return d.build({ title: `${opt.title} - ${name}`, footer: `${opt.title} · ${name} · FitDL · ${SHARE_URL}` });
 }
 
 // ----- Ventana "Descargar plan en PDF" -----
@@ -248,7 +248,7 @@ async function makePdf(mode) {
     let bytes;
     try { bytes = buildPlanPdf(o); } catch (e) { console.error(e); toast('No se pudo crear el PDF'); return; }
     const slug = norm(o.name).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'cliente'; // i18n-ignore (nombre de archivo)
-    const filename = `nutriDL-plan-${slug}-${todayISO()}.pdf`;
+    const filename = `FitDL-plan-${slug}-${todayISO()}.pdf`;
     const blob = new Blob([bytes], { type: 'application/pdf' });
     if (mode === 'share') {
         const file = new File([blob], filename, { type: 'application/pdf' });
@@ -267,3 +267,4 @@ async function makePdf(mode) {
     toast('PDF descargado');
 }
 function printFromPdfModal() { closePdfModal(); triggerPrintReport(); }
+

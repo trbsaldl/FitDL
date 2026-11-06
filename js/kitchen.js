@@ -1,4 +1,4 @@
-// nutriDL · Mi nevera (qué cocinar con lo que tienes) y Compra inteligente (planificada, a tu gusto y editable con palabras)
+﻿// FitDL · Mi nevera (qué cocinar con lo que tienes) y Compra inteligente (planificada, a tu gusto y editable con palabras)
 // Funciones PRO. Todo se calcula en el dispositivo con la base de alimentos.
 'use strict';
 
@@ -240,7 +240,7 @@ function renderShopView() {
     if (!proShop && !compraGuardada) { box.innerHTML = proTeaser('shop'); return; }
     if (!calc.target) { box.innerHTML = emptyPlan(tk('crear tu compra')); return; }
     const S = state.shop;
-    const avisoSinPro = `<div class="nd-card p-4 flex items-center gap-3"><span class="nd-ic shrink-0">${icon('👑')}</span><div class="min-w-0"><p class="text-sm text-neutral-200">${tr('Tu última compra se queda aquí para consultarla y marcarla. Para crear una nueva necesitas PRO.')}</p><button type="button" onclick="openPaywall('shop')" class="mt-1 text-sm font-extrabold text-mint-300 underline">${tr('Ver nutriDL PRO')}</button></div></div>`;
+    const avisoSinPro = `<div class="nd-card p-4 flex items-center gap-3"><span class="nd-ic shrink-0">${icon('👑')}</span><div class="min-w-0"><p class="text-sm text-neutral-200">${tr('Tu última compra se queda aquí para consultarla y marcarla. Para crear una nueva necesitas PRO.')}</p><button type="button" onclick="openPaywall('shop')" class="mt-1 text-sm font-extrabold text-mint-300 underline">${tr('Ver FitDL PRO')}</button></div></div>`;
     const ask = `<div class="nd-card p-5 space-y-3">
         <div class="flex items-center justify-between gap-2"><h3 class="text-lg font-extrabold text-neutral-50">${S && S.v === 2 ? tr('Nueva compra') : tr('¿Qué compra quieres?')}</h3>${S && S.v === 2 ? '<button onclick="shopReset()" class="text-xs font-bold text-neutral-400 underline">' + tr('Empezar de cero') + '</button>' : ''}</div>
         <form onsubmit="event.preventDefault(); shopAsk()" class="space-y-2"><textarea id="shop-q" rows="2" maxlength="300" placeholder="${tr('Ej: compra fitness para 7 días, me gusta el salmón y el arroz, sin lactosa')}" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-semibold text-[15px]" aria-label="${tr('Qué compra quieres')}"></textarea>
@@ -284,11 +284,11 @@ function renderShopView() {
 }
 function shopText() {
     const S = state.shop;
-    return tr('Lista de la compra · nutriDL ({x})', { x: S.days === 1 ? tr('hoy') : tp(S.days, 'día', 'días') }) + '\n' + SHOP_GROUPS.map(([g, label]) => { const L = S.items.filter(x => x.group === g && !S.done[x.fid]); return L.length ? `\n${tr(label)}\n` + L.map(x => { const f = getFood(x.fid); return f ? `- ${foodName(f)}: ${shopQty(f, x.g)}` : ''; }).join('\n') : ''; }).join('') + ((S.extra || []).filter(x => !x.done).length ? '\n\n' + tr('Otros') + '\n' + S.extra.filter(x => !x.done).map(x => '- ' + x.t).join('\n') : '');
+    return tr('Lista de la compra · FitDL ({x})', { x: S.days === 1 ? tr('hoy') : tp(S.days, 'día', 'días') }) + '\n' + SHOP_GROUPS.map(([g, label]) => { const L = S.items.filter(x => x.group === g && !S.done[x.fid]); return L.length ? `\n${tr(label)}\n` + L.map(x => { const f = getFood(x.fid); return f ? `- ${foodName(f)}: ${shopQty(f, x.g)}` : ''; }).join('\n') : ''; }).join('') + ((S.extra || []).filter(x => !x.done).length ? '\n\n' + tr('Otros') + '\n' + S.extra.filter(x => !x.done).map(x => '- ' + x.t).join('\n') : '');
 }
 async function shareShop() {
     // Al compartir, la lista lleva el enlace a la app: así quien la recibe puede probarla
-    const t = shopText() + '\n\n' + tr('Hecha con nutriDL, gratis: {u}', { u: 'https://' + SHARE_URL + '/' });
+    const t = shopText() + '\n\n' + tr('Hecha con FitDL, gratis: {u}', { u: 'https://' + SHARE_URL + '/' });
     if (navigator.share) { try { await navigator.share({ title: tr('Lista de la compra'), text: t }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     try { await navigator.clipboard.writeText(t); toast('Lista copiada: pégala donde quieras'); } catch (e) { toast('No se pudo copiar'); }
 }
@@ -296,5 +296,6 @@ async function shareShop() {
 function proTeaser(feature) {
     const [name, why] = PRO_FEATURES[feature];
     return `<div class="nd-card p-6 sm:p-8 text-center space-y-4"><div class="nd-ic-xl mx-auto">${icon('👑')}</div><h3 class="text-xl font-extrabold text-neutral-50">${esc(tr(name))} <span class="nd-pro-badge">PRO</span></h3><p class="text-sm text-neutral-400 max-w-sm mx-auto">${esc(tr(why))}</p>
-        <button onclick="openPaywall('${feature}')" class="nd-btn-primary mx-auto">${proData().trialUsed ? tr('Ver nutriDL PRO') : tr('Probar 7 días gratis')}</button></div>`;
+        <button onclick="openPaywall('${feature}')" class="nd-btn-primary mx-auto">${proData().trialUsed ? tr('Ver FitDL PRO') : tr('Probar 7 días gratis')}</button></div>`;
 }
+

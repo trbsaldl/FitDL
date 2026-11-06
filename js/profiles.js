@@ -1,4 +1,4 @@
-// nutriDL · Perfiles en el dispositivo y copias de seguridad
+﻿// FitDL · Perfiles en el dispositivo y copias de seguridad
 'use strict';
 
 // =====================================================================
@@ -112,7 +112,7 @@ function renderProfileChip() {
                 <span class="flex-1 font-semibold">${tr('Idioma')}</span>
                 <div class="nd-langsel" role="group" aria-label="${esc(tr('Idioma'))}">${Object.keys(LANGS).map(l => `<button type="button" onclick="setLang('${l}')" class="${l === LANG ? 'is-on' : ''}" aria-pressed="${l === LANG}">${l.toUpperCase()}</button>`).join('')}</div>
             </div>` : ''}
-            <button onclick="openPro()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-crown w-7 text-center text-amber-300"></i>nutriDL PRO <span class="nd-pro-badge ml-auto">${isPro() ? tr('Activo') : tr('Probar')}</span></button>
+            <button onclick="openPro()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-crown w-7 text-center text-amber-300"></i>FitDL PRO <span class="nd-pro-badge ml-auto">${isPro() ? tr('Activo') : tr('Probar')}</span></button>
             <button onclick="openSync()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-rotate w-7 text-center text-neutral-400"></i>${tr('Móvil y ordenador')}</button>
             <button data-install onclick="installApp()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-mobile-screen-button w-7 text-center text-mint-400"></i>${tr('Instalar la app')}</button>
                 <button onclick="openReport()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-bug w-7 text-center text-neutral-400"></i>${tr('Informe de errores')}</button>
@@ -129,14 +129,14 @@ function toggleProfileMenu(e) {
 }
 function closeProfileMenu() { const m = $('profile-menu'); if (m) m.classList.add('hidden'); }
 
-// ----- Usar nutriDL en varios dispositivos: hoy con copia de seguridad; la sincronización llegará con las cuentas -----
+// ----- Usar FitDL en varios dispositivos: hoy con copia de seguridad; la sincronización llegará con las cuentas -----
 function openSync() {
     closeProfileMenu();
     openSheet('<i class="fa-solid fa-rotate text-mint-400"></i> ' + tr('Móvil y ordenador'), `<div class="space-y-4 text-sm text-neutral-300">
         <p>${tr('Tus datos viven en este dispositivo. Para pasarlos a otro:')}</p>
         <ol class="nd-steps"><li>${tr('Aquí: <b>Guardar copia de seguridad</b> (descarga un archivo).')}</li><li>${tr('Envíate ese archivo (correo, nube, WhatsApp…).')}</li><li>${tr('En el otro dispositivo: <b>Cargar una copia</b>.')}</li></ol>
         <div class="grid grid-cols-2 gap-2"><button onclick="closeSheet();exportProfiles()" class="py-3 rounded-xl bg-mint-600 text-white font-extrabold"><i class="fa-solid fa-download"></i> ${tr('Guardar copia')}</button><button onclick="closeSheet();importProfiles()" class="py-3 rounded-xl border border-neutral-700 font-bold"><i class="fa-solid fa-upload"></i> ${tr('Cargar copia')}</button></div>
-        <div class="p-3 rounded-xl bg-neutral-800/60 border border-neutral-800 text-xs text-neutral-400">${tr('<b class="text-neutral-200">Próximamente:</b> sincronización automática con una cuenta opcional (PRO). Seguirás pudiendo usar nutriDL sin cuenta.')}</div>
+        <div class="p-3 rounded-xl bg-neutral-800/60 border border-neutral-800 text-xs text-neutral-400">${tr('<b class="text-neutral-200">Próximamente:</b> sincronización automática con una cuenta opcional (PRO). Seguirás pudiendo usar FitDL sin cuenta.')}</div>
     </div>`);
     track('sync_open');
 }
@@ -185,10 +185,10 @@ async function restoreAutoBackup(i) {
 }
 function exportProfiles() {
     closeProfileMenu(); save();
-    const data = { app: 'nutridl', v: 1, exported: new Date().toISOString(), profiles };
+    const data = { app: 'fitdl', v: 1, exported: new Date().toISOString(), profiles };
     const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = `nutridl-copia-${todayISO()}.json`;
+    a.href = URL.createObjectURL(blob); a.download = `fitdl-copia-${todayISO()}.json`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     toast('Copia descargada: guárdala para recuperar tus perfiles');
@@ -239,12 +239,12 @@ function importProfiles() {
     inp.onchange = () => {
         const file = inp.files && inp.files[0]; if (!file) return;
         // Una copia real ocupa como mucho unos pocos MB: un archivo enorme no se lee (bloquearía el móvil)
-        if (file.size > 20 * 1024 * 1024) { toast('Ese archivo es demasiado grande para ser una copia de NutriDL'); return; }
+        if (file.size > 20 * 1024 * 1024) { toast('Ese archivo es demasiado grande para ser una copia de FitDL'); return; }
         const r = new FileReader();
         r.onload = async () => {
-            let data; try { data = JSON.parse(r.result); } catch (e) { toast('Ese archivo no es una copia de NutriDL'); return; }
-            const list = data && data.app === 'nutridl' && data.profiles && data.profiles.list;
-            if (!list || typeof list !== 'object') { toast('Ese archivo no es una copia de NutriDL'); return; }
+            let data; try { data = JSON.parse(r.result); } catch (e) { toast('Ese archivo no es una copia de FitDL'); return; }
+            const list = data && (data.app === 'fitdl' || data.app === 'nutridl') && data.profiles && data.profiles.list;
+            if (!list || typeof list !== 'object') { toast('Ese archivo no es una copia de FitDL'); return; }
             save();
             // Ids de perfil raros (con comillas, etiquetas…) reciben un id nuevo y seguro
             const entries = Object.entries(list).filter(([, p]) => p && typeof p === 'object')
@@ -285,3 +285,4 @@ window.addEventListener('storage', e => {
         refreshAll();
     } catch (err) { }
 });
+

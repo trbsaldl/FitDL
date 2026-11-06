@@ -163,7 +163,7 @@ function scanHTML(f) {
     const deco = v => v.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&amp;/g, '&');
     while ((m = KEY.exec(s))) claves.add(deco(m[1]));
     // En index.html cualquier texto con letras tiene que estar marcado: lo que no se traduce va en IGUAL
-    const IGUAL = new Set(['nutri', 'DL', 'nutriDL', 'nutriDL PRO', 'Beta', 'Coach', 'PRO', 'IMC Prime (IMC / 25)']);
+    const IGUAL = new Set(['nutri', 'DL', 'Fit', 'FitDL', 'FitDL PRO', 'Beta', 'Coach', 'PRO', 'IMC Prime (IMC / 25)']);
     const TXT = />([^<>]+)</g;
     while ((m = TXT.exec(s))) {
         const txt = m[1].replace(/\s+/g, ' ').trim();

@@ -1,4 +1,4 @@
-// nutriDL · Diario de comidas, escáner y comidas guardadas
+﻿// nutriDL · Diario de comidas, escáner y comidas guardadas
 'use strict';
 
 // =====================================================================
@@ -724,3 +724,4 @@ function toastUndo(msg, fn) {
     toastTimer = setTimeout(() => { undoFn = null; t.style.pointerEvents = ''; t.style.transitionDuration = '.18s'; t.style.opacity = '0'; t.style.transform = 'translate(-50%, 10px)'; }, 5000);
 }
 function runUndo() { const fn = undoFn; undoFn = null; if (fn) fn(); toast('Deshecho'); }
+

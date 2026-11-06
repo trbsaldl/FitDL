@@ -1,4 +1,4 @@
-// nutriDL · Rachas, logros, resumen semanal y mensajes que interpretan tu progreso
+﻿// nutriDL · Rachas, logros, resumen semanal y mensajes que interpretan tu progreso
 // Solo se usan tus datos guardados; nunca se diagnostica nada.
 'use strict';
 
@@ -177,3 +177,4 @@ function celebrate(ic, title, sub) {
     clearTimeout(celT); celT = setTimeout(() => el.classList.remove('show'), 3200);
     track('celebrate');
 }
+

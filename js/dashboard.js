@@ -1,4 +1,4 @@
-// nutriDL · Panel de inicio del perfil
+﻿// nutriDL · Panel de inicio del perfil
 'use strict';
 
 // =====================================================================
@@ -121,3 +121,4 @@ function renderDashboard() {
         </div>
     </div>`;
 }
+

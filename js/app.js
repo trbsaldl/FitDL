@@ -1,4 +1,4 @@
-// nutriDL · App: pestañas, barra móvil, hojas, informe de errores
+// FitDL · App: pestañas, barra móvil, hojas, informe de errores
 'use strict';
 
 // =====================================================================
@@ -69,7 +69,7 @@ function track(k) { try { const u = JSON.parse(localStorage.getItem(USAGE_KEY) |
 function reportText() { // i18n-ignore-start
     let errs = [], use = {};
     try { errs = JSON.parse(localStorage.getItem(ERR_KEY) || '[]'); use = JSON.parse(localStorage.getItem(USAGE_KEY) || '{}'); } catch (e) { }
-    return `nutriDL ${APP_VERSION} · ${new Date().toISOString().slice(0, 16)}\n${navigator.userAgent}\n\nUso en este dispositivo:\n${typeof evReport === 'function' ? evReport() : ''}\n\nErrores (${errs.length}):\n${errs.map(e => `- ${e.t.slice(0, 16)} [${e.v}] ${e.m}`).join('\n') || '- ninguno'}\n\nUso:\n${Object.entries(use).map(([k, v]) => `- ${k}: ${v}`).join('\n') || '- sin datos'}`;
+    return `FitDL ${APP_VERSION} · ${new Date().toISOString().slice(0, 16)}\n${navigator.userAgent}\n\nUso en este dispositivo:\n${typeof evReport === 'function' ? evReport() : ''}\n\nErrores (${errs.length}):\n${errs.map(e => `- ${e.t.slice(0, 16)} [${e.v}] ${e.m}`).join('\n') || '- ninguno'}\n\nUso:\n${Object.entries(use).map(([k, v]) => `- ${k}: ${v}`).join('\n') || '- sin datos'}`;
 }
 function openReport() {
     closeProfileMenu();
@@ -89,7 +89,7 @@ function clearReport() { try { localStorage.removeItem(ERR_KEY); } catch (e) { }
 // Borrar TODO lo de nutriDL en este dispositivo (derecho de supresión)
 async function wipeAll() {
     closeProfileMenu();
-    if (!(await askConfirm('¿Borrar TODOS los datos de nutriDL en este dispositivo? Perfiles, diario, pesos, medidas y entrenos. No se puede deshacer: si quieres, guarda antes una copia de seguridad.', 'Continuar'))) return;
+    if (!(await askConfirm('¿Borrar TODOS los datos de FitDL en este dispositivo? Perfiles, diario, pesos, medidas y entrenos. No se puede deshacer: si quieres, guarda antes una copia de seguridad.', 'Continuar'))) return;
     if (!(await askConfirm('Última confirmación: se borrará todo.', 'Borrar todo'))) return;
     try { [PROFILES_KEY, STORAGE_KEY, ERR_KEY, USAGE_KEY, 'nutridl_events', 'nutridl_consent', 'nutridl_autobackup', 'nutridl_run'].forEach(k => localStorage.removeItem(k)); } catch (e) { }
     location.reload();

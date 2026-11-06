@@ -127,7 +127,7 @@ test('Compartir mi semana 3.19: titular verdadero, texto sin peso y con enlace',
     assert.equal(D.logged, D.past);
     if (D.past >= 3) assert.equal(D.hero.n, `${D.past}/${D.past}`);
     assert.doesNotMatch(D.text, /87[,.]3|87 kg/, 'nunca el peso');
-    assert.match(D.text, /https:\/\/trbs-aldl\.github\.io\/nutridl-app\//);
+    assert.match(D.text, /https:\/\/trbsaldl\.github\.io\/FitDL\//);
     assert.match(D.text, /gratis y sin anuncios/);
     // Sin nada apuntado: un titular de bienvenida, sin cifras inventadas
     const { run: run2, json: json2 } = loadApp();

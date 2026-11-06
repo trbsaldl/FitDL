@@ -1,4 +1,4 @@
-// nutriDL · Gratis y PRO
+// FitDL · Gratis y PRO
 // Lo básico es gratis siempre. Las funciones PRO solo se usan con PRO activo en este dispositivo:
 //   · prueba gratis de 7 días (una vez), · código de activación (lo das tú tras el pago), · enlace de pago (PAY_LINK).
 // Sin servidor no hay forma 100 % segura de comprobar pagos: cuando haya cuentas, PRO se validará en el servidor.
@@ -125,7 +125,7 @@ function proPreview(feature) {
 }
 function openPro() {
     closeProfileMenu();
-    openSheet('<span class="nd-pro-badge">PRO</span> nutriDL PRO', `<div class="space-y-4">${proActions()}${trasLaPrueba()}${proPrices()}${proTable()}
+    openSheet('<span class="nd-pro-badge">PRO</span> FitDL PRO', `<div class="space-y-4">${proActions()}${trasLaPrueba()}${proPrices()}${proTable()}
         <p class="text-[11px] text-neutral-500">${tr('Lo básico es gratis siempre. La prueba no pide tarjeta y no se renueva sola.')}</p></div>`);
     track('pro_open');
 }
@@ -133,7 +133,7 @@ function openPaywall(feature) {
     const [nameKey, whyKey] = PRO_FEATURES[feature] || [tk('Función PRO'), ''];
     const name = tr(nameKey), why = whyKey ? tr(whyKey) : '';
     openSheet('<span class="nd-pro-badge">PRO</span> ' + esc(name), `<div class="space-y-4">
-        <div class="text-center space-y-2 py-2"><div class="nd-ic-xl mx-auto">${icon('👑')}</div><h3 class="text-xl font-extrabold text-neutral-50">${tr('{n} es de nutriDL PRO', { n: esc(name) })}</h3><p class="text-sm text-neutral-300">${esc(why)}</p></div>
+        <div class="text-center space-y-2 py-2"><div class="nd-ic-xl mx-auto">${icon('👑')}</div><h3 class="text-xl font-extrabold text-neutral-50">${tr('{n} es de FitDL PRO', { n: esc(name) })}</h3><p class="text-sm text-neutral-300">${esc(why)}</p></div>
         ${proPreview(feature)}${proActions()}${trasLaPrueba()}${proPrices()}
         <details class="nd-faq"><summary>${tr('Qué incluye PRO')}<i class="fa-solid fa-chevron-down chev"></i></summary><div class="px-3 pb-3">${proTable()}</div></details>
         <button type="button" onclick="closeSheet()" class="w-full py-2.5 text-sm font-bold text-neutral-400 hover:text-neutral-200">${tr('Seguir con la versión gratis')}</button>
@@ -158,7 +158,7 @@ async function redeemCode() {
     try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nutridl|' + code)); h = [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('').slice(0, 32); } catch (e) { toast('Tu navegador no puede comprobar el código'); return; }
     if (!PRO_CODES.includes(h)) { toast('Ese código no es válido'); track('pro_code_bad'); return; }
     setProData({ ...proData(), code: h, codeDate: todayISO() });
-    track('pro_code_ok'); afterProChange(); celebrate('👑', 'nutriDL PRO activado', 'Es tuyo para siempre. Gracias por apoyar nutriDL');
+    track('pro_code_ok'); afterProChange(); celebrate('👑', 'FitDL PRO activado', 'Es tuyo para siempre. Gracias por apoyar FitDL');
 }
 function renderLandingPro() {
     const box = $('landing-pro'); if (!box || box.dataset.done === LANG) return;

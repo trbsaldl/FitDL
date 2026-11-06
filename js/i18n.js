@@ -1,4 +1,4 @@
-// nutriDL · Idioma de la app (español / inglés)
+﻿// nutriDL · Idioma de la app (español / inglés)
 // La clave del diccionario es el propio texto en español. Si falta una traducción se ve en español:
 // así nunca aparece un hueco vacío ni se rompe la pantalla.
 'use strict';
@@ -88,3 +88,4 @@ function setLang(l) {
     if (typeof track === 'function') track('lang_' + l);
     if (typeof toast === 'function') toast(tr('Idioma cambiado'));
 }
+

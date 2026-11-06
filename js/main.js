@@ -1,4 +1,4 @@
-// nutriDL · Arranque, instalación como app y modo sin conexión
+﻿// FitDL · Arranque, instalación como app y modo sin conexión
 'use strict';
 
 function init() {
@@ -60,7 +60,7 @@ function bootRescue(err) {
     box.style.cssText = 'position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;background:#110f0d;color:#f2ede6;font-family:system-ui,sans-serif';
     // Si el arranque falló, puede que el idioma no llegara a cargarse: se usa el texto tal cual
     const trSafe = s => typeof tr === 'function' ? tr(s) : s;
-    box.innerHTML = `<div style="max-width:420px;text-align:center"><h1 style="font-size:22px;margin:0 0 10px">${trSafe('nutriDL no ha podido abrirse bien')}</h1>
+    box.innerHTML = `<div style="max-width:420px;text-align:center"><h1 style="font-size:22px;margin:0 0 10px">${trSafe('FitDL no ha podido abrirse bien')}</h1>
         <p style="color:#cfc5b8;line-height:1.5;margin:0 0 18px">${trSafe('Tus datos siguen guardados en este dispositivo. Descarga una copia por seguridad y vuelve a cargar la app.')}</p>
         <button id="rescue-dl" style="width:100%;padding:14px;border-radius:12px;border:0;background:#9a6b40;color:#fff;font-weight:700;font-size:16px;margin-bottom:10px">${trSafe('Descargar mis datos')}</button>
         <button id="rescue-reload" style="width:100%;padding:14px;border-radius:12px;border:1px solid #463f38;background:transparent;color:#f2ede6;font-weight:700;font-size:16px">${trSafe('Volver a cargar')}</button></div>`;
@@ -68,8 +68,8 @@ function bootRescue(err) {
     box.querySelector('#rescue-dl').onclick = () => {
         let raw = ''; try { raw = localStorage.getItem(PROFILES_KEY) || localStorage.getItem(PROFILES_KEY + '_rescate') || ''; } catch (e) { }
         const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([`{"app":"nutridl","v":1,"profiles":${raw && raw.trim().startsWith('{') ? raw : '{"list":{}}'}}`], { type: 'application/json' }));
-        a.download = 'nutridl-copia-rescate.json'; document.body.appendChild(a); a.click(); a.remove();
+        a.href = URL.createObjectURL(new Blob([`{"app":"fitdl","v":1,"profiles":${raw && raw.trim().startsWith('{') ? raw : '{"list":{}}'}}`], { type: 'application/json' }));
+        a.download = 'fitdl-copia-rescate.json'; document.body.appendChild(a); a.click(); a.remove();
     };
     box.querySelector('#rescue-reload').onclick = () => location.reload();
 }
@@ -96,7 +96,7 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http') && (!/^
     });
 }
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
-window.addEventListener('appinstalled', () => { installEvt = null; renderInstall(); track('installed'); toast('nutriDL instalada en tu dispositivo'); });
+window.addEventListener('appinstalled', () => { installEvt = null; renderInstall(); track('installed'); toast('FitDL instalada en tu dispositivo'); });
 function renderInstall() {
     document.querySelectorAll('[data-install]').forEach(b => b.classList.toggle('hidden', isInstalled()));
 }
@@ -110,7 +110,7 @@ async function installApp() {
     }
     // iPhone/iPad y navegadores sin botón de instalar: instrucciones
     const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    openSheet('<i class="fa-solid fa-mobile-screen-button text-mint-400"></i> ' + tr('Instalar nutriDL'), `
+    openSheet('<i class="fa-solid fa-mobile-screen-button text-mint-400"></i> ' + tr('Instalar FitDL'), `
         <ol class="space-y-3 text-sm text-neutral-200 list-decimal pl-5">
             ${ios ? `<li>${tr('Abre esta página en <b>Safari</b>.')}</li><li>${tr('Pulsa el botón <b>Compartir</b> {i}.', { i: '<i class="fa-solid fa-arrow-up-from-bracket text-mint-400"></i>' })}</li><li>${tr('Elige <b>«Añadir a pantalla de inicio»</b> y pulsa <b>Añadir</b>.')}</li>`
                 : `<li>${tr('Abre el menú del navegador {i}.', { i: '<i class="fa-solid fa-ellipsis-vertical text-mint-400"></i>' })}</li><li>${tr('Elige <b>«Instalar aplicación»</b> o <b>«Añadir a pantalla de inicio»</b>.')}</li>`}
@@ -119,3 +119,4 @@ async function installApp() {
 }
 
 try { init(); } catch (e) { bootRescue(e); }
+

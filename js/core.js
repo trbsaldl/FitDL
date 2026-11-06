@@ -1,4 +1,4 @@
-// nutriDL · Núcleo: configuración, estado, guardado, utilidades y nutrientes
+// FitDL · Núcleo: configuración, estado, guardado, utilidades y nutrientes
 'use strict';
 
 // =====================================================================
@@ -28,7 +28,7 @@ let calc = {};
     try {
         if (window.top === window.self) return;
         document.addEventListener('DOMContentLoaded', () => {
-            document.documentElement.innerHTML = '<body style="margin:0;background:#110f0d;color:#f5f5f4;font:16px/1.5 system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;text-align:center"><div style="padding:24px"><p><strong>nutriDL</strong> no se puede usar dentro de otra web.<br>nutriDL can’t be used inside another website.</p><p><a href="https://trbs-aldl.github.io/nutridl-app/" target="_blank" rel="noopener" style="color:#5eead4">Abrir nutriDL</a></p></div></body>'; // i18n-ignore (pantalla de emergencia, en los dos idiomas)
+            document.documentElement.innerHTML = '<body style="margin:0;background:#110f0d;color:#f5f5f4;font:16px/1.5 system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;text-align:center"><div style="padding:24px"><p><strong>FitDL</strong> no se puede usar dentro de otra web.<br>FitDL can’t be used inside another website.</p><p><a href="https://trbsaldl.github.io/FitDL/" target="_blank" rel="noopener" style="color:#5eead4">Abrir FitDL</a></p></div></body>'; // i18n-ignore (pantalla de emergencia, en los dos idiomas)
         });
     } catch (e) { }
 })();
@@ -121,7 +121,7 @@ function load() {
 let marcasPedidas = false;
 function cargarMarcas() {
     if (marcasPedidas || typeof document === 'undefined') return;
-    const meta = document.querySelector('meta[name="nutridl-marcas"]');
+    const meta = document.querySelector('meta[name="fitdl-marcas"]');
     if (!meta || !meta.content) return;
     marcasPedidas = true;
     const sc = document.createElement('script');

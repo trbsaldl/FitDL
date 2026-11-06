@@ -1,4 +1,4 @@
-// nutriDL · Motor de comidas: «¿Qué como?», menú del día, recetas y lista de la compra
+﻿// nutriDL · Motor de comidas: «¿Qué como?», menú del día, recetas y lista de la compra
 // Todo se calcula en el dispositivo con la base de alimentos (USDA / BEDCA): nada se inventa ni se envía.
 'use strict';
 
@@ -372,3 +372,4 @@ function shopQty(f, g) {
     if (r >= 1000) return `${fmt(r / 1000, r % 1000 ? 1 : 0)} ${f.ml ? 'l' : 'kg'}`;
     return `${fmt(r)} ${unit}`;
 }
+

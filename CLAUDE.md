@@ -1,4 +1,4 @@
-# NutriDL (app)
+# FitDL (app)
 
 App de calorías, comidas y gym. HTML + JS sin framework, Tailwind 3 precompilado, service worker. Este repo es la versión que manda.
 

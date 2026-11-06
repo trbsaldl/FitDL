@@ -7,10 +7,10 @@
     <!-- Añadido: comportamiento tipo app en móvil -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="nutriDL">
+    <meta name="apple-mobile-web-app-title" content="FitDL">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title data-t="nutriDL · Tu entrenador nutricional personal">nutriDL · Tu entrenador nutricional personal</title>
-    <link rel="canonical" href="https://trbs-aldl.github.io/nutridl-app/">
+    <title data-t="FitDL · Tu entrenador de fitness personal">FitDL · Tu entrenador de fitness personal</title>
+    <link rel="canonical" href="https://trbsaldl.github.io/FitDL/">
     <meta data-t-co="Controla tus calorías, macros, comidas y progreso en un solo lugar. Coach que te dice qué comer, menú del día con gramos exactos, lista de la compra, registro por voz y seguimiento de tu peso. Escáner de código de barras y macros gratis, sin anuncios y sin registro. Más de 4.500 alimentos, con más de 880 productos Hacendado." name="description" content="Controla tus calorías, macros, comidas y progreso en un solo lugar. Coach que te dice qué comer, menú del día con gramos exactos, lista de la compra, registro por voz y seguimiento de tu peso. Escáner de código de barras y macros gratis, sin anuncios y sin registro. Más de 4.500 alimentos, con más de 880 productos Hacendado.">
     <!-- Seguridad: solo se cargan archivos propios y solo se conecta con Open Food Facts (escáner) -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' https://world.openfoodfacts.org; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
@@ -19,17 +19,17 @@
     <meta name="theme-color" content="#110f0d">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
-    <meta data-t-co="nutriDL · Tu entrenador nutricional personal" property="og:title" content="nutriDL · Tu entrenador nutricional personal">
+    <meta data-t-co="FitDL · Tu entrenador de fitness personal" property="og:title" content="FitDL · Tu entrenador de fitness personal">
     <meta data-t-co="Calorías, macros, comidas y progreso en un solo lugar, con un Coach que te dice qué comer. Escáner y macros gratis, sin anuncios ni registro." property="og:description" content="Calorías, macros, comidas y progreso en un solo lugar, con un Coach que te dice qué comer. Escáner y macros gratis, sin anuncios ni registro.">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="nutriDL · Tu entrenador nutricional personal">
+    <meta name="twitter:title" content="FitDL · Tu entrenador de fitness personal">
     <meta name="twitter:description" content="Calorías, macros, comidas y progreso en un solo lugar, con un Coach que te dice qué comer.">
     <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <link rel="manifest" href="manifest.webmanifest">
     <!-- Los 3.618 productos de marca se cargan cuando la app ya está en pantalla (o antes, si abres el buscador):
          así la primera pantalla aparece mucho antes y no falta ningún alimento. -->
-    <meta name="nutridl-marcas" content="js/data/foods-marcas.js?v=9b65d05f9d">
+    <meta name="fitdl-marcas" content="js/data/foods-marcas.js?v=9b65d05f9d">
     <link rel="preload" href="fonts/newsreader-600.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
     <!-- Rendimiento: estas dos también se usan en la primera pantalla (títulos en negrita e iconos del menú).
@@ -44,7 +44,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "nutriDL",
+      "name": "FitDL",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "Web",
       "inLanguage": "es",
@@ -59,11 +59,11 @@
 
     <header class="sticky top-0 z-50 bg-neutral-950/85 backdrop-blur-md border-b border-neutral-800 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-            <button data-t-al="nutriDL, ir al inicio" onclick="showTab('home')" class="flex items-center gap-2.5" aria-label="nutriDL, ir al inicio">
+            <button data-t-al="FitDL, ir al inicio" onclick="showTab('home')" class="flex items-center gap-2.5" aria-label="FitDL, ir al inicio">
                 <div class="nd-logo w-10 h-10 rounded-2xl flex items-center justify-center text-white">
                     <i class="fa-solid fa-leaf text-lg"></i>
                 </div>
-                <span class="nd-brand text-[1.4rem] text-neutral-100">nutri<span class="text-mint-400">DL</span></span>
+                <span class="nd-brand text-[1.4rem] text-neutral-100">Fit<span class="text-mint-400">DL</span></span>
             </button>
             <nav data-t-al="Secciones" id="tabbar-top" class="hidden lg:flex items-center gap-1 p-1 rounded-2xl bg-neutral-900 border border-neutral-800 text-sm font-extrabold" aria-label="Secciones">
                 <button data-tab="home" onclick="showTab('home')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-house"></i> <span data-t="Hoy">Hoy</span></button>
@@ -86,7 +86,7 @@
             <div class="nd-hero relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-12 sm:py-16">
                 <div class="relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
                     <div class="space-y-6">
-                        <span class="nd-eyebrow" data-t="Tu entrenador nutricional personal">Tu entrenador nutricional personal</span>
+                        <span class="nd-eyebrow" data-t="Tu entrenador de fitness personal">Tu entrenador de fitness personal</span>
                         <h1 data-t="Cuenta calorías gratis de verdad" class="text-[2.6rem] leading-[1.04] sm:text-6xl font-extrabold tracking-tight text-neutral-50">Cuenta calorías gratis de verdad</h1>
                         <p data-t="Escáner, macros y todas tus comidas sin pagar ni ver anuncios. Con más de 880 productos Hacendado y tu plan en 2 minutos." class="text-lg sm:text-xl text-neutral-300 max-w-xl">Escáner, macros y todas tus comidas sin pagar ni ver anuncios. Con más de 880 productos Hacendado y tu plan en 2 minutos.</p>
                         <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3">
@@ -149,7 +149,7 @@
                 <details class="nd-faq"><summary><span data-t="¿Es gratis?">¿Es gratis?</span><i class="fa-solid fa-chevron-down chev"></i></summary><p data-t="Sí. Calcular tu plan, el diario, el peso y el progreso son gratis siempre. El plan PRO es opcional (voz, calculadora de plato, nevera, menú del día, compra inteligente y análisis avanzado) y puedes probarlo 7 días gratis, sin tarjeta.">Sí. Calcular tu plan, el diario, el peso y el progreso son gratis siempre. El plan PRO es opcional (voz, calculadora de plato, nevera, menú del día, compra inteligente y análisis avanzado) y puedes probarlo 7 días gratis, sin tarjeta.</p><p data-t="Es una promesa: lo que hoy es gratis (escáner, macros, diario, Coach básico, progreso y gym) no pasará a ser de pago.">Es una promesa: lo que hoy es gratis (escáner, macros, diario, Coach básico, progreso y gym) no pasará a ser de pago.</p></details>
                 <details class="nd-faq"><summary><span data-t="¿Dónde se guardan mis datos?">¿Dónde se guardan mis datos?</span><i class="fa-solid fa-chevron-down chev"></i></summary><p data-t="En tu propio dispositivo. No hay cuentas ni servidores con tus datos. Puedes guardar una copia de seguridad o borrarlo todo cuando quieras.">En tu propio dispositivo. No hay cuentas ni servidores con tus datos. Puedes guardar una copia de seguridad o borrarlo todo cuando quieras.</p></details>
                 <details class="nd-faq"><summary><span data-t="¿Cómo se calculan mis calorías?">¿Cómo se calculan mis calorías?</span><i class="fa-solid fa-chevron-down chev"></i></summary><p data-t="Con la ecuación de Mifflin-St Jeor (la más precisa en población general), tu nivel de actividad y un ajuste según tu objetivo, sin bajar nunca de un mínimo seguro.">Con la ecuación de Mifflin-St Jeor (la más precisa en población general), tu nivel de actividad y un ajuste según tu objetivo, sin bajar nunca de un mínimo seguro.</p></details>
-                <details class="nd-faq"><summary><span data-t="¿Sustituye a un nutricionista?">¿Sustituye a un nutricionista?</span><i class="fa-solid fa-chevron-down chev"></i></summary><p data-t="No. nutriDL es orientativa y educativa. Si tienes alguna enfermedad, estás embarazada o en lactancia, o tienes antecedentes de trastornos de la conducta alimentaria, consulta a un profesional sanitario.">No. nutriDL es orientativa y educativa. Si tienes alguna enfermedad, estás embarazada o en lactancia, o tienes antecedentes de trastornos de la conducta alimentaria, consulta a un profesional sanitario.</p></details>
+                <details class="nd-faq"><summary><span data-t="¿Sustituye a un nutricionista?">¿Sustituye a un nutricionista?</span><i class="fa-solid fa-chevron-down chev"></i></summary><p data-t="No. FitDL es orientativa y educativa. Si tienes alguna enfermedad, estás embarazada o en lactancia, o tienes antecedentes de trastornos de la conducta alimentaria, consulta a un profesional sanitario.">No. FitDL es orientativa y educativa. Si tienes alguna enfermedad, estás embarazada o en lactancia, o tienes antecedentes de trastornos de la conducta alimentaria, consulta a un profesional sanitario.</p></details>
             </div>
 
             <div class="nd-hero rounded-[2rem] p-8 sm:p-12 text-center space-y-5">
@@ -566,9 +566,9 @@
 
     <footer class="no-print border-t border-neutral-800 bg-neutral-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-[11px] text-neutral-400 leading-relaxed space-y-1">
-            <p><strong data-t="Aviso importante:">Aviso importante:</strong> <span data-t="nutriDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria, diabetes con medicación, enfermedad renal u otras patologías: en esos casos consulta a un profesional sanitario.">nutriDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria, diabetes con medicación, enfermedad renal u otras patologías: en esos casos consulta a un profesional sanitario.</span></p>
+            <p><strong data-t="Aviso importante:">Aviso importante:</strong> <span data-t="FitDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria, diabetes con medicación, enfermedad renal u otras patologías: en esos casos consulta a un profesional sanitario.">FitDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria, diabetes con medicación, enfermedad renal u otras patologías: en esos casos consulta a un profesional sanitario.</span></p>
             <p data-t="Tus datos se guardan solo en tu navegador; no se envían a ningún servidor. Al escanear un producto solo se consulta su código de barras en Open Food Facts. Si usas la voz, tu navegador puede enviar el audio a su servicio de dictado (Google en Chrome, Apple en Safari) para convertirlo en texto. Las cantidades estimadas (foto, raciones por defecto) son aproximadas.">Tus datos se guardan solo en tu navegador; no se envían a ningún servidor. Al escanear un producto solo se consulta su código de barras en Open Food Facts. Si usas la voz, tu navegador puede enviar el audio a su servicio de dictado (Google en Chrome, Apple en Safari) para convertirlo en texto. Las cantidades estimadas (foto, raciones por defecto) son aproximadas.</p>
-            <p class="nd-foot-links flex flex-wrap gap-x-4 gap-y-1 pt-1"><button data-install onclick="installApp()" class="underline underline-offset-2 hover:text-neutral-200 font-bold text-mint-300"><i class="fa-solid fa-mobile-screen-button"></i> <span data-t="Instalar la app">Instalar la app</span></button><a data-t="Calorías de los alimentos" href="alimentos/" class="underline underline-offset-2 hover:text-neutral-200">Calorías de los alimentos</a><a href="privacidad.html" data-t-hr="privacy.html" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Privacidad">Privacidad</span></a><a data-t="Términos de uso" data-t-hr="terms.html" href="terminos.html" class="underline underline-offset-2 hover:text-neutral-200">Términos de uso</a><a href="mailto:aannggeelltrabajos@gmail.com" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Contacto">Contacto</span></a><button data-t="Informe de errores" onclick="openReport()" class="underline underline-offset-2 hover:text-neutral-200">Informe de errores</button><button onclick="openPro()" class="underline underline-offset-2 hover:text-neutral-200">nutriDL PRO</button><button data-t="Borrar todos mis datos" onclick="wipeAll()" class="underline underline-offset-2 hover:text-neutral-200">Borrar todos mis datos</button><span>nutriDL <span id="app-version"></span></span></p>
+            <p class="nd-foot-links flex flex-wrap gap-x-4 gap-y-1 pt-1"><button data-install onclick="installApp()" class="underline underline-offset-2 hover:text-neutral-200 font-bold text-mint-300"><i class="fa-solid fa-mobile-screen-button"></i> <span data-t="Instalar la app">Instalar la app</span></button><a data-t="Calorías de los alimentos" href="alimentos/" class="underline underline-offset-2 hover:text-neutral-200">Calorías de los alimentos</a><a href="privacidad.html" data-t-hr="privacy.html" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Privacidad">Privacidad</span></a><a data-t="Términos de uso" data-t-hr="terms.html" href="terminos.html" class="underline underline-offset-2 hover:text-neutral-200">Términos de uso</a><a href="mailto:aannggeelltrabajos@gmail.com" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Contacto">Contacto</span></a><button data-t="Informe de errores" onclick="openReport()" class="underline underline-offset-2 hover:text-neutral-200">Informe de errores</button><button onclick="openPro()" class="underline underline-offset-2 hover:text-neutral-200">FitDL PRO</button><button data-t="Borrar todos mis datos" onclick="wipeAll()" class="underline underline-offset-2 hover:text-neutral-200">Borrar todos mis datos</button><span>FitDL <span id="app-version"></span></span></p>
         </div>
     </footer>
 
@@ -700,29 +700,29 @@
          2. Te dará una etiqueta <script> con un token. Pégala justo debajo de este comentario, sin quitar nada más.
          Cloudflare Web Analytics es gratis y NO usa cookies ni guarda datos personales; aun así, al activarla
          hay que mencionarla en privacidad.html / privacy.html. -->
-    <script src="js/data/lang-en.js?v=455ba1bd14" defer></script>
+    <script src="js/data/lang-en.js?v=b797cd6def" defer></script>
     <script src="js/data/foods-en.js?v=831aef6157" defer></script>
-    <script src="js/i18n.js?v=84fac2b353" defer></script>
-    <script src="js/core.js?v=d1377c37e2" defer></script>
+    <script src="js/i18n.js?v=77a77f5a18" defer></script>
+    <script src="js/core.js?v=151042dcb8" defer></script>
     <script src="js/data/foods.js?v=f467b6aa1b" defer></script>
     <script src="js/data/exercises.js?v=bd72a47ab7" defer></script>
-    <script src="js/calc.js?v=8f4284649c" defer></script>
-    <script src="js/analytics.js?v=2d9545c625" defer></script>
-    <script src="js/progress.js?v=a813f170e0" defer></script>
-    <script src="js/engine.js?v=d37a6aadb6" defer></script>
-    <script src="js/parser.js?v=54810e4385" defer></script>
-    <script src="js/insights.js?v=294ee539fc" defer></script>
-    <script src="js/pdf.js?v=9c2ba3519e" defer></script>
-    <script src="js/wizard.js?v=57e270620d" defer></script>
-    <script src="js/gym.js?v=154c0ae346" defer></script>
-    <script src="js/barras.js?v=2e881120ba" defer></script>
-    <script src="js/diary.js?v=88e82a1fdd" defer></script>
-    <script src="js/profiles.js?v=eb94e03aa8" defer></script>
-    <script src="js/dashboard.js?v=1dcc427e44" defer></script>
-    <script src="js/kitchen.js?v=f36c0f9830" defer></script>
-    <script src="js/coach.js?v=9aec4f7ca4" defer></script>
-    <script src="js/plans.js?v=a68d93b6d8" defer></script>
-    <script src="js/app.js?v=b5a61c41dc" defer></script>
-    <script src="js/main.js?v=263104e7ff" defer></script>
+    <script src="js/calc.js?v=5ccda0825e" defer></script>
+    <script src="js/analytics.js?v=e8957666c1" defer></script>
+    <script src="js/progress.js?v=6fa0c8ea4e" defer></script>
+    <script src="js/engine.js?v=bc8d901d46" defer></script>
+    <script src="js/parser.js?v=f699814dc5" defer></script>
+    <script src="js/insights.js?v=b41ca8f5d4" defer></script>
+    <script src="js/pdf.js?v=eab8c4bd48" defer></script>
+    <script src="js/wizard.js?v=5d42039729" defer></script>
+    <script src="js/gym.js?v=cfc416ef0a" defer></script>
+    <script src="js/barras.js?v=821a90ec35" defer></script>
+    <script src="js/diary.js?v=6d81ce9979" defer></script>
+    <script src="js/profiles.js?v=101370a030" defer></script>
+    <script src="js/dashboard.js?v=28eb29b607" defer></script>
+    <script src="js/kitchen.js?v=1963164cc1" defer></script>
+    <script src="js/coach.js?v=3e35106a9b" defer></script>
+    <script src="js/plans.js?v=8f8399150a" defer></script>
+    <script src="js/app.js?v=d1d9e341f0" defer></script>
+    <script src="js/main.js?v=b57a5cfe37" defer></script>
 </body>
 </html>

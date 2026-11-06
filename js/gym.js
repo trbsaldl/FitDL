@@ -1,4 +1,4 @@
-// nutriDL · Gym: tus días, ejercicios, pesos, récords, progreso y descanso
+﻿// nutriDL · Gym: tus días, ejercicios, pesos, récords, progreso y descanso
 'use strict';
 
 // =====================================================================
@@ -688,3 +688,4 @@ function startRest(sec) {
 function restAdd(d) { const bar = $('rest-bar'); if (bar.classList.contains('hidden')) return; bar.dataset.end = +bar.dataset.end + d * 1000; bar.dataset.total = Math.max(5, +bar.dataset.total + d); }
 function restStop() { clearInterval(restT); $('rest-bar').classList.add('hidden'); }
 const fmtDur = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+

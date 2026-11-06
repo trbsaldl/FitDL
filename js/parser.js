@@ -1,4 +1,4 @@
-// nutriDL · Entender lo que comes en lenguaje natural («200 g de pollo, un plátano y una ensalada»)
+﻿// nutriDL · Entender lo que comes en lenguaje natural («200 g de pollo, un plátano y una ensalada»)
 // Lo usan el registro por voz, el Coach y la foto. Siempre se muestra una confirmación antes de guardar.
 'use strict';
 
@@ -241,3 +241,4 @@ function parseFoodText(text) {
 }
 // De un plato servido (foto) se ven gramos ya cocinados: se usa el alimento «ya cocido» si existe
 const cookedFood = f => (COOKED_ALT[f.id] && getFood(COOKED_ALT[f.id])) || f;
+

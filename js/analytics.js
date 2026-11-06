@@ -1,4 +1,4 @@
-// nutriDL · Medición de uso SOLO en este dispositivo (nada se envía a ningún servidor)
+﻿// nutriDL · Medición de uso SOLO en este dispositivo (nada se envía a ningún servidor)
 // Sirve para ver en «Informe de errores» si la app engancha: primer día, días activos, retención y la métrica clave
 // (personas que apuntan comidas y vuelven al menos 7 días). Si en el futuro se activa un servicio de estadísticas
 // sin cookies (Plausible, Umami…), su dirección iría en ANALYTICS_ENDPOINT y solo se usaría con consentimiento.
@@ -37,3 +37,4 @@ function evReport() { // i18n-ignore-start
     const yes = b => b ? 'sí' : 'no';
     return `Primer uso: ${M.first} · días activos: ${M.activeDays} · días con comidas: ${M.foodDays}\nPlan completado: ${yes(M.onboarding)} · primera comida: ${M.firstFood || 'no'}\nVolvió al día siguiente: ${yes(M.d1)} · a los 7 días: ${yes(M.d7)} · a los 30 días: ${yes(M.d30)}\nMétrica clave (apunta y vuelve 7+ días): ${yes(M.northStar)} · interés en PRO: ${yes(M.proInterest)}`;
 } // i18n-ignore-end
+

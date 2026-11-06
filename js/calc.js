@@ -1,4 +1,4 @@
-// nutriDL · Calculadora: datos, calorías (Mifflin-St Jeor), objetivo, IMC (OMS) y macros
+﻿// nutriDL · Calculadora: datos, calorías (Mifflin-St Jeor), objetivo, IMC (OMS) y macros
 'use strict';
 
 // =====================================================================
@@ -312,3 +312,4 @@ function renderExplain() {
     box.innerHTML = `<details class="rounded-2xl border border-neutral-800"><summary class="p-3 text-xs font-bold text-neutral-300 flex items-center justify-between"><span><i class="fa-solid fa-circle-info text-mint-400"></i> ${tr('Cómo se ha calculado')}</span><i class="fa-solid fa-chevron-down chev text-neutral-500"></i></summary>
         <div class="px-3 pb-3 space-y-1.5 text-xs text-neutral-300 leading-relaxed">${explainLines().map(l => `<p>${l}</p>`).join('')}</div></details>`;
 }
+
