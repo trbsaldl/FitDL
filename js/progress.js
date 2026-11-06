@@ -424,7 +424,7 @@ async function shareProgress() {
         <div id="sh-prev" class="rounded-2xl bg-neutral-950 border border-neutral-800 grid place-items-center p-2 min-h-[240px]" aria-live="polite"><i class="fa-solid fa-circle-notch fa-spin text-neutral-500"></i></div>
         <p class="text-xs text-neutral-400"><i class="fa-solid fa-lock"></i> ${tr('Sin tu peso ni tus medidas: solo tus hábitos de la semana.')}</p>
         <button type="button" ${ND.on(shareSend)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-solid fa-share-nodes"></i> ${tr('Compartir')}</button>
-        <div class="grid grid-cols-2 gap-2"><button type="button" ${ND.on(shareSave)} class="nd-mbtn"><i class="fa-solid fa-download"></i> ${tr('Guardar imagen')}</button><button type="button" ${ND.on(shareCopy)} class="nd-mbtn"><i class="fa-regular fa-copy"></i> ${tr('Copiar texto')}</button></div>
+        <div class="grid grid-cols-2 gap-2"><button type="button" ${ND.on(() => shareSave())} class="nd-mbtn"><i class="fa-solid fa-download"></i> ${tr('Guardar imagen')}</button><button type="button" ${ND.on(shareCopy)} class="nd-mbtn"><i class="fa-regular fa-copy"></i> ${tr('Copiar texto')}</button></div>
     </div>`);
     track('share_open');
     shareSetFmt(shareFmt);

@@ -1,4 +1,14 @@
-# Cambios de nutriDL
+# Cambios de FitDL
+
+## 3.29.1 · 6 de noviembre de 2026
+
+**Arreglo: botones que no respondían y pasta/arroz ya cocidos**
+
+- En la 3.28-3.29 no hacían nada los botones fijos de la página: «Instalar la app», «Empezar gratis», «Ya tengo una copia», FitDL PRO, Informe de errores, Borrar mis datos, las vistas del Coach y los enlaces internos. El `<body>` lleva `data-tab` (la pestaña actual) y el listener único de clic lo tomaba por un botón de pestaña. Ahora solo cuentan los `<button data-tab>` / `<button data-cv>`.
+- Los botones rápidos del inicio (Voz, Foto, Nevera, Buscar, Escanear), «Mi nevera» y «Parar» del cronómetro del gym recibían el clic como si fuera un dato: el buscador abría sin comida elegida, Voz abría solo para escribir y «Parar» paraba el entreno sin preguntar. Arreglado.
+- Las comidas que se hubieran guardado con esa franja inválida pasan a «Otros» al abrir la app (no se borra nada).
+- Nuevos alimentos ya cocidos (USDA): espaguetis, macarrones, tallarines, fideos de trigo, plumas/penne, espirales/hélices, espaguetis integrales, arroz basmati y arroz vaporizado.
+- `tests/clics.test.js`: 3 pruebas nuevas para que no vuelva a pasar. 91 pruebas pasan (3 de navegador se omiten sin Playwright).
 
 ## 3.29.0 · 6 de noviembre de 2026
 

@@ -293,6 +293,15 @@ D('arrozintcocido', 'Arroz integral (ya cocido)', 'hc', 2.6, 0.9, 22, 1.8, [200,
 D('quinoacocida', 'Quinoa (ya cocida)', 'hc', 4.4, 1.9, 18.5, 2.8, [180, 'plato', 'platos'], '🌾');
 D('cuscuscocido', 'Cuscús (ya cocido)', 'hc', 3.8, 0.2, 21.7, 1.4, [180, 'plato', 'platos'], '🌾', 'NG');
 D('pastaintcocida', 'Pasta integral (ya cocida)', 'hc', 5.3, 0.9, 24, 3.9, [200, 'plato', 'platos'], '🍝', 'NG');
+D('espaguetiscocidos', 'Espaguetis (ya cocidos)', 'hc', 5.8, 0.9, 29.2, 1.8, [200, 'plato', 'platos'], '🍝', 'NG', { alias: 'spaghetti' });
+D('macarronescocidos', 'Macarrones (ya cocidos)', 'hc', 5.8, 0.9, 29.2, 1.8, [200, 'plato', 'platos'], '🍝', 'NG');
+D('tallarinescocidos', 'Tallarines (ya cocidos)', 'hc', 5.8, 0.9, 29.2, 1.8, [200, 'plato', 'platos'], '🍝', 'NG');
+D('fideoscocidos', 'Fideos de trigo (ya cocidos)', 'hc', 5.8, 0.9, 29.2, 1.8, [200, 'plato', 'platos'], '🍜', 'NG');
+D('pennecocidos', 'Plumas / penne (ya cocidos)', 'hc', 5.8, 0.9, 29.2, 1.8, [200, 'plato', 'platos'], '🍝', 'NG');
+D('espiralescocidas', 'Espirales / hélices (ya cocidas)', 'hc', 5.8, 0.9, 29.2, 1.8, [200, 'plato', 'platos'], '🍝', 'NG');
+D('espaguetisintcocidos', 'Espaguetis integrales (ya cocidos)', 'hc', 6, 1.7, 26.2, 3.9, [200, 'plato', 'platos'], '🍝', 'NG', { alias: 'spaghetti' });
+D('basmaticocido', 'Arroz basmati (ya cocido)', 'hc', 2.7, 0.3, 27.6, 0.4, [200, 'plato', 'platos'], '🍚');
+D('arrozvaporcocido', 'Arroz vaporizado (ya cocido)', 'hc', 2.9, 0.4, 25.2, 0.9, [200, 'plato', 'platos'], '🍚');
 D('pavopl', 'Pechuga de pavo a la plancha (hecha)', 'prot', 29, 2, 0, 0, [120, 'filete', 'filetes'], '🦃', 'M');
 D('terneraplancha', 'Filete de ternera a la plancha (hecho)', 'prot', 28, 7, 0, 0, [120, 'filete', 'filetes'], '🥩', 'M');
 D('salmonpl', 'Salmón a la plancha (hecho)', 'prot', 25, 12, 0, 0, [130, 'lomo', 'lomos'], '🐟', 'P');

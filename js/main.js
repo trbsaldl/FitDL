@@ -33,10 +33,11 @@ function init() {
             return;
         }
         // 3. Pestañas de navegación
-        const tabEl = e.target.closest('[data-tab]');
+        // Solo botones: <body> también lleva data-tab (la pestaña actual) y lo contiene todo
+        const tabEl = e.target.closest('button[data-tab]');
         if (tabEl) { showTab(tabEl.dataset.tab); return; }
         // 4. Vistas del Coach
-        const cvEl = e.target.closest('[data-cv]');
+        const cvEl = e.target.closest('button[data-cv]');
         if (cvEl) { coachView(cvEl.dataset.cv); return; }
         // 5. Acciones del HTML estático (data-action)
         const aEl = e.target.closest('[data-action]');

@@ -67,7 +67,7 @@ function renderDashboard() {
     const W = state.weights, T = weightTrend();
     const wk = weekInfo(), gd = gymDays();
     const ins = insightsList()[0];
-    const quick = (fn, ic, l, pro) => `<button ${ND.on(fn)} class="nd-quick"><i class="fa-solid ${ic}"></i><span>${l}</span>${pro && !canUse(pro) ? '<b class="nd-lock" aria-label="PRO"><i class="fa-solid fa-lock"></i></b>' : ''}</button>`;
+    const quick = (fn, ic, l, pro) => `<button ${ND.on(() => fn())} class="nd-quick"><i class="fa-solid ${ic}"></i><span>${l}</span>${pro && !canUse(pro) ? '<b class="nd-lock" aria-label="PRO"><i class="fa-solid fa-lock"></i></b>' : ''}</button>`;
     const tile = (fn, l, v, sub) => `<button ${ND.on(fn)} class="nd-tile text-left"><div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">${l}</div><div class="text-xl font-extrabold text-neutral-50 mt-1">${v}</div>${sub ? `<div class="text-xs text-neutral-400 mt-0.5">${sub}</div>` : ''}</button>`;
     const lastW = W.length ? W[W.length - 1] : null;
     // 3.10: el «momento» del día (resumen semanal, racha en peligro, vuelta…). Como mucho uno, y solo si toca.

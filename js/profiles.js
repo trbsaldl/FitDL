@@ -15,6 +15,8 @@ function mergeState(s) {
     m.ach = (s.ach && typeof s.ach === 'object') ? s.ach : {}; m.cel = (s.cel && typeof s.cel === 'object') ? s.cel : {};
     m.moments = (s.moments && typeof s.moments === 'object') ? s.moments : {};
     m.chat = arr(s.chat).slice(-40); m.measures = arr(s.measures); m.meals = arr(s.meals);
+    // 3.28-3.29 podían guardar el evento del clic como franja: esas comidas pasan a «Otros» para que se vean
+    Object.values(m.diary).forEach(day => Array.isArray(day) && day.forEach(it => { if (it && typeof it.slot !== 'string') it.slot = 'X'; }));
     m.gym.eq = 'gym'; // la rutina es solo de gimnasio
     if (s.calcOk === undefined) m.calcOk = PAIRS_OK(m);
     delete m.gym.style; // el método FST-7 se quitó: todas las rutinas son las basadas en evidencia

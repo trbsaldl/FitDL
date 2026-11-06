@@ -488,7 +488,7 @@ function sessHtml() {
     return `<div class="nd-sess ${paused ? 'is-paused' : ''}" role="timer" aria-live="off">
         <i class="fa-solid fa-stopwatch"></i><div class="min-w-0 flex-1"><div class="nd-sess-lbl">${paused ? tr('En pausa') : tr('Entreno en marcha')}</div><div id="gs-clock" class="nd-sess-time">${clockTxt(sessSeconds())}</div></div>
         <button type="button" ${ND.on(pauseSession)} class="nd-mbtn" aria-label="${paused ? tr('Reanudar cronómetro') : tr('Pausar cronómetro')}"><i class="fa-solid ${paused ? 'fa-play' : 'fa-pause'}"></i> ${paused ? tr('Seguir') : tr('Pausa')}</button>
-        <button type="button" ${ND.on(stopSession)} class="nd-mbtn" aria-label="${tr('Parar cronómetro sin guardar')}"><i class="fa-solid fa-stop"></i></button>
+        <button type="button" ${ND.on(() => stopSession())} class="nd-mbtn" aria-label="${tr('Parar cronómetro sin guardar')}"><i class="fa-solid fa-stop"></i></button>
     </div>`;
 }
 
