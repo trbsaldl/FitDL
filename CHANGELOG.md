@@ -1,5 +1,13 @@
 # Cambios de nutriDL
 
+## 3.29.0 · 6 de noviembre de 2026
+
+**Seguridad: eliminación de `script-src-attr 'unsafe-inline'` de la CSP**
+
+- Todos los atributos HTML `onclick`, `oninput`, `onchange`, `onsubmit`, `onkeydown` y `onblur` reemplazados por delegación de eventos vía el registro `ND` en los 11 archivos JS de la app (`coach.js`, `diary.js`, `gym.js`, `plans.js`, `kitchen.js`, `insights.js`, `progress.js`, `dashboard.js`, `wizard.js`, `calc.js`, `app.js`).
+- `script-src-attr 'unsafe-inline'` eliminado de la CSP en `index.html`. La política queda `script-src 'self'`: sin vectores de inyección vía atributos.
+- 91 pruebas pasan (actualización de las de seguridad de cadenas con apóstrofos y del historial de entrenos para el nuevo patrón ND).
+
 ## 3.28.0 · 6 de noviembre de 2026
 
 **Revisión de calidad: direcciones, código y pruebas (sin cambios para quien usa la app)**

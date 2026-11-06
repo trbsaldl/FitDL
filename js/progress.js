@@ -78,7 +78,7 @@ function renderTracker() {
 
     $('trk-actions').innerHTML =
         `<span class="px-3 py-2.5 text-neutral-400"><i class="fa-solid fa-link text-mint-500"></i> ${tr('Tu último registro ({k} kg) es tu peso actual en la calculadora.', { k: fmt(last.w, 1) })}</span>`;
-    $('trk-list').innerHTML = L.slice().reverse().map(e => `<div class="p-2 rounded-xl bg-neutral-800/60 border border-neutral-800 flex items-center justify-between gap-1"><span>${new Date(e.d + 'T12:00:00').toLocaleDateString(locale(), { day: '2-digit', month: 'short' })}: <b>${fmt(e.w, 1)}</b></span><button onclick="delWeight('${e.d}')" class="text-neutral-500 hover:text-roseAccent-600" aria-label="${tr('Borrar registro')}"><i class="fa-solid fa-xmark"></i></button></div>`).join('');
+    $('trk-list').innerHTML = L.slice().reverse().map(e => `<div class="p-2 rounded-xl bg-neutral-800/60 border border-neutral-800 flex items-center justify-between gap-1"><span>${new Date(e.d + 'T12:00:00').toLocaleDateString(locale(), { day: '2-digit', month: 'short' })}: <b>${fmt(e.w, 1)}</b></span><button ${ND.on(() => delWeight(e.d))} class="text-neutral-500 hover:text-roseAccent-600" aria-label="${tr('Borrar registro')}"><i class="fa-solid fa-xmark"></i></button></div>`).join('');
 }
 // El último registro de peso es el peso actual del perfil: todo se recalcula
 function syncWeightFromLog() {
@@ -112,7 +112,7 @@ function renderMeasures() {
     box.innerHTML = L.length ? L.map(m => `<div class="p-3 rounded-2xl bg-neutral-800/60 border border-neutral-800 flex items-start justify-between gap-3">
         <div class="min-w-0"><div class="text-xs font-bold text-neutral-400">${new Date(m.d + 'T12:00:00').toLocaleDateString(locale(), { day: 'numeric', month: 'short', year: 'numeric' })}</div>
             <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm">${MEASURES.filter(([k]) => m[k]).map(([k, l]) => { const dv = first && first[k] && first !== m ? m[k] - first[k] : null; return `<span><span class="text-neutral-400">${tr(l)}</span> <b>${fmt(m[k], m[k] % 1 ? 1 : 0)}</b>${dv ? ` <span class="text-xs ${dv < 0 ? 'text-mint-300' : 'text-neutral-400'}">(${dv > 0 ? '+' : ''}${fmt(dv, 1)})</span>` : ''}</span>`; }).join('')}</div></div>
-        <button onclick="delMeasures('${m.d}')" class="w-8 h-8 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Borrar medidas del {d}', { d: m.d })}"><i class="fa-solid fa-xmark"></i></button>
+        <button ${ND.on(() => delMeasures(m.d))} class="w-8 h-8 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Borrar medidas del {d}', { d: m.d })}"><i class="fa-solid fa-xmark"></i></button>
     </div>`).join('') : '';
     renderMeasureChart();
 }
@@ -132,14 +132,14 @@ function setGoalWeight(v) {
 let msKey = 'waist';
 function renderMeasureChart() {
     const box = $('ms-chart-box'); if (!box) return;
-    if (!canUse('trends')) { box.innerHTML = (state.measures || []).length > 1 ? `<button type="button" onclick="openPaywall('trends')" class="w-full py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300"><i class="fa-solid fa-lock text-amber-300"></i> ${tr('Gráfica de tus medidas')} · PRO</button>` : ''; return; }
+    if (!canUse('trends')) { box.innerHTML = (state.measures || []).length > 1 ? `<button type="button" ${ND.on(() => openPaywall('trends'))} class="w-full py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300"><i class="fa-solid fa-lock text-amber-300"></i> ${tr('Gráfica de tus medidas')} · PRO</button>` : ''; return; }
     const have = MEASURES.filter(([k]) => (state.measures || []).some(m => m[k]));
     if (!have.length) { box.innerHTML = ''; return; }
     if (!have.some(([k]) => k === msKey)) msKey = have[0][0];
     const pts = (state.measures || []).filter(m => m[msKey]);
     const dLabel = d => new Date(d + 'T12:00:00').toLocaleDateString(locale(), { day: 'numeric', month: 'short' });
     const diff = pts.length > 1 ? pts[pts.length - 1][msKey] - pts[0][msKey] : null;
-    box.innerHTML = `<div class="flex flex-wrap items-center gap-2">${have.map(([k, l]) => `<button type="button" onclick="msKey='${k}';renderMeasureChart()" class="px-3 py-1.5 rounded-xl border text-xs font-bold ${k === msKey ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-800'}">${tr(l)}</button>`).join('')}
+    box.innerHTML = `<div class="flex flex-wrap items-center gap-2">${have.map(([k, l]) => `<button type="button" ${ND.on(() => { msKey = k; renderMeasureChart(); })} class="px-3 py-1.5 rounded-xl border text-xs font-bold ${k === msKey ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-800'}">${tr(l)}</button>`).join('')}
         ${diff != null ? `<span class="ml-auto text-xs font-bold ${diff < 0 ? 'text-mint-300' : 'text-neutral-400'}">${tr('{k} cm desde el {d}', { k: (diff > 0 ? '+' : '') + fmt(diff, 1), d: dLabel(pts[0].d) })}</span>` : ''}</div>
         <div id="ms-chart"></div>`;
     if (pts.length > 1) lineChart($('ms-chart'), { aria: tr('Gráfica de medidas'), legend: tr((MEASURES.find(m => m[0] === msKey) || [, ''])[1]) + ' (cm)', points: pts.map(m => ({ x: dayNum(m.d), y: m[msKey], tip: `${dLabel(m.d)}: ${fmt(m[msKey], 1)} cm` })), line: pts.map(m => ({ x: dayNum(m.d), y: m[msKey] })), xLabels: [dLabel(pts[0].d), dLabel(pts[pts.length - 1].d)], minPad: .5 });
@@ -149,7 +149,7 @@ function renderProgress() {
     const box = $('prog-summary'); if (!box) return;
     if ($('trk-goal')) $('trk-goal').value = state.goalWeight || '';
     renderMeasureChart();
-    if (!profiles.current) { box.innerHTML = `<div class="nd-card p-6 text-center space-y-3"><p class="text-sm text-neutral-300">${tr('Crea tu perfil para ver tu progreso.')}</p><button onclick="newProfile()" class="nd-btn-primary mx-auto">${tr('Empezar gratis')}</button></div>`; $('prog-ach').innerHTML = ''; return; }
+    if (!profiles.current) { box.innerHTML = `<div class="nd-card p-6 text-center space-y-3"><p class="text-sm text-neutral-300">${tr('Crea tu perfil para ver tu progreso.')}</p><button ${ND.on(newProfile)} class="nd-btn-primary mx-auto">${tr('Empezar gratis')}</button></div>`; $('prog-ach').innerHTML = ''; return; }
     const S = streakInfo(), W = calWeekStats(), T = weightTrend(), L = insightsList();
     const days = W.days.map((d, i) => { const on = loggedOn(d), t = on ? diaryTotals(d) : null, ok = t && calc.prot && t.p >= calc.prot * .9, fut = d > todayISO(); return `<div class="flex flex-col items-center gap-1 flex-1 ${fut ? 'opacity-40' : ''}"><span class="text-[10px] font-bold ${d === todayISO() ? 'text-mint-300' : 'text-neutral-500'}">${dowLetters()[i]}</span><span class="w-8 h-8 rounded-full grid place-items-center text-xs ${on ? (ok ? 'bg-ok-500 text-ok-900' : 'bg-mint-600/40 text-mint-200') : 'bg-neutral-800 text-neutral-600'}">${on ? (ok ? '<i class="fa-solid fa-check"></i>' : '•') : ''}</span></div>`; }).join('');
     const stat = (l, v, s) => `<div class="p-3 rounded-2xl bg-neutral-800/60 border border-neutral-800"><div class="text-[11px] font-bold uppercase text-neutral-400">${l}</div><div class="text-lg font-extrabold text-neutral-50">${v}</div>${s ? `<div class="text-[11px] text-neutral-400">${s}</div>` : ''}</div>`;
@@ -166,7 +166,7 @@ function renderProgress() {
         </div>
         <div class="lg:col-span-2 space-y-3">
             <div class="nd-card p-5 flex items-center gap-4"><span class="nd-ic-lg ${S.cur > 0 ? 'text-ok-400' : ''}">${icon('🔥')}</span><div><div class="text-2xl font-extrabold text-neutral-50">${tr(S.cur === 1 ? '{k} día seguido' : '{k} días seguidos', { k: S.cur })}</div><div class="text-xs text-neutral-400">${tr('Mejor racha: {k}', { k: S.best })} · ${S.today ? tr('hoy ya has apuntado ✓') : tr('apunta algo hoy para mantenerla')}</div></div></div>
-            ${S.total ? `<button onclick="shareProgress()" class="w-full p-4 rounded-2xl bg-mint-500/10 border border-mint-500/40 hover:bg-mint-500/15 text-left flex items-center gap-3"><span class="nd-ic shrink-0"><i class="fa-solid fa-share-nodes"></i></span><span class="flex-1 min-w-0"><span class="block text-sm font-extrabold text-neutral-50">${tr('Compartir mi semana')}</span><span class="block text-xs text-neutral-400">${tr('Tarjeta para historias y chats, sin tu peso')}</span></span><i class="fa-solid fa-chevron-right text-neutral-500"></i></button>` : ''}
+            ${S.total ? `<button ${ND.on(shareProgress)} class="w-full p-4 rounded-2xl bg-mint-500/10 border border-mint-500/40 hover:bg-mint-500/15 text-left flex items-center gap-3"><span class="nd-ic shrink-0"><i class="fa-solid fa-share-nodes"></i></span><span class="flex-1 min-w-0"><span class="block text-sm font-extrabold text-neutral-50">${tr('Compartir mi semana')}</span><span class="block text-xs text-neutral-400">${tr('Tarjeta para historias y chats, sin tu peso')}</span></span><i class="fa-solid fa-chevron-right text-neutral-500"></i></button>` : ''}
             ${T ? `<div class="nd-card p-5 space-y-1"><div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">${tr('Peso medio (7 días)')}</div><div class="text-2xl font-extrabold text-neutral-50">${fmt(T.now, 1)} kg</div><div class="text-xs text-neutral-400">${T.week != null ? tr('{k} kg respecto a la semana anterior', { k: (T.week > 0 ? '+' : '') + fmt(T.week, 1) }) : tr('Con 2 semanas de registros verás la tendencia')}${toGoal != null ? ` · ${Math.abs(toGoal) < .3 ? tr('¡en tu objetivo!') : tr('{k} kg para tu objetivo', { k: fmt(Math.abs(toGoal), 1) })}` : ''}</div></div>` : ''}
         </div>
     </div>
@@ -220,7 +220,7 @@ function renderAnalisis() {
     if (!canUse('trends')) { box.innerHTML = ''; return; }
     const R = anaResumen(anaDias);
     if (!R.registrados) { box.innerHTML = `<div class="nd-card p-5 space-y-2"><h3 class="text-lg font-extrabold text-neutral-50">${tr('Análisis avanzado')}</h3><p class="text-sm text-neutral-300">${tr('Apunta algunos días y aquí verás tus medias, en qué días te pasas y podrás exportar tu historial.')}</p></div>`; return; }
-    const bot = (n, l) => `<button type="button" onclick="anaPeriodo(${n})" class="px-3 py-1.5 rounded-xl border text-xs font-bold ${n === anaDias ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800/60 border-neutral-800 text-neutral-300'}">${l}</button>`;
+    const bot = (n, l) => `<button type="button" ${ND.on(() => anaPeriodo(n))} class="px-3 py-1.5 rounded-xl border text-xs font-bold ${n === anaDias ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800/60 border-neutral-800 text-neutral-300'}">${l}</button>`;
     const dato = (l, v, s2) => `<div class="p-3 rounded-2xl bg-neutral-800/60 border border-neutral-800"><div class="text-[11px] font-bold uppercase text-neutral-400">${l}</div><div class="text-lg font-extrabold text-neutral-50">${v}</div>${s2 ? `<div class="text-[11px] text-neutral-400">${s2}</div>` : ''}</div>`;
     // Macros reales frente a tu objetivo
     const barra = (l, real, obj, col) => {
@@ -252,8 +252,8 @@ function renderAnalisis() {
         ${calc.prot ? `<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${barra(tr('Proteína'), R.p, calc.prot, '#c49a6c')}${barra(tr('Hidratos'), R.c, calc.carbs, '#e6d3b3')}${barra(tr('Grasas'), R.f, calc.fat, '#f59e0b')}</div>` : ''}
         ${semana}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <button onclick="exportCSV('diario')" class="nd-mbtn nd-mbtn-main"><i class="fa-solid fa-file-csv"></i> ${tr('Exportar mi diario (Excel)')}</button>
-            <button onclick="exportCSV('resumen')" class="nd-mbtn"><i class="fa-solid fa-table"></i> ${tr('Exportar resumen por días')}</button>
+            <button ${ND.on(() => exportCSV('diario'))} class="nd-mbtn nd-mbtn-main"><i class="fa-solid fa-file-csv"></i> ${tr('Exportar mi diario (Excel)')}</button>
+            <button ${ND.on(() => exportCSV('resumen'))} class="nd-mbtn"><i class="fa-solid fa-table"></i> ${tr('Exportar resumen por días')}</button>
         </div>
         <p class="text-[11px] text-neutral-500">${tr('Medias de los días en los que apuntaste algo. El archivo se crea en tu dispositivo: no se envía a ningún sitio.')}</p>
     </div>`;
@@ -420,11 +420,11 @@ async function drawWeekCard(fmtKey, D) {
 async function shareProgress() {
     if (!profiles.current) { toast('Crea tu perfil para ver tu progreso.'); return; }
     openSheet('<i class="fa-solid fa-share-nodes text-mint-400"></i> ' + tr('Compartir mi semana'), `<div class="space-y-4">
-        <div class="grid grid-cols-2 gap-2" role="radiogroup" aria-label="${tr('Formato')}">${[['story', tk('Historia'), tk('Instagram y WhatsApp')], ['post', tk('Publicación'), tk('Feed y chats')]].map(([k, l, s]) => `<button type="button" role="radio" data-shfmt="${k}" onclick="shareSetFmt('${k}')" class="nd-shfmt p-3 rounded-2xl border text-left"><span class="block text-sm font-extrabold">${tr(l)}</span><span class="block text-[11px] text-neutral-400">${tr(s)}</span></button>`).join('')}</div>
+        <div class="grid grid-cols-2 gap-2" role="radiogroup" aria-label="${tr('Formato')}">${[['story', tk('Historia'), tk('Instagram y WhatsApp')], ['post', tk('Publicación'), tk('Feed y chats')]].map(([k, l, s]) => `<button type="button" role="radio" data-shfmt="${k}" ${ND.on(() => shareSetFmt(k))} class="nd-shfmt p-3 rounded-2xl border text-left"><span class="block text-sm font-extrabold">${tr(l)}</span><span class="block text-[11px] text-neutral-400">${tr(s)}</span></button>`).join('')}</div>
         <div id="sh-prev" class="rounded-2xl bg-neutral-950 border border-neutral-800 grid place-items-center p-2 min-h-[240px]" aria-live="polite"><i class="fa-solid fa-circle-notch fa-spin text-neutral-500"></i></div>
         <p class="text-xs text-neutral-400"><i class="fa-solid fa-lock"></i> ${tr('Sin tu peso ni tus medidas: solo tus hábitos de la semana.')}</p>
-        <button type="button" onclick="shareSend()" class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-solid fa-share-nodes"></i> ${tr('Compartir')}</button>
-        <div class="grid grid-cols-2 gap-2"><button type="button" onclick="shareSave()" class="nd-mbtn"><i class="fa-solid fa-download"></i> ${tr('Guardar imagen')}</button><button type="button" onclick="shareCopy()" class="nd-mbtn"><i class="fa-regular fa-copy"></i> ${tr('Copiar texto')}</button></div>
+        <button type="button" ${ND.on(shareSend)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-solid fa-share-nodes"></i> ${tr('Compartir')}</button>
+        <div class="grid grid-cols-2 gap-2"><button type="button" ${ND.on(shareSave)} class="nd-mbtn"><i class="fa-solid fa-download"></i> ${tr('Guardar imagen')}</button><button type="button" ${ND.on(shareCopy)} class="nd-mbtn"><i class="fa-regular fa-copy"></i> ${tr('Copiar texto')}</button></div>
     </div>`);
     track('share_open');
     shareSetFmt(shareFmt);

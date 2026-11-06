@@ -80,10 +80,10 @@ function renderWz() {
     $('wz-count').innerText = wz.i < WZ_Q ? tr('Paso {a} de {b}', { a: wz.i + 1, b: WZ_Q }) : step === 'loading' ? tr('Creando tu plan…') : tr('¡Plan listo!');
     $('wz-back').style.visibility = wz.i > 0 && wz.i < WZ_Q ? 'visible' : 'hidden';
     const title = t => `<h2 id="wz-title" class="text-xl sm:text-2xl font-extrabold text-neutral-100 mb-5">${t}</h2>`; // sin subtítulos
-    const tile = (on, onclick, emoji, t, d) => `<button onclick="${onclick}" class="wz-tile w-full text-left p-4 rounded-2xl border flex items-center gap-4 ${on ? 'border-mint-600 bg-mint-500/10' : 'border-neutral-800 hover:border-mint-400 bg-neutral-900'}">${emoji ? `<span class="nd-ic">${icon(emoji)}</span>` : ""}<span class="min-w-0"><span class="block font-extrabold text-sm text-neutral-100">${t}</span>${d && step === 'activity' ? `<span class="block text-xs text-neutral-400">${d}</span>` : ''}</span></button>`;
-    const next = (label, dis) => `<button onclick="wzNext()" ${dis ? 'disabled' : ''} class="w-full py-4 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-sm cta-glow flex items-center justify-center gap-2 ${dis ? 'opacity-50' : ''}">${label || tr('Continuar')} <i class="fa-solid fa-arrow-right"></i></button>`;
+    const tile = (on, fn, emoji, t, d) => `<button ${ND.on(fn)} class="wz-tile w-full text-left p-4 rounded-2xl border flex items-center gap-4 ${on ? 'border-mint-600 bg-mint-500/10' : 'border-neutral-800 hover:border-mint-400 bg-neutral-900'}">${emoji ? `<span class="nd-ic">${icon(emoji)}</span>` : ""}<span class="min-w-0"><span class="block font-extrabold text-sm text-neutral-100">${t}</span>${d && step === 'activity' ? `<span class="block text-xs text-neutral-400">${d}</span>` : ''}</span></button>`;
+    const next = (label, dis) => `<button ${ND.on(wzNext)} ${dis ? 'disabled' : ''} class="w-full py-4 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-sm cta-glow flex items-center justify-center gap-2 ${dis ? 'opacity-50' : ''}">${label || tr('Continuar')} <i class="fa-solid fa-arrow-right"></i></button>`;
     // Opciones cortas en rejilla de 2: emoji arriba y texto debajo (cabe en móviles pequeños)
-    const tileV = (on, onclick, emoji, t) => `<button onclick="${onclick}" class="wz-tile w-full p-4 rounded-2xl border flex flex-col items-center gap-2 text-center ${on ? 'border-mint-600 bg-mint-500/10' : 'border-neutral-800 hover:border-mint-400 bg-neutral-900'}">${emoji ? `<span class="nd-ic">${icon(emoji)}</span>` : ""}<span class="font-extrabold text-sm text-neutral-100">${t}</span></button>`;
+    const tileV = (on, fn, emoji, t) => `<button ${ND.on(fn)} class="wz-tile w-full p-4 rounded-2xl border flex flex-col items-center gap-2 text-center ${on ? 'border-mint-600 bg-mint-500/10' : 'border-neutral-800 hover:border-mint-400 bg-neutral-900'}">${emoji ? `<span class="nd-ic">${icon(emoji)}</span>` : ""}<span class="font-extrabold text-sm text-neutral-100">${t}</span></button>`;
     let body = '', foot = '';
     switch (step) {
         case 'name':
@@ -94,16 +94,16 @@ function renderWz() {
             break;
         case 'goal':
             body = title(tr('¿Qué quieres conseguir?'), 'Elige tu objetivo principal. Podrás cambiarlo después.') + `<div class="grid gap-3">` + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(goalTypeOf() === 'lose' && (state.goalAdj || 0) >= 0, "wzGoal('lose',0)", '🔥', tr('Perder grasa'), 'Bajar de peso a un ritmo saludable y sostenible') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(goalTypeOf() === 'lose' && state.goalAdj === -1, "wzGoal('lose',-1)", '🌱', tr('Perder peso poco a poco'), 'Sin prisa y con el mínimo hambre posible') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(goalTypeOf() === 'recomp', "wzGoal('recomp',0)", '🔄', tr('Recomposición corporal'), 'Perder grasa y ganar músculo a la vez') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(goalTypeOf() === 'maintain', "wzGoal('maintain',0)", '⚖️', tr('Mantener mi peso'), 'Comer mejor, tener energía y tonificar') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(goalTypeOf() === 'gain', "wzGoal('gain',0)", '💪', tr('Ganar músculo'), 'Superávit moderado para minimizar grasa') + `</div>`; // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
+                tile(goalTypeOf() === 'lose' && (state.goalAdj || 0) >= 0, () => wzGoal('lose',0), '🔥', tr('Perder grasa'), 'Bajar de peso a un ritmo saludable y sostenible') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
+                tile(goalTypeOf() === 'lose' && state.goalAdj === -1, () => wzGoal('lose',-1), '🌱', tr('Perder peso poco a poco'), 'Sin prisa y con el mínimo hambre posible') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
+                tile(goalTypeOf() === 'recomp', () => wzGoal('recomp',0), '🔄', tr('Recomposición corporal'), 'Perder grasa y ganar músculo a la vez') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
+                tile(goalTypeOf() === 'maintain', () => wzGoal('maintain',0), '⚖️', tr('Mantener mi peso'), 'Comer mejor, tener energía y tonificar') + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
+                tile(goalTypeOf() === 'gain', () => wzGoal('gain',0), '💪', tr('Ganar músculo'), 'Superávit moderado para minimizar grasa') + `</div>`; // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
             break;
         case 'gender':
             body = title(tr('¿Cuál es tu sexo biológico?'), 'Hombres y mujeres tienen metabolismos distintos: lo necesitamos para la fórmula.') + `<div class="grid grid-cols-2 gap-3">` + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(state.gender === 'female', "wzSet('gender','female')", '👩', tr('Mujer'), '') +
-                tile(state.gender === 'male', "wzSet('gender','male')", '👨', tr('Hombre'), '') + `</div>`;
+                tile(state.gender === 'female', () => wzSet('gender','female'), '👩', tr('Mujer'), '') +
+                tile(state.gender === 'male', () => wzSet('gender','male'), '👨', tr('Hombre'), '') + `</div>`;
             break;
         case 'body': {
             const inp = (id, lab, val, unit, st) => `<label class="block p-4 rounded-2xl border-2 border-neutral-800 focus-within:border-mint-500"><span class="text-xs font-bold text-neutral-400 uppercase">${lab}</span><span class="flex items-baseline gap-2"><input id="${id}" type="number" inputmode="decimal" step="${st}" value="${val || ''}" placeholder="0" class="w-full text-3xl font-extrabold text-neutral-100 outline-none bg-transparent"><span class="text-sm font-bold text-neutral-500">${unit}</span></span></label>`;
@@ -114,32 +114,32 @@ function renderWz() {
         }
         case 'activity':
             body = title(tr('¿Cómo de activo es tu día a día?'), 'Sé sincero: casi todos nos sobreestimamos. Si dudas, elige el nivel inferior.') + `<div class="grid gap-3">` + // i18n-ignore (el 2.º texto de title() y las descripciones de objetivo ya no se enseñan)
-                tile(state.activity === 1.2, "wzSet('activity',1.2)", '🛋️', tr('Sedentario'), tr('Trabajo sentado, menos de 5.000 pasos, sin ejercicio')) +
-                tile(state.activity === 1.375, "wzSet('activity',1.375)", '🚶', tr('Ligero'), tr('5.000-7.500 pasos o ejercicio 1-3 días/semana')) +
-                tile(state.activity === 1.55, "wzSet('activity',1.55)", '🏃', tr('Moderado'), tr('7.500-10.000 pasos o ejercicio 3-5 días/semana')) +
-                tile(state.activity === 1.725, "wzSet('activity',1.725)", '🏋️', tr('Alto'), tr('Más de 10.000 pasos y entreno 6-7 días')) +
-                tile(state.activity === 1.9, "wzSet('activity',1.9)", '⛏️', tr('Muy alto'), tr('Trabajo físico duro y entreno diario')) + `</div>`;
+                tile(state.activity === 1.2, () => wzSet('activity',1.2), '🛋️', tr('Sedentario'), tr('Trabajo sentado, menos de 5.000 pasos, sin ejercicio')) +
+                tile(state.activity === 1.375, () => wzSet('activity',1.375), '🚶', tr('Ligero'), tr('5.000-7.500 pasos o ejercicio 1-3 días/semana')) +
+                tile(state.activity === 1.55, () => wzSet('activity',1.55), '🏃', tr('Moderado'), tr('7.500-10.000 pasos o ejercicio 3-5 días/semana')) +
+                tile(state.activity === 1.725, () => wzSet('activity',1.725), '🏋️', tr('Alto'), tr('Más de 10.000 pasos y entreno 6-7 días')) +
+                tile(state.activity === 1.9, () => wzSet('activity',1.9), '⛏️', tr('Muy alto'), tr('Trabajo físico duro y entreno diario')) + `</div>`;
             break;
         case 'training':
             body = title(tr('¿Entrenas fuerza (pesas, máquinas)?')) + `<div class="grid grid-cols-2 gap-3">` +
-                tileV(state.training === 0, 'wzTraining(0)', '🚶', tr('No entreno'), '') +
-                tileV(state.training === 2, 'wzTraining(2)', '🏋️', tr('1-2 días'), '') +
-                tileV(state.training === 3, 'wzTraining(3)', '💪', tr('3 días'), '') +
-                tileV(state.training === 4, 'wzTraining(4)', '🔥', tr('4 días o más'), '') + `</div>`;
+                tileV(state.training === 0, () => wzTraining(0), '🚶', tr('No entreno'), '') +
+                tileV(state.training === 2, () => wzTraining(2), '🏋️', tr('1-2 días'), '') +
+                tileV(state.training === 3, () => wzTraining(3), '💪', tr('3 días'), '') +
+                tileV(state.training === 4, () => wzTraining(4), '🔥', tr('4 días o más'), '') + `</div>`;
             break;
         case 'diet': {
             const p = myPrefs();
-            const chip = (on, onclick, l) => `<button type="button" onclick="${onclick}" aria-pressed="${on}" class="px-3 py-2 rounded-xl border text-xs font-bold ${on ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-800'}">${l}</button>`;
+            const chip = (on, fn, l) => `<button type="button" ${ND.on(fn)} aria-pressed="${on}" class="px-3 py-2 rounded-xl border text-xs font-bold ${on ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-800'}">${l}</button>`;
             body = title(tr('¿Cómo comes?')) + `<div class="grid grid-cols-2 gap-3">` +
-                tileV(p.diet === 'omni', "wzPref('diet','omni')", '🍗', tr('De todo'), '') + tileV(p.diet === 'pesc', "wzPref('diet','pesc')", '🐟', tr('Pescetariana'), '') +
-                tileV(p.diet === 'veg', "wzPref('diet','veg')", '🥚', tr('Vegetariana'), '') + tileV(p.diet === 'vegan', "wzPref('diet','vegan')", '🌱', tr('Vegana'), '') + `</div>
-                <div class="mt-5 space-y-2"><div class="text-xs font-bold text-neutral-400 uppercase">${tr('Alergias o intolerancias')}</div><div class="flex flex-wrap gap-2">${Object.entries(ALLERGENS).map(([k, [l]]) => chip(p.allergies.includes(k), `wzAllergy('${k}')`, tr(l))).join('')}</div></div>`;
+                tileV(p.diet === 'omni', () => wzPref('diet','omni'), '🍗', tr('De todo'), '') + tileV(p.diet === 'pesc', () => wzPref('diet','pesc'), '🐟', tr('Pescetariana'), '') +
+                tileV(p.diet === 'veg', () => wzPref('diet','veg'), '🥚', tr('Vegetariana'), '') + tileV(p.diet === 'vegan', () => wzPref('diet','vegan'), '🌱', tr('Vegana'), '') + `</div>
+                <div class="mt-5 space-y-2"><div class="text-xs font-bold text-neutral-400 uppercase">${tr('Alergias o intolerancias')}</div><div class="flex flex-wrap gap-2">${Object.entries(ALLERGENS).map(([k, [l]]) => chip(p.allergies.includes(k), () => wzAllergy(k), tr(l))).join('')}</div></div>`;
             foot = next();
             break;
         }
         case 'meals':
             body = title(tr('¿Cuántas comidas haces al día?')) + `<div class="grid grid-cols-3 gap-3">` +
-                [3, 4, 5].map(n => tileV(myPrefs().meals === n, `wzPref('meals',${n})`, ['', '', '', '🍽️', '🥪', '🍎'][n], tr('{k} comidas', { k: n }), '')).join('') + `</div>`;
+                [3, 4, 5].map(n => tileV(myPrefs().meals === n, () => wzPref('meals',n), ['', '', '', '🍽️', '🥪', '🍎'][n], tr('{k} comidas', { k: n }), '')).join('') + `</div>`;
             break;
         case 'loading': {
             const items = [tr('Calculando tu metabolismo basal (Mifflin-St Jeor)'), tr('Ajustando tu objetivo de forma segura'), tr('Repartiendo proteína, grasa e hidratos'), tr('Preparando tu Coach, tu diario y tu gym')];
@@ -162,8 +162,8 @@ function renderWz() {
                         <div class="px-3 pb-3 space-y-1.5 text-xs text-neutral-300 leading-relaxed">${explainLines().map(l => `<p>${l}</p>`).join('')}</div></details>
                     ${c.alerts.filter(a => a.t !== 'info').map(a => `<div class="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200">${a.m}</div>`).join('')}
                 </div>`;
-            foot = `<button onclick="closeWizard();showTab('home')" class="w-full py-4 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-base cta-glow flex items-center justify-center gap-2">${tr('Empezar')} <i class="fa-solid fa-arrow-right"></i></button>
-                <button onclick="closeWizard();showTab('calc')" class="w-full mt-2 py-2 text-xs font-bold text-neutral-400 hover:text-neutral-200">${tr('Ver mi plan completo')}</button>`;
+            foot = `<button ${ND.on(() => { closeWizard(); showTab('home'); })} class="w-full py-4 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-base cta-glow flex items-center justify-center gap-2">${tr('Empezar')} <i class="fa-solid fa-arrow-right"></i></button>
+                <button ${ND.on(() => { closeWizard(); showTab('calc'); })} class="w-full mt-2 py-2 text-xs font-bold text-neutral-400 hover:text-neutral-200">${tr('Ver mi plan completo')}</button>`;
             break;
         }
     }

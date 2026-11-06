@@ -82,12 +82,12 @@ function renderProfileChip() {
     const box = $('profile-chip'); if (!box) return;
     const cur = profiles.list[profiles.current];
     if (!cur) {
-        box.innerHTML = `<div class="flex items-center gap-2"><button onclick="newProfile()" class="px-4 py-2 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold flex items-center gap-2"><i class="fa-solid fa-user-plus"></i><span class="whitespace-nowrap">${tr('Crear perfil')}</span></button>
-            <button onclick="importProfiles()" class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 hover:border-mint-500/50" title="${tr('Cargar una copia de seguridad')}" aria-label="${tr('Cargar una copia de seguridad')}"><i class="fa-solid fa-upload"></i></button></div>`;
+        box.innerHTML = `<div class="flex items-center gap-2"><button ${ND.on(newProfile)} class="px-4 py-2 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold flex items-center gap-2"><i class="fa-solid fa-user-plus"></i><span class="whitespace-nowrap">${tr('Crear perfil')}</span></button>
+            <button ${ND.on(importProfiles)} class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 hover:border-mint-500/50" title="${tr('Cargar una copia de seguridad')}" aria-label="${tr('Cargar una copia de seguridad')}"><i class="fa-solid fa-upload"></i></button></div>`;
         return;
     }
     const others = Object.entries(profiles.list);
-    box.innerHTML = `<button onclick="toggleProfileMenu(event)" class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-mint-500/50" aria-haspopup="true" aria-expanded="false" id="profile-btn">
+    box.innerHTML = `<button ${ND.on(e => toggleProfileMenu(e))} class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-mint-500/50" aria-haspopup="true" aria-expanded="false" id="profile-btn">
             <span class="w-8 h-8 rounded-xl bg-mint-600 text-white font-extrabold grid place-items-center">${initial(cur.name)}</span>
             <span class="hidden sm:block text-sm font-bold text-neutral-100 max-w-[120px] truncate" title="${esc(cur.name)}">${esc(cur.name)}</span>
             <i class="fa-solid fa-chevron-down text-[10px] text-neutral-500"></i>
@@ -95,29 +95,29 @@ function renderProfileChip() {
         <div id="profile-menu" class="hidden absolute right-0 mt-2 w-64 rounded-2xl bg-neutral-900 border border-neutral-800 shadow-2xl p-2 text-sm z-50">
             <div class="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-neutral-500">${tr('Perfiles en este dispositivo')}</div>
             ${others.map(([id, p]) => `<div class="flex items-center gap-1 rounded-xl hover:bg-neutral-800">
-                <button onclick="switchProfile('${id}')" class="flex-1 min-w-0 flex items-center gap-3 px-3 py-2 text-left">
+                <button ${ND.on(() => switchProfile(id))} class="flex-1 min-w-0 flex items-center gap-3 px-3 py-2 text-left">
                     <span class="w-7 h-7 rounded-lg ${id === profiles.current ? 'bg-mint-600 text-white' : 'bg-neutral-800 text-neutral-300'} font-extrabold grid place-items-center text-xs">${initial(p.name)}</span>
                     <span class="flex-1 truncate font-semibold" title="${esc(p.name)}">${esc(p.name)}</span>${id === profiles.current ? '<i class="fa-solid fa-check text-mint-500"></i>' : ''}</button>
-                <button onclick="event.stopPropagation();deleteProfile('${id}')" class="w-9 h-9 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-600 hover:bg-neutral-700" aria-label="${tr('Borrar el perfil de {n}', { n: esc(p.name) })}" title="${tr('Borrar este perfil')}"><i class="fa-solid fa-trash text-xs"></i></button>
+                <button ${ND.on(e => { e.stopPropagation(); deleteProfile(id); })} class="w-9 h-9 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-600 hover:bg-neutral-700" aria-label="${tr('Borrar el perfil de {n}', { n: esc(p.name) })}" title="${tr('Borrar este perfil')}"><i class="fa-solid fa-trash text-xs"></i></button>
             </div>`).join('')}
             <div class="my-2 border-t border-neutral-800"></div>
-            <button onclick="closeProfileMenu();openWizard('edit')" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-pen w-7 text-center text-neutral-400"></i>${tr('Editar mis datos')}</button>
-            <button onclick="newProfile()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-user-plus w-7 text-center text-neutral-400"></i>${tr('Añadir otra persona')}</button>
-            <button onclick="exportProfiles()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-download w-7 text-center text-neutral-400"></i>${tr('Guardar copia de seguridad')}</button>
-            <button onclick="importProfiles()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-upload w-7 text-center text-neutral-400"></i>${tr('Cargar una copia')}</button>
-            <button onclick="openAutoBackups()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-clock-rotate-left w-7 text-center text-neutral-400"></i>${tr('Copias automáticas')}</button>
-            <button onclick="deleteProfile(profiles.current)" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left text-roseAccent-600"><i class="fa-solid fa-trash w-7 text-center"></i>${tr('Borrar mi perfil')}</button>
+            <button ${ND.on(() => { closeProfileMenu(); openWizard('edit'); })} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-pen w-7 text-center text-neutral-400"></i>${tr('Editar mis datos')}</button>
+            <button ${ND.on(newProfile)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-user-plus w-7 text-center text-neutral-400"></i>${tr('Añadir otra persona')}</button>
+            <button ${ND.on(exportProfiles)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-download w-7 text-center text-neutral-400"></i>${tr('Guardar copia de seguridad')}</button>
+            <button ${ND.on(importProfiles)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-upload w-7 text-center text-neutral-400"></i>${tr('Cargar una copia')}</button>
+            <button ${ND.on(openAutoBackups)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-clock-rotate-left w-7 text-center text-neutral-400"></i>${tr('Copias automáticas')}</button>
+            <button ${ND.on(() => deleteProfile(profiles.current))} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left text-roseAccent-600"><i class="fa-solid fa-trash w-7 text-center"></i>${tr('Borrar mi perfil')}</button>
             <div class="my-2 border-t border-neutral-800"></div>
             ${I18N_READY ? `<div class="flex items-center gap-3 px-3 py-2"><i class="fa-solid fa-language w-7 text-center text-neutral-400"></i>
                 <span class="flex-1 font-semibold">${tr('Idioma')}</span>
-                <div class="nd-langsel" role="group" aria-label="${esc(tr('Idioma'))}">${Object.keys(LANGS).map(l => `<button type="button" onclick="setLang('${l}')" class="${l === LANG ? 'is-on' : ''}" aria-pressed="${l === LANG}">${l.toUpperCase()}</button>`).join('')}</div>
+                <div class="nd-langsel" role="group" aria-label="${esc(tr('Idioma'))}">${Object.keys(LANGS).map(l => `<button type="button" ${ND.on(() => setLang(l))} class="${l === LANG ? 'is-on' : ''}" aria-pressed="${l === LANG}">${l.toUpperCase()}</button>`).join('')}</div>
             </div>` : ''}
-            <button onclick="openPro()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-crown w-7 text-center text-amber-300"></i>FitDL PRO <span class="nd-pro-badge ml-auto">${isPro() ? tr('Activo') : tr('Probar')}</span></button>
-            <button onclick="openSync()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-rotate w-7 text-center text-neutral-400"></i>${tr('Móvil y ordenador')}</button>
-            <button data-install onclick="installApp()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-mobile-screen-button w-7 text-center text-mint-400"></i>${tr('Instalar la app')}</button>
-                <button onclick="openReport()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-bug w-7 text-center text-neutral-400"></i>${tr('Informe de errores')}</button>
+            <button ${ND.on(openPro)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-crown w-7 text-center text-amber-300"></i>FitDL PRO <span class="nd-pro-badge ml-auto">${isPro() ? tr('Activo') : tr('Probar')}</span></button>
+            <button ${ND.on(openSync)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-rotate w-7 text-center text-neutral-400"></i>${tr('Móvil y ordenador')}</button>
+            <button data-install ${ND.on(installApp)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-mobile-screen-button w-7 text-center text-mint-400"></i>${tr('Instalar la app')}</button>
+                <button ${ND.on(openReport)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-bug w-7 text-center text-neutral-400"></i>${tr('Informe de errores')}</button>
             <a href="${LANG === 'en' ? 'privacy.html' : 'privacidad.html'}" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left"><i class="fa-solid fa-shield-halved w-7 text-center text-neutral-400"></i>${tr('Privacidad')}</a>
-            <button onclick="wipeAll()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left text-roseAccent-600"><i class="fa-solid fa-eraser w-7 text-center"></i>${tr('Borrar todos los datos')}</button>
+            <button ${ND.on(wipeAll)} class="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 text-left text-roseAccent-600"><i class="fa-solid fa-eraser w-7 text-center"></i>${tr('Borrar todos los datos')}</button>
         </div>`;
 }
 function toggleProfileMenu(e) {
@@ -135,7 +135,7 @@ function openSync() {
     openSheet('<i class="fa-solid fa-rotate text-mint-400"></i> ' + tr('Móvil y ordenador'), `<div class="space-y-4 text-sm text-neutral-300">
         <p>${tr('Tus datos viven en este dispositivo. Para pasarlos a otro:')}</p>
         <ol class="nd-steps"><li>${tr('Aquí: <b>Guardar copia de seguridad</b> (descarga un archivo).')}</li><li>${tr('Envíate ese archivo (correo, nube, WhatsApp…).')}</li><li>${tr('En el otro dispositivo: <b>Cargar una copia</b>.')}</li></ol>
-        <div class="grid grid-cols-2 gap-2"><button onclick="closeSheet();exportProfiles()" class="py-3 rounded-xl bg-mint-600 text-white font-extrabold"><i class="fa-solid fa-download"></i> ${tr('Guardar copia')}</button><button onclick="closeSheet();importProfiles()" class="py-3 rounded-xl border border-neutral-700 font-bold"><i class="fa-solid fa-upload"></i> ${tr('Cargar copia')}</button></div>
+        <div class="grid grid-cols-2 gap-2"><button ${ND.on(() => { closeSheet(); exportProfiles(); })} class="py-3 rounded-xl bg-mint-600 text-white font-extrabold"><i class="fa-solid fa-download"></i> ${tr('Guardar copia')}</button><button ${ND.on(() => { closeSheet(); importProfiles(); })} class="py-3 rounded-xl border border-neutral-700 font-bold"><i class="fa-solid fa-upload"></i> ${tr('Cargar copia')}</button></div>
         <div class="p-3 rounded-xl bg-neutral-800/60 border border-neutral-800 text-xs text-neutral-400">${tr('<b class="text-neutral-200">Próximamente:</b> sincronización automática con una cuenta opcional (PRO). Seguirás pudiendo usar FitDL sin cuenta.')}</div>
     </div>`);
     track('sync_open');
@@ -166,7 +166,7 @@ function openAutoBackups() {
     openSheet('<i class="fa-solid fa-clock-rotate-left text-mint-400"></i> ' + tr('Copias automáticas'), `
         <div class="space-y-4">
             <p class="text-sm text-neutral-300">${tr('Cada día se guarda sola una copia de todo en este dispositivo (las 3 últimas). Si borras algo sin querer, vuelve a como estaba ese día.')}</p>
-            ${L.length ? `<div class="divide-y divide-neutral-800 border border-neutral-800 rounded-xl">${L.map((b, i) => `<div class="flex items-center gap-3 p-3"><div class="flex-1 min-w-0"><div class="text-sm font-bold text-neutral-100">${esc(new Date(b.t).toLocaleString(locale(), { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }))}</div><div class="text-xs text-neutral-400">${tp(b.n, 'perfil', 'perfiles')}</div></div><button onclick="restoreAutoBackup(${i})" class="nd-mbtn">${tr('Restaurar')}</button></div>`).join('')}</div>` : '<p class="text-sm text-neutral-400">' + tr('Aún no hay copias. Se crea la primera hoy mismo.') + '</p>'}
+            ${L.length ? `<div class="divide-y divide-neutral-800 border border-neutral-800 rounded-xl">${L.map((b, i) => `<div class="flex items-center gap-3 p-3"><div class="flex-1 min-w-0"><div class="text-sm font-bold text-neutral-100">${esc(new Date(b.t).toLocaleString(locale(), { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }))}</div><div class="text-xs text-neutral-400">${tp(b.n, 'perfil', 'perfiles')}</div></div><button ${ND.on(() => restoreAutoBackup(i))} class="nd-mbtn">${tr('Restaurar')}</button></div>`).join('')}</div>` : '<p class="text-sm text-neutral-400">' + tr('Aún no hay copias. Se crea la primera hoy mismo.') + '</p>'}
             <p class="text-xs text-neutral-400">${tr('Para no perder nada si cambias de móvil o borras el navegador, guarda también de vez en cuando una copia en archivo (menú del perfil → «Guardar copia de seguridad»).')}</p>
         </div>`);
 }

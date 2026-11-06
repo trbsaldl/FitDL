@@ -45,10 +45,10 @@ async function openScanner(slot) {
             ${canCam ? `<div class="relative rounded-2xl overflow-hidden bg-black aspect-[4/3]">
                 <video id="sc-video" class="w-full h-full object-cover" playsinline muted></video>
                 <div class="absolute inset-x-8 top-1/2 -translate-y-1/2 h-24 rounded-2xl border-2 border-mint-400/80 shadow-[0_0_0_9999px_rgba(0,0,0,.35)]"></div>
-                <button type="button" id="sc-luz" onclick="scanLuz()" class="hidden absolute top-3 right-3 w-10 h-10 rounded-xl bg-black/60 text-white/90" aria-label="${tr('Linterna')}"><i class="fa-solid fa-bolt"></i></button>
+                <button type="button" id="sc-luz" ${ND.on(scanLuz)} class="hidden absolute top-3 right-3 w-10 h-10 rounded-xl bg-black/60 text-white/90" aria-label="${tr('Linterna')}"><i class="fa-solid fa-bolt"></i></button>
                 <div id="sc-status" class="absolute bottom-3 inset-x-3 text-center text-xs font-bold text-white/90">${tr('Apunta al código de barras')}</div>
             </div>` : `<div class="p-4 rounded-2xl bg-neutral-800/60 border border-neutral-800 text-sm text-neutral-300"><i class="fa-solid fa-camera text-mint-400"></i> ${tr('Este navegador no puede usar la cámara. Escribe los números que hay debajo de las barras.')}</div>`}
-            <form onsubmit="event.preventDefault(); lookupBarcode($('sc-code').value)" class="flex gap-2">
+            <form ${ND.onsubmit(() => lookupBarcode($('sc-code').value))} class="flex gap-2">
                 <input id="sc-code" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="${tr('Ej: {x}', { x: '8480000123459' })}" class="flex-1 min-w-0 p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold tracking-wider" aria-label="${tr('Número del código de barras')}">
                 <button class="px-4 rounded-xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-sm">${tr('Buscar')}</button>
             </form>
@@ -207,7 +207,7 @@ function scanCrear(code, nombre, marca, slot) {
     if (box) box.innerHTML = `<div class="p-4 rounded-2xl bg-neutral-800/60 border border-neutral-800 space-y-3 text-sm text-neutral-300">
         <p>${nombre ? tr('«{n}» está en el catálogo, pero sin la tabla nutricional.', { n: esc(nombre) }) : tr('Ese código ({c}) todavía no está en el catálogo mundial.', { c: esc(code) })}</p>
         <p class="text-xs text-neutral-400">${tr('Copia la etiqueta una vez y el producto queda guardado con su código: la próxima vez saldrá solo, incluso sin internet.')}</p>
-        <button onclick="scanNuevo('${esc(code)}', '${esc((nombre || '').replace(/'/g, ''))}', '${esc((marca || '').replace(/'/g, ''))}', '${esc(slot)}')" class="w-full py-3 rounded-xl bg-mint-600 text-white font-extrabold"><i class="fa-solid fa-plus"></i> ${tr('Apuntarlo con su etiqueta')}</button></div>`;
+        <button ${ND.on(() => scanNuevo(code, nombre || '', marca || '', slot))} class="w-full py-3 rounded-xl bg-mint-600 text-white font-extrabold"><i class="fa-solid fa-plus"></i> ${tr('Apuntarlo con su etiqueta')}</button></div>`;
 }
 function scanNuevo(code, nombre, marca, slot) {
     closeSheet();
@@ -234,7 +234,7 @@ function saveMealPrompt(slot) {
     if (!list.length) return;
     const def = (DSLOTS.find(s => s[0] === slot) || [, tk('Comida')])[1];
     openSheet('<i class="fa-solid fa-bookmark text-mint-400"></i> ' + tr('Guardar comida'), `
-        <form onsubmit="event.preventDefault(); saveMeal('${slot}')" class="space-y-4">
+        <form ${ND.onsubmit(() => saveMeal(slot))} class="space-y-4">
             <div class="space-y-1.5"><label for="sm-name" class="block text-xs font-bold text-neutral-300 uppercase tracking-wider">${tr('Nombre')}</label>
                 <input id="sm-name" maxlength="40" value="${esc(tr('Mi {x}', { x: tr(def).toLowerCase() }))}" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold"></div>
             <div class="rounded-2xl bg-neutral-800/60 border border-neutral-800 divide-y divide-neutral-800 text-sm">${list.map(e => `<div class="flex justify-between gap-3 px-3 py-2"><span class="truncate">${esc(e.name)}</span><span class="text-neutral-400 whitespace-nowrap">${fmt(e.kcal)} kcal</span></div>`).join('')}</div>
@@ -263,10 +263,10 @@ function savedMealsHtml() {
     const L = myMeals();
     if (!L.length) return '<p class="text-sm text-neutral-400 py-6 text-center">' + tr('Guarda una comida desde tu diario con el botón {i} y aparecerá aquí.', { i: '<i class="fa-solid fa-bookmark"></i>' }) + '</p>';
     return `<div class="divide-y divide-neutral-800">${L.map(m => { const k = m.items.reduce((a, e) => a + e.kcal, 0); return `<div class="flex items-center gap-2 py-2.5">
-        <button type="button" onclick="addSavedMeal('${m.id}')" class="flex-1 min-w-0 text-left"><div class="text-sm font-semibold text-neutral-100 truncate">${esc(m.name)}</div>
+        <button type="button" ${ND.on(() => addSavedMeal(m.id))} class="flex-1 min-w-0 text-left"><div class="text-sm font-semibold text-neutral-100 truncate">${esc(m.name)}</div>
             <div class="text-xs text-neutral-400 truncate">${tp(m.items.length, 'alimento', 'alimentos')} · ${fmt(k)} kcal · ${esc(m.items.map(e => e.name).join(', '))}</div></button>
-        <button type="button" onclick="delSavedMeal('${m.id}')" class="w-9 h-9 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Borrar {n}', { n: esc(m.name) })}"><i class="fa-solid fa-trash-can"></i></button>
-        <button type="button" onclick="addSavedMeal('${m.id}')" class="w-9 h-9 shrink-0 rounded-full bg-neutral-800 hover:bg-mint-600 text-mint-400 hover:text-white" aria-label="${tr('Añadir {n}', { n: esc(m.name) })}"><i class="fa-solid fa-plus"></i></button>
+        <button type="button" ${ND.on(() => delSavedMeal(m.id))} class="w-9 h-9 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Borrar {n}', { n: esc(m.name) })}"><i class="fa-solid fa-trash-can"></i></button>
+        <button type="button" ${ND.on(() => addSavedMeal(m.id))} class="w-9 h-9 shrink-0 rounded-full bg-neutral-800 hover:bg-mint-600 text-mint-400 hover:text-white" aria-label="${tr('Añadir {n}', { n: esc(m.name) })}"><i class="fa-solid fa-plus"></i></button>
     </div>`; }).join('')}</div>`;
 }
 
@@ -280,6 +280,7 @@ function diaryTotals(d) {
 }
 function slotByHour() { const h = new Date().getHours(); return h < 11 ? 'B' : h < 13 ? 'M' : h < 16 ? 'L' : h < 19 ? 'S' : 'D'; }
 function diaryShift(n) { const d = new Date((diaryDate || todayISO()) + 'T12:00:00'); d.setDate(d.getDate() + n); diaryDate = new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); renderDiary(); }
+function diaryGoToday() { diaryDate = todayISO(); renderDiary(); }
 function renderDiary() {
     if (!$('diary-summary')) return;
     if (!diaryDate) diaryDate = todayISO();
@@ -296,7 +297,7 @@ function renderDiary() {
     const dayRel = isToday ? tr('Hoy') : diaryDate === shiftISO(todayISO(), -1) ? tr('Ayer') : diaryDate === shiftISO(todayISO(), 1) ? tr('Mañana') : '';
     $('diary-summary').innerHTML = !c.target ? `<div class="md:col-span-12 flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-neutral-800/60 border border-neutral-800">
             <div><div class="text-3xl font-extrabold text-neutral-100">${fmt(t.kcal)} <span class="text-sm text-neutral-400">kcal</span></div><div class="text-xs text-neutral-400">${tr('P')} ${fmt(t.p)} · ${tr('G')} ${fmt(t.f)} · ${tr('HC')} ${fmt(t.c)} g</div></div>
-            <button onclick="showTab('calc')" class="px-4 py-2.5 rounded-xl bg-mint-600 text-white text-xs font-extrabold"><i class="fa-solid fa-calculator"></i> ${tr('Calcular mi objetivo')}</button></div>` : `
+            <button ${ND.on(() => showTab('calc'))} class="px-4 py-2.5 rounded-xl bg-mint-600 text-white text-xs font-extrabold"><i class="fa-solid fa-calculator"></i> ${tr('Calcular mi objetivo')}</button></div>` : `
         <div class="md:col-span-3 flex flex-col items-center gap-1">${ring(t.kcal, c.target, 120)}
             <div class="text-xs font-bold ${left >= 0 ? 'text-ok-400' : 'text-roseAccent-400'}">${left >= 0 ? tr('Quedan {k} kcal', { k: fmt(left) }) : tr('+{k} kcal sobre tu objetivo', { k: fmt(-left) })}</div></div>
         <div class="md:col-span-9 space-y-3">
@@ -318,20 +319,20 @@ function renderDiary() {
                     <div class="text-sm font-extrabold text-neutral-100">${tr(n)}</div>
                     <div class="text-xs text-neutral-400">${list.length ? `${fmt(tot.kcal)} kcal · ${tr('P')} ${fmt(tot.p)} · ${tr('G')} ${fmt(tot.f)} · ${tr('HC')} ${fmt(tot.c)}` : tr('Sin apuntar')}</div>
                 </div>
-                ${list.length ? `<button type="button" onclick="saveMealPrompt('${k}')" class="w-9 h-9 shrink-0 rounded-xl text-neutral-400 hover:text-mint-300 hover:bg-neutral-800" aria-label="${tr('Guardar {x} como comida', { x: tr(n).toLowerCase() })}" title="${tr('Guardar esta comida para repetirla')}"><i class="fa-solid fa-bookmark"></i></button>` : ''}
-                ${canCopy ? `<button type="button" onclick="copyMealFromYesterday('${k}')" class="px-2.5 py-2 rounded-xl text-xs font-bold text-neutral-300 hover:bg-neutral-800" title="${tr('Copiar lo que comiste ayer en {x}', { x: tr(n).toLowerCase() })}"><i class="fa-regular fa-copy"></i> ${tr('Ayer')}</button>` : ''}
-                <button type="button" onclick="openFoodSheet('${k}')" class="px-3 py-2 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-xs font-extrabold shrink-0" aria-label="${tr('Añadir alimento a {x}', { x: tr(n) })}"><i class="fa-solid fa-plus"></i> ${tr('Añadir')}</button>
+                ${list.length ? `<button type="button" ${ND.on(() => saveMealPrompt(k))} class="w-9 h-9 shrink-0 rounded-xl text-neutral-400 hover:text-mint-300 hover:bg-neutral-800" aria-label="${tr('Guardar {x} como comida', { x: tr(n).toLowerCase() })}" title="${tr('Guardar esta comida para repetirla')}"><i class="fa-solid fa-bookmark"></i></button>` : ''}
+                ${canCopy ? `<button type="button" ${ND.on(() => copyMealFromYesterday(k))} class="px-2.5 py-2 rounded-xl text-xs font-bold text-neutral-300 hover:bg-neutral-800" title="${tr('Copiar lo que comiste ayer en {x}', { x: tr(n).toLowerCase() })}"><i class="fa-regular fa-copy"></i> ${tr('Ayer')}</button>` : ''}
+                <button type="button" ${ND.on(() => openFoodSheet(k))} class="px-3 py-2 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-xs font-extrabold shrink-0" aria-label="${tr('Añadir alimento a {x}', { x: tr(n) })}"><i class="fa-solid fa-plus"></i> ${tr('Añadir')}</button>
             </div>
             ${list.length ? `<div class="border-t border-neutral-800 divide-y divide-neutral-800/70">${list.map(e => {
                 const f = e.fid && getFood(e.fid);
                 return `<div class="flex items-center gap-2 px-3.5 py-2.5" data-entry="${e.id}">
-                    <button type="button" onclick="editDiaryEntry('${e.id}')" class="flex-1 min-w-0 text-left" aria-label="${tr('Editar {n}', { n: esc(e.name) })}">
+                    <button type="button" ${ND.on(() => editDiaryEntry(e.id))} class="flex-1 min-w-0 text-left" aria-label="${tr('Editar {n}', { n: esc(e.name) })}">
                         <div class="text-sm font-semibold text-neutral-100 break-words leading-snug">${f ? emo(f) + ' ' : ''}${esc(e.name)}</div>
                         <div class="text-xs text-neutral-400">${e.brand ? esc(e.brand) + ' · ' : ''}${e.g ? entryAmount(e) : tr('Solo calorías')}${e.est ? ' · <span class="nd-est">' + tr('≈ estimado') + '</span>' : ''}</div>
                         <div class="text-[11px] text-neutral-400 tabular-nums flex flex-wrap gap-x-2.5 mt-0.5">${macroLine(e.p, e.c, e.f)}${e.sug != null ? `<span class="nd-m">${tr('azúc.')} ${fmt(e.sug, e.sug < 10 ? 1 : 0)}</span>` : ''}</div>
                     </button>
                     <span class="text-sm font-extrabold text-neutral-100 shrink-0">${fmt(e.kcal)}<span class="text-xs font-semibold text-neutral-500"> kcal</span></span>
-                    <button type="button" onclick="diaryDel('${e.id}')" class="w-8 h-8 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-600 hover:bg-neutral-800" aria-label="${tr('Quitar {n}', { n: esc(e.name) })}"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" ${ND.on(() => diaryDel(e.id))} class="w-8 h-8 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-600 hover:bg-neutral-800" aria-label="${tr('Quitar {n}', { n: esc(e.name) })}"><i class="fa-solid fa-xmark"></i></button>
                 </div>`;
             }).join('')}</div>` : ''}
         </div>`;
@@ -445,7 +446,7 @@ function fsRender() {
     if (fs.mode === 'quick') return fsRenderQuick();
     const mine = FOODS.filter(f => f.custom);
     const tabs = [['recent', tk('Recientes')], ['freq', tk('Frecuentes')], ['meals', tk('Comidas guardadas')], ['all', tk('Todos')], ...(mine.length ? [['mine', tk('Mis alimentos')]] : [])];
-    $('fs-tabs').innerHTML = tabs.map(([k, l]) => `<button type="button" onclick="fs.tab='${k}';fsRender()" class="px-3 py-1.5 rounded-xl border ${fs.tab === k ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-700'}">${tr(l)}</button>`).join('');
+    $('fs-tabs').innerHTML = tabs.map(([k, l]) => `<button type="button" ${ND.on(() => { fs.tab = k; fsRender(); })} class="px-3 py-1.5 rounded-xl border ${fs.tab === k ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-700'}">${tr(l)}</button>`).join('');
     let items, empty;
     const q = fs.q.trim();
     if (q) { items = searchFoods(q); empty = tr('No hay resultados para «{q}».', { q: esc(q) }); }
@@ -456,20 +457,20 @@ function fsRender() {
     const row = f => {
         const d = defaultPortion(f), kc = macrosOf(f, d.g).kcal;
         return `<div class="flex items-center gap-2 py-2.5">
-            <button type="button" onclick="fsOpen('${f.id}')" class="flex-1 min-w-0 text-left">
+            <button type="button" ${ND.on(() => fsOpen(f.id))} class="flex-1 min-w-0 text-left">
                 <div class="text-sm font-semibold text-neutral-100 break-words leading-snug">${emo(f)} ${esc(f.name)}</div>
                 <div class="text-xs text-neutral-400">${f.brand ? `<span class="text-mint-300/90">${esc(f.brand)}</span> · ` : ''}${portionLabel(d.unit, d.n, f)} · ${fmt(kc)} kcal</div>
             </button>
-            <button type="button" onclick="fsQuickAdd('${f.id}')" class="w-9 h-9 shrink-0 rounded-full bg-neutral-800 hover:bg-mint-600 text-mint-400 hover:text-white" aria-label="${tr('Añadir {n}', { n: `${esc(f.name)} (${portionLabel(d.unit, d.n, f)})` })}"><i class="fa-solid fa-plus"></i></button>
+            <button type="button" ${ND.on(() => fsQuickAdd(f.id))} class="w-9 h-9 shrink-0 rounded-full bg-neutral-800 hover:bg-mint-600 text-mint-400 hover:text-white" aria-label="${tr('Añadir {n}', { n: `${esc(f.name)} (${portionLabel(d.unit, d.n, f)})` })}"><i class="fa-solid fa-plus"></i></button>
         </div>`;
     };
-    const scanBtn = `<button type="button" onclick="openScanner(fs.slot)" class="py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300 hover:border-mint-500/50"><i class="fa-solid fa-barcode text-mint-400"></i> ${tr('Escanear código de barras')}</button>`;
+    const scanBtn = `<button type="button" ${ND.on(() => openScanner(fs.slot))} class="py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300 hover:border-mint-500/50"><i class="fa-solid fa-barcode text-mint-400"></i> ${tr('Escanear código de barras')}</button>`;
     if (!q && fs.tab === 'meals') { $('fs-body').innerHTML = savedMealsHtml(); $('fs-body').scrollTop = 0; return; }
     $('fs-body').innerHTML = (items.length ? `<div class="divide-y divide-neutral-800">${items.map(row).join('')}</div>` : `<p class="text-sm text-neutral-400 py-6 text-center">${empty}</p>`) +
         `<div class="mt-4 pt-4 border-t border-neutral-800 grid grid-cols-1 sm:grid-cols-2 gap-2">
             ${scanBtn}
-            <button type="button" onclick="fs.mode='create';fsRender()" class="py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300 hover:border-mint-500/50"><i class="fa-solid fa-plus text-mint-400"></i> ${tr('Crear alimento')}</button>
-            <button type="button" onclick="fs.mode='quick';fsRender()" class="py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300 hover:border-mint-500/50"><i class="fa-solid fa-bolt text-mint-400"></i> ${tr('Apuntar solo calorías')}</button>
+            <button type="button" ${ND.on(() => { fs.mode = 'create'; fsRender(); })} class="py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300 hover:border-mint-500/50"><i class="fa-solid fa-plus text-mint-400"></i> ${tr('Crear alimento')}</button>
+            <button type="button" ${ND.on(() => { fs.mode = 'quick'; fsRender(); })} class="py-3 rounded-xl border border-dashed border-neutral-700 text-sm font-bold text-neutral-300 hover:border-mint-500/50"><i class="fa-solid fa-bolt text-mint-400"></i> ${tr('Apuntar solo calorías')}</button>
         </div>
         ${FOODS.some(f => f.off) ? '<p class="mt-3 text-[11px] text-neutral-500">' + tr('Alimentos genéricos y platos: USDA FoodData Central (dominio público) y, para Colombia, la Tabla de Composición de Alimentos Colombianos del ICBF (2018). Productos de marca: Open Food Facts (openfoodfacts.org), licencia ODbL. Comida rápida: información nutricional oficial de cada cadena en España. Comprueba la etiqueta: las recetas cambian.') + '</p>' : ''}`;
     $('fs-body').scrollTop = 0;
@@ -518,20 +519,20 @@ function fsRenderDetail() {
         </div>
         <div class="grid grid-cols-5 gap-2">
             <label class="col-span-2 block"><span class="text-xs font-bold text-neutral-400">${tr('Cantidad')}</span>
-                <input id="fs-n" type="number" inputmode="decimal" min="0" step="${u.key === 'g' ? 1 : 0.5}" value="${fs.n}" oninput="fs.n=this.value;fsUpdateDetail()" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-extrabold"></label>
+                <input id="fs-n" type="number" inputmode="decimal" min="0" step="${u.key === 'g' ? 1 : 0.5}" value="${fs.n}" ${ND.oninput(e => { fs.n = e.target.value; fsUpdateDetail(); })} class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-extrabold"></label>
             <label class="col-span-3 block"><span class="text-xs font-bold text-neutral-400">${tr('Medida')}</span>
-                <select id="fs-unit" onchange="fsSetUnit(this.value)" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold">${units.map(x => `<option value="${x.key}" ${x.key === u.key ? 'selected' : ''}>${x.key === 'g' ? x.label : `${tr(x.label)} (${fmt(x.g)} ${f.ml ? 'ml' : 'g'})`}</option>`).join('')}</select></label>
+                <select id="fs-unit" ${ND.onchange(e => fsSetUnit(e.target.value))} class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold">${units.map(x => `<option value="${x.key}" ${x.key === u.key ? 'selected' : ''}>${x.key === 'g' ? x.label : `${tr(x.label)} (${fmt(x.g)} ${f.ml ? 'ml' : 'g'})`}</option>`).join('')}</select></label>
         </div>
         <div id="fs-macros" class="grid grid-cols-4 gap-2 text-center"></div>
         <div class="grid ${fs.editId ? 'grid-cols-3' : 'grid-cols-1'} gap-2">
-            ${fs.editId ? `<button type="button" onclick="const id=fs.editId;closeFoodSheet();diaryDel(id)" class="py-3.5 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-solid fa-trash"></i> ${tr('Quitar')}</button>` : ''}
-            ${fs.editId ? `<button type="button" onclick="const id=fs.editId;closeFoodSheet();dupEntry(id)" class="py-3.5 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-regular fa-copy"></i> ${tr('Duplicar')}</button>` : ''}
-            <button id="fs-detail-add" type="button" onclick="fsConfirm()" class="py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${fs.editId ? '<i class="fa-solid fa-check"></i> ' + tr('Guardar cambios') : ''}</button>
+            ${fs.editId ? `<button type="button" ${ND.on(() => { const id = fs.editId; closeFoodSheet(); diaryDel(id); })} class="py-3.5 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-solid fa-trash"></i> ${tr('Quitar')}</button>` : ''}
+            ${fs.editId ? `<button type="button" ${ND.on(() => { const id = fs.editId; closeFoodSheet(); dupEntry(id); })} class="py-3.5 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-regular fa-copy"></i> ${tr('Duplicar')}</button>` : ''}
+            <button id="fs-detail-add" type="button" ${ND.on(fsConfirm)} class="py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${fs.editId ? '<i class="fa-solid fa-check"></i> ' + tr('Guardar cambios') : ''}</button>
         </div>
         ${fs.editId || f.custom ? `<div class="flex flex-wrap gap-2 pt-1">
-            ${fs.editId ? `<button type="button" onclick="fs.mode='quick';fsRender()" class="nd-mbtn flex-1"><i class="fa-solid fa-pen"></i> ${tr('Cambiar nombre o macros')}</button>` : ''}
-            ${f.custom ? `<button type="button" onclick="fsEditCustom('${f.id}')" class="nd-mbtn flex-1"><i class="fa-solid fa-pen-to-square"></i> ${tr('Editar mi alimento')}</button>
-            <button type="button" onclick="delCustomFood('${f.id}')" class="nd-mbtn flex-1"><i class="fa-solid fa-trash-can"></i> ${tr('Borrar mi alimento')}</button>` : ''}
+            ${fs.editId ? `<button type="button" ${ND.on(() => { fs.mode = 'quick'; fsRender(); })} class="nd-mbtn flex-1"><i class="fa-solid fa-pen"></i> ${tr('Cambiar nombre o macros')}</button>` : ''}
+            ${f.custom ? `<button type="button" ${ND.on(() => fsEditCustom(f.id))} class="nd-mbtn flex-1"><i class="fa-solid fa-pen-to-square"></i> ${tr('Editar mi alimento')}</button>
+            <button type="button" ${ND.on(() => delCustomFood(f.id))} class="nd-mbtn flex-1"><i class="fa-solid fa-trash-can"></i> ${tr('Borrar mi alimento')}</button>` : ''}
         </div>` : ''}
     </div>`;
     fsRenderTitle(); fsUpdateDetail();
@@ -575,9 +576,9 @@ function fsRenderQuick() {
             ${inp('fq-f', tr('Grasa (g)'), e ? e.f : '', `type="number" inputmode="decimal" min="0" placeholder="${tr('opcional')}"`)}
             ${inp('fq-c', tr('Hidratos (g)'), e ? e.c : '', `type="number" inputmode="decimal" min="0" placeholder="${tr('opcional')}"`)}
         </div>
-        <button type="button" onclick="fsQuickSave()" class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${tr(e ? 'Guardar cambios' : 'Apuntar')}</button>
-        ${e ? `<div class="grid grid-cols-2 gap-2"><button type="button" onclick="const id=fs.editId;closeFoodSheet();diaryDel(id)" class="py-3 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-solid fa-trash"></i> ${tr('Quitar')}</button>
-            <button type="button" onclick="const id=fs.editId;closeFoodSheet();dupEntry(id)" class="py-3 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-regular fa-copy"></i> ${tr('Duplicar')}</button></div>` : ''}
+        <button type="button" ${ND.on(fsQuickSave)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${tr(e ? 'Guardar cambios' : 'Apuntar')}</button>
+        ${e ? `<div class="grid grid-cols-2 gap-2"><button type="button" ${ND.on(() => { const id = fs.editId; closeFoodSheet(); diaryDel(id); })} class="py-3 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-solid fa-trash"></i> ${tr('Quitar')}</button>
+            <button type="button" ${ND.on(() => { const id = fs.editId; closeFoodSheet(); dupEntry(id); })} class="py-3 rounded-2xl border border-neutral-700 text-neutral-300 font-bold hover:bg-neutral-800"><i class="fa-regular fa-copy"></i> ${tr('Duplicar')}</button></div>` : ''}
     </div>`;
     setTimeout(() => { const el = $('fq-name'); if (el) el.focus(); }, 30);
 }
@@ -623,7 +624,7 @@ function fsRenderCreate() {
             ${inp('fc-fib', tr('Fibra (g, opcional)'), `type="number" inputmode="decimal" min="0" max="100"${E ? v(E.fib) : ' value="0"'}`)}
         </div>
         ${inp('fc-serv', tr('Peso de una ración (g, opcional)'), `type="number" inputmode="decimal" min="1" max="2000" placeholder="${tr('Ej: {x}', { x: '60' })}"${v(E && E.serv && E.serv[0])}`)}
-        <button type="button" onclick="fsCreateSave()" class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${E ? '<i class="fa-solid fa-check"></i> ' + tr('Guardar cambios') : tr('Crear y elegir cantidad')}</button>
+        <button type="button" ${ND.on(fsCreateSave)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${E ? '<i class="fa-solid fa-check"></i> ' + tr('Guardar cambios') : tr('Crear y elegir cantidad')}</button>
         ${E ? `<p class="text-xs text-neutral-400">${tr('Lo que ya apuntaste no cambia: los cambios cuentan desde ahora.')}</p>` : ''}
         ${!E && fs.cfPre && fs.cfPre.barcode ? `<p class="text-xs text-neutral-400"><i class="fa-solid fa-barcode text-mint-400"></i> ${tr('Se guardará con su código ({c}): la próxima vez que lo escanees saldrá solo.', { c: esc(fs.cfPre.barcode) })}</p>` : ''}
     </div>`;
@@ -685,7 +686,7 @@ function dupEntry(id) {
             <label class="block"><span class="text-xs font-bold text-neutral-400">${tr('Comida|etiqueta')}</span><select id="dup-slot" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold">${DSLOTS.map(([k, n]) => `<option value="${k}" ${k === e.slot ? 'selected' : ''}>${tr(n)}</option>`).join('')}</select></label>
             <label class="block"><span class="text-xs font-bold text-neutral-400">${tr('Día')}</span><input id="dup-date" type="date" value="${todayISO()}" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold"></label>
         </div>
-        <button onclick="dupConfirm('${id}','${from}')" class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-regular fa-copy"></i> ${tr('Duplicar')}</button></div>`);
+        <button ${ND.on(() => dupConfirm(id, from))} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-regular fa-copy"></i> ${tr('Duplicar')}</button></div>`);
 }
 function dupConfirm(id, from) {
     const e = (state.diary[from] || []).find(x => x.id === id); if (!e) return;
@@ -716,7 +717,7 @@ let undoFn = null;
 function toastUndo(msg, fn) {
     undoFn = fn;
     const t = $('toast');
-    t.innerHTML = `<span>${esc(tr(msg))}</span><button type="button" onclick="runUndo()" class="ml-3 underline font-extrabold">${tr('Deshacer')}</button>`;
+    t.innerHTML = `<span>${esc(tr(msg))}</span><button type="button" ${ND.on(runUndo)} class="ml-3 underline font-extrabold">${tr('Deshacer')}</button>`;
     t.style.pointerEvents = 'auto'; t.style.transitionDuration = '';
     t.style.opacity = '1'; t.style.transform = 'translate(-50%, 0)';
     clearTimeout(toastTimer);

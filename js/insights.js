@@ -82,14 +82,14 @@ function dayMoment() {
         k: 'trial', ic: '👑', kicker: tr('Prueba PRO'),
         title: tl === 1 ? tr('Tu prueba PRO termina mañana') : tr('Tu prueba PRO termina en 2 días'),
         sub: tr('Después sigues con todo lo gratis: diario, escáner, Coach, progreso y gym. No se cobra nada: la prueba no se renueva sola.'),
-        btn: [tr('Ver qué incluye PRO'), "momentSeen('trial'); openPro()"], btn2: [tr('Entendido'), "dismissMoment('trial')"] };
+        btn: [tr('Ver qué incluye PRO'), () => { momentSeen('trial'); openPro(); }], btn2: [tr('Entendido'), () => dismissMoment('trial')] };
 
     // 1. Vuelve después de unos días: ni regañar ni fingir que no ha pasado
     if (last && fuera >= 3 && M.back !== today) return {
         k: 'back', ic: '🌱', kicker: tr('{k} días sin apuntar', { k: fuera }),
         title: tr('Me alegra verte de vuelta'),
         sub: tr('Tu plan sigue donde lo dejaste: {k} kcal y {p} g de proteína. No hay nada que recuperar, se empieza por la comida de hoy.', { k: fmt(calc.target), p: fmt(calc.prot) }),
-        btn: [tr('Apuntar algo'), 'openFoodSheet()'], btn2: [tr('Ahora no'), "dismissMoment('back')"] };
+        btn: [tr('Apuntar algo'), openFoodSheet], btn2: [tr('Ahora no'), () => dismissMoment('back')] };
 
     // 2. La racha se pierde esta noche: solo a partir de las 17 h y solo si es verdad.
     //    Va antes que el resumen semanal: el resumen aguanta hasta el miércoles, la racha no.
@@ -97,7 +97,7 @@ function dayMoment() {
         k: 'risk', ic: '🔥', kicker: tr('Racha de {k} días', { k: S.cur }),
         title: tr('Hoy aún no has apuntado nada'),
         sub: tr('Con apuntar una comida la mantienes.') + ' ' + (S.cur === S.best ? tr('Además es tu mejor racha hasta ahora.') : tr('Tu récord está en {k} días.', { k: S.best })),
-        btn: [tr('Apuntar en 10 segundos'), 'openFoodSheet()'], btn2: [tr('Hoy no'), "dismissMoment('risk')"] };
+        btn: [tr('Apuntar en 10 segundos'), openFoodSheet], btn2: [tr('Hoy no'), () => dismissMoment('risk')] };
 
     // 3. Resumen de la semana pasada: lunes, martes o miércoles, una vez por semana
     const lunes = mondayOf(today);
@@ -112,8 +112,8 @@ function dayMoment() {
                 sub: tr('Media de {k} kcal y {p} g de proteína.', { k: fmt(W.avgKcal), p: fmt(W.avgP) })
                     + ' ' + (W.protOk ? tr('Cumpliste tu proteína {x}.', { x: tp(W.protOk, 'día', 'días') }) : tr('Esta semana, apunta a {p} g de proteína al día.', { p: fmt(calc.prot) }))
                     + (W.workouts ? ' ' + tr('Guardaste {x}.', { x: tp(W.workouts, 'entreno', 'entrenos') }) : '') + peso,
-                btn: [tr('Ver mi progreso'), `momentSeen('week','${lunes}'); showTab('progress')`],
-                btn2: [tr('Compartirla'), `momentSeen('week','${lunes}'); shareProgress()`] };
+                btn: [tr('Ver mi progreso'), () => { momentSeen('week', lunes); showTab('progress'); }],
+                btn2: [tr('Compartirla'), () => { momentSeen('week', lunes); shareProgress(); }] };
         }
     }
 
@@ -122,7 +122,7 @@ function dayMoment() {
         k: 'remind', ic: '🔔', kicker: tr('Para no olvidarte'),
         title: tr('Ponte un recordatorio diario'),
         sub: tr('Se añade a tu calendario y te avisa a la hora que elijas. Funciona aunque no abras la app.'),
-        btn: [tr('Ponerlo'), "momentSeen('remind', 1); openReminder()"], btn2: [tr('No, gracias'), "dismissMoment('remind')"] };
+        btn: [tr('Ponerlo'), () => { momentSeen('remind', 1); openReminder(); }], btn2: [tr('No, gracias'), () => dismissMoment('remind')] };
 
     return null;
 }

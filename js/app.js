@@ -79,8 +79,8 @@ function openReport() {
             <p class="text-sm text-neutral-300">${tr('Este informe se guarda solo en tu dispositivo. Si algo falla, cópialo y envíaselo a quien te pasó la app.')}</p>
             <pre class="p-3 rounded-2xl bg-neutral-950 border border-neutral-800 text-[11px] text-neutral-300 whitespace-pre-wrap break-words max-h-72 overflow-y-auto">${esc(reportText())}</pre>
             <div class="grid grid-cols-2 gap-2">
-                <button onclick="copyReport()" class="py-3 rounded-xl bg-mint-600 text-white font-extrabold text-sm"><i class="fa-solid fa-copy"></i> ${tr('Copiar')}</button>
-                <button onclick="clearReport()" class="py-3 rounded-xl border border-neutral-700 text-neutral-200 font-bold text-sm">${tr('Vaciar')}</button>
+                <button ${ND.on(copyReport)} class="py-3 rounded-xl bg-mint-600 text-white font-extrabold text-sm"><i class="fa-solid fa-copy"></i> ${tr('Copiar')}</button>
+                <button ${ND.on(clearReport)} class="py-3 rounded-xl border border-neutral-700 text-neutral-200 font-bold text-sm">${tr('Vaciar')}</button>
             </div>
         </div>`);
 }

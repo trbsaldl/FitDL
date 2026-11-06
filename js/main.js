@@ -17,8 +17,42 @@ function init() {
     renderTracker();
     renderMeasures();
     updateSticky();
-    // Los enlaces internos (#seccion) abren la pestaña correcta
+    // Listener único de clic: data-h, data-backdrop, data-tab, data-cv, data-action, links internos
     document.addEventListener('click', e => {
+        // 1. Handlers dinámicos registrados con ND.on()
+        const hEl = e.target.closest('[data-h]');
+        if (hEl) {
+            const fn = ND._h.get(hEl.dataset.h);
+            if (fn) { fn(e); return; }
+        }
+        // 2. Cierre de modales al hacer clic en el fondo
+        const bd = e.target.closest('[data-backdrop]');
+        if (bd && e.target === bd) {
+            const fn = window[bd.dataset.backdrop];
+            if (typeof fn === 'function') fn();
+            return;
+        }
+        // 3. Pestañas de navegación
+        const tabEl = e.target.closest('[data-tab]');
+        if (tabEl) { showTab(tabEl.dataset.tab); return; }
+        // 4. Vistas del Coach
+        const cvEl = e.target.closest('[data-cv]');
+        if (cvEl) { coachView(cvEl.dataset.cv); return; }
+        // 5. Acciones del HTML estático (data-action)
+        const aEl = e.target.closest('[data-action]');
+        if (aEl) {
+            const action = aEl.dataset.action;
+            const fn = window[action];
+            if (typeof fn === 'function') {
+                const arg = aEl.dataset.arg;
+                const arg2 = aEl.dataset.arg2;
+                if (arg2 !== undefined) fn(isNaN(arg) ? arg : +arg, isNaN(arg2) ? arg2 : +arg2);
+                else if (arg !== undefined) fn(isNaN(arg) ? arg : +arg);
+                else fn();
+            }
+            return;
+        }
+        // 6. Links internos (#seccion)
         const a = e.target.closest('a[href^="#"]');
         if (!a) return;
         const id = a.getAttribute('href').slice(1);
@@ -26,9 +60,34 @@ function init() {
         e.preventDefault();
         goTo(id);
     });
+    // Listener de input (data-ih)
+    document.addEventListener('input', e => {
+        const t = e.target.closest('[data-ih]');
+        if (t) { const fn = ND._h.get(t.dataset.ih); if (fn) fn(e); }
+    });
+    // Listener de change (data-ch)
+    document.addEventListener('change', e => {
+        const t = e.target.closest('[data-ch]');
+        if (t) { const fn = ND._h.get(t.dataset.ch); if (fn) fn(e); }
+    });
+    // Listener de submit (data-sh)
+    document.addEventListener('submit', e => {
+        const t = e.target.closest('[data-sh]');
+        if (t) { e.preventDefault(); const fn = ND._h.get(t.dataset.sh); if (fn) fn(e); }
+    });
+    // Listener de keydown (data-kd)
+    document.addEventListener('keydown', e => {
+        const t = e.target.closest('[data-kd]');
+        if (t) { const fn = ND._h.get(t.dataset.kd); if (fn) fn(e); }
+    });
+    // Listener de focusout (reemplaza onblur, data-bh)
+    document.addEventListener('focusout', e => {
+        const t = e.target.closest('[data-bh]');
+        if (t) { const fn = ND._h.get(t.dataset.bh); if (fn) fn(e); }
+    });
     checkAchievements(true); // logros ya conseguidos con datos anteriores: se anotan sin celebrarlos
     renderProfileChip(); renderDiary(); renderDashboard(); renderPrefs();
-    document.addEventListener('click', e => { if (!e.target.closest('#profile-chip')) closeProfileMenu(); });
+    document.addEventListener('click', e => { if (!e.target.closest('#profile-chip') && !e.target.closest('[data-backdrop]')) closeProfileMenu(); });
     // Sin perfil se abre la bienvenida; con perfil, la última pestaña usada (la calculadora antigua es «Mi plan»)
     // Idioma: se aplica a los textos fijos antes de pintar nada
     document.documentElement.lang = LANG;
@@ -45,6 +104,19 @@ function init() {
     if (alimento) openFoodFromLink(alimento);
     // Se limpia la dirección para que al recargar no se repita la acción
     if (accion || alimento) try { history.replaceState(null, '', location.pathname); } catch (e) { }
+    // Bindings para elementos estáticos del HTML (sustituyen a los onclick/oninput/onchange/onsubmit inline)
+    const bindEl = (id, evt, fn) => { const el = document.getElementById(id); if (el) el.addEventListener(evt, fn); };
+    ['age', 'weight', 'height'].forEach(k => {
+        bindEl('n-' + k, 'input', function () { onPair(k, this); });
+        bindEl('r-' + k, 'input', function () { onPair(k, this); });
+        bindEl('n-' + k, 'blur', function () { clampPair(k); });
+    });
+    bindEl('input-activity', 'change', function () { setField('activity', parseFloat(this.value)); });
+    bindEl('dia-date', 'change', function () { diaryDate = this.value || todayISO(); renderDiary(); });
+    bindEl('chat-form', 'submit', function (e) { e.preventDefault(); coachSend(); });
+    bindEl('trk-goal', 'change', function () { setGoalWeight(this.value); });
+    bindEl('fs-slot', 'change', function () { fs.slot = this.value; fsRenderTitle(); });
+    bindEl('fs-q', 'input', function () { fs.q = this.value; fsRender(); });
     renderInstall();
     track('visit'); renderLocks();
     // Copia automática del día y petición al navegador para que NO borre los datos de la app por falta de espacio

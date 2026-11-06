@@ -100,11 +100,11 @@ function proActions() {
     if (isPro()) return `<div class="p-4 rounded-2xl bg-mint-600/15 border border-mint-500/30 text-sm text-neutral-100"><i class="fa-solid fa-crown text-amber-300"></i> <b>${tr('PRO activo')}</b>${d.code ? ' ' + tr('(código de activación)') : ' · ' + tr('prueba gratis: te quedan {x}', { x: tp(trialDaysLeft(), 'día', 'días') })}</div>`;
     // Sin prueba gastada: el único botón grande es la prueba (no pide tarjeta). Ya gastada: el pago único.
     const codigo = `<details class="nd-faq"><summary>${tr('Ya tengo un código')}<i class="fa-solid fa-chevron-down chev"></i></summary>
-        <form onsubmit="event.preventDefault(); redeemCode()" class="flex gap-2 p-3"><input id="pro-code" autocomplete="off" autocapitalize="characters" placeholder="NDL-XXXX-XXXX-XXXX" class="flex-1 min-w-0 px-3 py-3 rounded-xl bg-neutral-800 border border-neutral-700 font-bold tracking-wide text-sm" aria-label="${tr('Código de activación')}"><button class="px-4 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-extrabold">${tr('Activar')}</button></form></details>`;
+        <form ${ND.onsubmit(redeemCode)} class="flex gap-2 p-3"><input id="pro-code" autocomplete="off" autocapitalize="characters" placeholder="NDL-XXXX-XXXX-XXXX" class="flex-1 min-w-0 px-3 py-3 rounded-xl bg-neutral-800 border border-neutral-700 font-bold tracking-wide text-sm" aria-label="${tr('Código de activación')}"><button class="px-4 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-extrabold">${tr('Activar')}</button></form></details>`;
     return `<div class="space-y-2">
-        ${!d.trialUsed ? `<button onclick="startTrial()" class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${tr('Probar PRO 7 días gratis')}</button>
+        ${!d.trialUsed ? `<button ${ND.on(startTrial)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold">${tr('Probar PRO 7 días gratis')}</button>
         <p class="text-xs text-center text-neutral-400">${tr('Sin tarjeta y sin renovación automática. Al acabar vuelves a la versión gratis tú solo.')}</p>` : ''}
-        ${IN_PLAY ? (d.trialUsed ? '<p class="text-sm text-neutral-300">' + tr('Muy pronto podrás hacerte PRO desde la app. Lo básico sigue siendo gratis.') + '</p>' : '') : `<button onclick="payPro()" class="w-full py-3.5 rounded-2xl ${d.trialUsed ? 'bg-mint-600 hover:bg-mint-700 text-white' : 'bg-neutral-800 border border-neutral-700 text-neutral-100'} font-extrabold">${tr('Hazte PRO para siempre · {m}', { m: eur(PRO_PRICE.life) })}</button>
+        ${IN_PLAY ? (d.trialUsed ? '<p class="text-sm text-neutral-300">' + tr('Muy pronto podrás hacerte PRO desde la app. Lo básico sigue siendo gratis.') + '</p>' : '') : `<button ${ND.on(payPro)} class="w-full py-3.5 rounded-2xl ${d.trialUsed ? 'bg-mint-600 hover:bg-mint-700 text-white' : 'bg-neutral-800 border border-neutral-700 text-neutral-100'} font-extrabold">${tr('Hazte PRO para siempre · {m}', { m: eur(PRO_PRICE.life) })}</button>
         ${codigo}`}
     </div>`;
 }
@@ -136,7 +136,7 @@ function openPaywall(feature) {
         <div class="text-center space-y-2 py-2"><div class="nd-ic-xl mx-auto">${icon('👑')}</div><h3 class="text-xl font-extrabold text-neutral-50">${tr('{n} es de FitDL PRO', { n: esc(name) })}</h3><p class="text-sm text-neutral-300">${esc(why)}</p></div>
         ${proPreview(feature)}${proActions()}${trasLaPrueba()}${proPrices()}
         <details class="nd-faq"><summary>${tr('Qué incluye PRO')}<i class="fa-solid fa-chevron-down chev"></i></summary><div class="px-3 pb-3">${proTable()}</div></details>
-        <button type="button" onclick="closeSheet()" class="w-full py-2.5 text-sm font-bold text-neutral-400 hover:text-neutral-200">${tr('Seguir con la versión gratis')}</button>
+        <button type="button" ${ND.on(closeSheet)} class="w-full py-2.5 text-sm font-bold text-neutral-400 hover:text-neutral-200">${tr('Seguir con la versión gratis')}</button>
     </div>`);
 }
 function afterProChange() { closeSheet(); renderDashboard(); renderDiary(); if (state.tab === 'coach') renderCoach(); if (state.tab === 'progress') renderProgress(); }

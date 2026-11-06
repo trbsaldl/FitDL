@@ -13,7 +13,7 @@
     <link rel="canonical" href="https://trbsaldl.github.io/FitDL/">
     <meta data-t-co="Controla tus calorías, macros, comidas y progreso en un solo lugar. Coach que te dice qué comer, menú del día con gramos exactos, lista de la compra, registro por voz y seguimiento de tu peso. Escáner de código de barras y macros gratis, sin anuncios y sin registro. Más de 4.500 alimentos, con más de 880 productos Hacendado." name="description" content="Controla tus calorías, macros, comidas y progreso en un solo lugar. Coach que te dice qué comer, menú del día con gramos exactos, lista de la compra, registro por voz y seguimiento de tu peso. Escáner de código de barras y macros gratis, sin anuncios y sin registro. Más de 4.500 alimentos, con más de 880 productos Hacendado.">
     <!-- Seguridad: solo se cargan archivos propios y solo se conecta con Open Food Facts (escáner) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' https://world.openfoodfacts.org; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' https://world.openfoodfacts.org; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="no-referrer">
     <!-- Añadido: SEO social, color de tema e icono -->
     <meta name="theme-color" content="#110f0d">
@@ -59,19 +59,19 @@
 
     <header class="sticky top-0 z-50 bg-neutral-950/85 backdrop-blur-md border-b border-neutral-800 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-            <button data-t-al="FitDL, ir al inicio" onclick="showTab('home')" class="flex items-center gap-2.5" aria-label="FitDL, ir al inicio">
+            <button data-t-al="FitDL, ir al inicio" class="flex items-center gap-2.5" aria-label="FitDL, ir al inicio">
                 <div class="nd-logo w-10 h-10 rounded-2xl flex items-center justify-center text-white">
                     <i class="fa-solid fa-leaf text-lg"></i>
                 </div>
                 <span class="nd-brand text-[1.4rem] text-neutral-100">Fit<span class="text-mint-400">DL</span></span>
             </button>
             <nav data-t-al="Secciones" id="tabbar-top" class="hidden lg:flex items-center gap-1 p-1 rounded-2xl bg-neutral-900 border border-neutral-800 text-sm font-extrabold" aria-label="Secciones">
-                <button data-tab="home" onclick="showTab('home')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-house"></i> <span data-t="Hoy">Hoy</span></button>
-                <button data-tab="food" onclick="showTab('food')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-utensils"></i> <span data-t="Diario">Diario</span></button>
-                <button data-tab="coach" onclick="showTab('coach')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-t="Coach">Coach</span></button>
-                <button data-tab="progress" onclick="showTab('progress')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-chart-line"></i> <span data-t="Progreso">Progreso</span></button>
-                <button data-tab="gym" onclick="showTab('gym')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-dumbbell"></i> <span data-t="Gym">Gym</span></button>
-                <button data-tab="calc" onclick="showTab('calc')" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-bullseye"></i> <span data-t="Mi plan">Mi plan</span></button>
+                <button data-tab="home" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-house"></i> <span data-t="Hoy">Hoy</span></button>
+                <button data-tab="food" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-utensils"></i> <span data-t="Diario">Diario</span></button>
+                <button data-tab="coach" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-t="Coach">Coach</span></button>
+                <button data-tab="progress" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-chart-line"></i> <span data-t="Progreso">Progreso</span></button>
+                <button data-tab="gym" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-dumbbell"></i> <span data-t="Gym">Gym</span></button>
+                <button data-tab="calc" class="px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-bullseye"></i> <span data-t="Mi plan">Mi plan</span></button>
             </nav>
             <div id="profile-chip" class="relative"></div>
         </div>
@@ -90,8 +90,8 @@
                         <h1 data-t="Cuenta calorías gratis de verdad" class="text-[2.6rem] leading-[1.04] sm:text-6xl font-extrabold tracking-tight text-neutral-50">Cuenta calorías gratis de verdad</h1>
                         <p data-t="Escáner, macros y todas tus comidas sin pagar ni ver anuncios. Con más de 880 productos Hacendado y tu plan en 2 minutos." class="text-lg sm:text-xl text-neutral-300 max-w-xl">Escáner, macros y todas tus comidas sin pagar ni ver anuncios. Con más de 880 productos Hacendado y tu plan en 2 minutos.</p>
                         <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3">
-                            <button onclick="newProfile()" class="nd-btn-primary"><span data-t="Empezar gratis">Empezar gratis</span> <i class="fa-solid fa-arrow-right"></i></button>
-                            <button onclick="importProfiles()" class="nd-btn-ghost"><i class="fa-solid fa-upload"></i> <span data-t="Ya tengo una copia">Ya tengo una copia</span></button>
+                            <button data-action="newProfile" class="nd-btn-primary"><span data-t="Empezar gratis">Empezar gratis</span> <i class="fa-solid fa-arrow-right"></i></button>
+                            <button data-action="importProfiles" class="nd-btn-ghost"><i class="fa-solid fa-upload"></i> <span data-t="Ya tengo una copia">Ya tengo una copia</span></button>
                         </div>
                         <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-neutral-400">
                             <li><i class="fa-solid fa-check text-mint-400"></i> <span data-t="Gratis y sin anuncios">Gratis y sin anuncios</span></li>
@@ -154,7 +154,7 @@
 
             <div class="nd-hero rounded-[2rem] p-8 sm:p-12 text-center space-y-5">
                 <h2 data-t="Empieza hoy. Tarda 2 minutos." class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-50">Empieza hoy. Tarda 2 minutos.</h2>
-                <button onclick="newProfile()" class="nd-btn-primary mx-auto"><span data-t="Empezar gratis">Empezar gratis</span> <i class="fa-solid fa-arrow-right"></i></button>
+                <button data-action="newProfile" class="nd-btn-primary mx-auto"><span data-t="Empezar gratis">Empezar gratis</span> <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </section>
 
@@ -166,7 +166,7 @@
         <div id="tab-calc" data-panel="calc" class="space-y-8 hidden">
         <div class="flex items-center justify-between gap-3">
             <h2 data-t="Mi plan" class="text-3xl font-extrabold text-neutral-100 tracking-tight">Mi plan</h2>
-            <button onclick="openWizard('edit')" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-wand-magic-sparkles text-mint-400"></i> <span data-t="Asistente">Asistente</span></button>
+            <button data-action="openWizard" data-arg="edit" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-wand-magic-sparkles text-mint-400"></i> <span data-t="Asistente">Asistente</span></button>
         </div>
 
 
@@ -182,7 +182,7 @@
                                 <h2 data-t="1. Tus datos" class="text-lg font-bold text-neutral-100">1. Tus datos</h2>
                             </div>
                         </div>
-                        <button onclick="resetInputs()" class="text-xs font-semibold text-neutral-500 hover:text-roseAccent-500 transition flex items-center gap-1">
+                        <button data-action="resetInputs" class="text-xs font-semibold text-neutral-500 hover:text-roseAccent-500 transition flex items-center gap-1">
                             <i class="fa-solid fa-arrow-rotate-left"></i> <span data-t="Restablecer">Restablecer</span>
                         </button>
                     </div>
@@ -190,8 +190,8 @@
                     <div class="space-y-2">
                         <label data-t="Sexo biológico" class="block text-xs font-bold text-neutral-300 uppercase tracking-wider">Sexo biológico</label>
                         <div class="grid grid-cols-2 gap-3">
-                            <button id="btn-gender-female" onclick="setGender('female')" class="py-3 px-4 rounded-2xl font-extrabold text-xs transition border flex items-center justify-center gap-2"><i class="fa-solid fa-venus text-sm"></i> <span data-t="Mujer">Mujer</span></button>
-                            <button id="btn-gender-male" onclick="setGender('male')" class="py-3 px-4 rounded-2xl font-extrabold text-xs transition border flex items-center justify-center gap-2"><i class="fa-solid fa-mars text-sm"></i> <span data-t="Hombre">Hombre</span></button>
+                            <button id="btn-gender-female" data-action="setGender" data-arg="female" class="py-3 px-4 rounded-2xl font-extrabold text-xs transition border flex items-center justify-center gap-2"><i class="fa-solid fa-venus text-sm"></i> <span data-t="Mujer">Mujer</span></button>
+                            <button id="btn-gender-male" data-action="setGender" data-arg="male" class="py-3 px-4 rounded-2xl font-extrabold text-xs transition border flex items-center justify-center gap-2"><i class="fa-solid fa-mars text-sm"></i> <span data-t="Hombre">Hombre</span></button>
                         </div>
                     </div>
 
@@ -199,30 +199,30 @@
                     <div class="space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <label data-t="Edad (años)" for="n-age" class="font-bold text-neutral-300 uppercase tracking-wider">Edad (años)</label>
-                            <input id="n-age" placeholder="0" type="number" inputmode="decimal" min="18" max="90" step="1" class="num-input text-right font-extrabold text-mint-400 bg-mint-500/10 px-2 py-1 rounded-lg border border-mint-500/30" oninput="onPair('age', this)" onblur="clampPair('age')">
+                            <input id="n-age" placeholder="0" type="number" inputmode="decimal" min="18" max="90" step="1" class="num-input text-right font-extrabold text-mint-400 bg-mint-500/10 px-2 py-1 rounded-lg border border-mint-500/30">
                         </div>
-                        <input data-t-al="Edad" type="range" id="r-age" min="18" max="90" step="1" oninput="onPair('age', this)" class="w-full h-2 bg-neutral-700 rounded-lg cursor-pointer" aria-label="Edad">
+                        <input data-t-al="Edad" type="range" id="r-age" min="18" max="90" step="1" class="w-full h-2 bg-neutral-700 rounded-lg cursor-pointer" aria-label="Edad">
                     </div>
 
                     <div class="space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <label data-t="Peso (kg)" for="n-weight" class="font-bold text-neutral-300 uppercase tracking-wider">Peso (kg)</label>
-                            <input id="n-weight" placeholder="0" type="number" inputmode="decimal" min="35" max="250" step="0.1" class="num-input text-right font-extrabold text-mint-400 bg-mint-500/10 px-2 py-1 rounded-lg border border-mint-500/30" oninput="onPair('weight', this)" onblur="clampPair('weight')">
+                            <input id="n-weight" placeholder="0" type="number" inputmode="decimal" min="35" max="250" step="0.1" class="num-input text-right font-extrabold text-mint-400 bg-mint-500/10 px-2 py-1 rounded-lg border border-mint-500/30">
                         </div>
-                        <input data-t-al="Peso" type="range" id="r-weight" min="35" max="250" step="0.5" oninput="onPair('weight', this)" class="w-full h-2 bg-neutral-700 rounded-lg cursor-pointer" aria-label="Peso">
+                        <input data-t-al="Peso" type="range" id="r-weight" min="35" max="250" step="0.5" class="w-full h-2 bg-neutral-700 rounded-lg cursor-pointer" aria-label="Peso">
                     </div>
 
                     <div class="space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <label data-t="Estatura (cm)" for="n-height" class="font-bold text-neutral-300 uppercase tracking-wider">Estatura (cm)</label>
-                            <input id="n-height" placeholder="0" type="number" inputmode="decimal" min="130" max="220" step="1" class="num-input text-right font-extrabold text-mint-400 bg-mint-500/10 px-2 py-1 rounded-lg border border-mint-500/30" oninput="onPair('height', this)" onblur="clampPair('height')">
+                            <input id="n-height" placeholder="0" type="number" inputmode="decimal" min="130" max="220" step="1" class="num-input text-right font-extrabold text-mint-400 bg-mint-500/10 px-2 py-1 rounded-lg border border-mint-500/30">
                         </div>
-                        <input data-t-al="Estatura" type="range" id="r-height" min="130" max="220" step="1" oninput="onPair('height', this)" class="w-full h-2 bg-neutral-700 rounded-lg cursor-pointer" aria-label="Estatura">
+                        <input data-t-al="Estatura" type="range" id="r-height" min="130" max="220" step="1" class="w-full h-2 bg-neutral-700 rounded-lg cursor-pointer" aria-label="Estatura">
                     </div>
 
                     <div class="space-y-2">
                         <label data-t="Actividad física (factor PAL)" for="input-activity" class="block text-xs font-bold text-neutral-300 uppercase tracking-wider">Actividad física (factor PAL)</label>
-                        <select id="input-activity" onchange="setField('activity', parseFloat(this.value))" class="w-full p-3 bg-neutral-800/60 border border-neutral-800 rounded-2xl text-xs font-bold text-neutral-100 focus:outline-none focus:ring-2 focus:ring-mint-500">
+                        <select id="input-activity" class="w-full p-3 bg-neutral-800/60 border border-neutral-800 rounded-2xl text-xs font-bold text-neutral-100 focus:outline-none focus:ring-2 focus:ring-mint-500">
                             <option data-t="Sedentario · trabajo sentado, &lt; 5.000 pasos, sin ejercicio (×1,2)" value="1.2">Sedentario · trabajo sentado, &lt; 5.000 pasos, sin ejercicio (×1,2)</option>
                             <option data-t="Ligero · 5-7.500 pasos o ejercicio 1-3 días/sem (×1,375)" value="1.375">Ligero · 5-7.500 pasos o ejercicio 1-3 días/sem (×1,375)</option>
                             <option data-t="Moderado · 7.500-10.000 pasos o ejercicio 3-5 días/sem (×1,55)" value="1.55">Moderado · 7.500-10.000 pasos o ejercicio 3-5 días/sem (×1,55)</option>
@@ -232,8 +232,8 @@
                     </div>
 
                     <div class="space-y-2">
-                        <button id="btn-edit" onclick="editData()" class="hidden w-full py-3.5 rounded-2xl bg-neutral-800 border border-neutral-700 hover:border-mint-500/50 text-neutral-100 font-extrabold text-sm flex items-center justify-center gap-2"><i class="fa-solid fa-pen text-mint-400"></i> <span data-t="Editar datos">Editar datos</span></button>
-                        <button id="btn-accept" onclick="acceptData()" class="w-full py-4 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-base cta-glow flex items-center justify-center gap-2"><i class="fa-solid fa-check"></i> <span data-t="Aceptar">Aceptar</span></button>
+                        <button id="btn-edit" data-action="editData" class="hidden w-full py-3.5 rounded-2xl bg-neutral-800 border border-neutral-700 hover:border-mint-500/50 text-neutral-100 font-extrabold text-sm flex items-center justify-center gap-2"><i class="fa-solid fa-pen text-mint-400"></i> <span data-t="Editar datos">Editar datos</span></button>
+                        <button id="btn-accept" data-action="acceptData" class="w-full py-4 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold text-base cta-glow flex items-center justify-center gap-2"><i class="fa-solid fa-check"></i> <span data-t="Aceptar">Aceptar</span></button>
                         <p id="calc-err" role="alert" class="hidden text-xs font-bold text-roseAccent-400"></p>
                     </div>
 
@@ -369,9 +369,9 @@
                             </div>
                         </div>
                         <div class="flex flex-wrap items-center gap-1 bg-neutral-800 p-1 rounded-2xl text-xs font-bold" id="strategy-btns">
-                            <button data-t="Alta en proteína" data-strat="highprotein" onclick="setField('strategy','highprotein')" class="px-3 py-1.5 rounded-xl">Alta en proteína</button>
-                            <button data-t="Equilibrada" data-strat="balanced" onclick="setField('strategy','balanced')" class="px-3 py-1.5 rounded-xl">Equilibrada</button>
-                            <button data-t="Baja en hidratos" data-strat="lowcarb" onclick="setField('strategy','lowcarb')" class="px-3 py-1.5 rounded-xl">Baja en hidratos</button>
+                            <button data-t="Alta en proteína" data-strat="highprotein" data-action="setField" data-arg="strategy" data-arg2="highprotein" class="px-3 py-1.5 rounded-xl">Alta en proteína</button>
+                            <button data-t="Equilibrada" data-strat="balanced" data-action="setField" data-arg="strategy" data-arg2="balanced" class="px-3 py-1.5 rounded-xl">Equilibrada</button>
+                            <button data-t="Baja en hidratos" data-strat="lowcarb" data-action="setField" data-arg="strategy" data-arg2="lowcarb" class="px-3 py-1.5 rounded-xl">Baja en hidratos</button>
                         </div>
                     </div>
 
@@ -443,10 +443,10 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2 w-full md:w-auto min-w-0">
-                    <button onclick="diaryShift(-1)" class="w-10 h-10 shrink-0 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300" aria-label="Día anterior" data-t-al="Día anterior"><i class="fa-solid fa-chevron-left"></i></button>
-                    <input id="dia-date" type="date" aria-label="Día del diario" data-t-al="Día del diario" onchange="diaryDate=this.value||todayISO();renderDiary()" class="flex-1 md:flex-none min-w-0 w-full md:w-auto p-2.5 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold">
-                    <button onclick="diaryShift(1)" class="w-10 h-10 shrink-0 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300" aria-label="Día siguiente" data-t-al="Día siguiente"><i class="fa-solid fa-chevron-right"></i></button>
-                    <button data-t="Hoy" id="dia-today" onclick="diaryDate=todayISO();renderDiary()" class="px-3 h-10 rounded-xl text-xs font-bold whitespace-nowrap">Hoy</button>
+                    <button data-action="diaryShift" data-arg="-1" class="w-10 h-10 shrink-0 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300" aria-label="Día anterior" data-t-al="Día anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                    <input id="dia-date" type="date" aria-label="Día del diario" data-t-al="Día del diario" class="flex-1 md:flex-none min-w-0 w-full md:w-auto p-2.5 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold">
+                    <button data-action="diaryShift" data-arg="1" class="w-10 h-10 shrink-0 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300" aria-label="Día siguiente" data-t-al="Día siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button data-t="Hoy" id="dia-today" data-action="diaryGoToday" class="px-3 h-10 rounded-xl text-xs font-bold whitespace-nowrap">Hoy</button>
                 </div>
             </div>
 
@@ -454,16 +454,16 @@
 
             <!-- Diario tipo FatSecret: buscador con lupa y comidas del día -->
             <div class="flex gap-2">
-            <button data-t-al="Buscar un alimento para apuntar" type="button" onclick="openFoodSheet()" class="flex-1 min-w-0 flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-neutral-800/70 border border-neutral-700 text-left hover:border-mint-500/50" aria-label="Buscar un alimento para apuntar">
+            <button data-t-al="Buscar un alimento para apuntar" type="button" data-action="openFoodSheet" class="flex-1 min-w-0 flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-neutral-800/70 border border-neutral-700 text-left hover:border-mint-500/50" aria-label="Buscar un alimento para apuntar">
                 <i class="fa-solid fa-magnifying-glass text-mint-400"></i>
                 <span class="text-sm font-semibold text-neutral-400 truncate" data-t="Busca un alimento: «spaghetti hacendado», «yogur griego»…">Busca un alimento: «spaghetti hacendado», «yogur griego»…</span>
             </button>
-            <button type="button" onclick="openScanner()" class="w-14 shrink-0 rounded-2xl bg-neutral-800/70 border border-neutral-700 text-mint-400 text-lg hover:border-mint-500/50" aria-label="Escanear código de barras" data-t-al="Escanear código de barras"><i class="fa-solid fa-barcode"></i></button>
+            <button type="button" data-action="openScanner" class="w-14 shrink-0 rounded-2xl bg-neutral-800/70 border border-neutral-700 text-mint-400 text-lg hover:border-mint-500/50" aria-label="Escanear código de barras" data-t-al="Escanear código de barras"><i class="fa-solid fa-barcode"></i></button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="openVoiceLog()" class="py-3 rounded-2xl bg-neutral-800/70 border border-neutral-700 hover:border-mint-500/50 text-sm font-extrabold text-neutral-100 flex items-center justify-center gap-2"><i class="fa-solid fa-microphone text-mint-400"></i> <span data-t="Voz">Voz</span> <i data-lock="voice" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
-                <button type="button" onclick="openPhotoLog()" class="py-3 rounded-2xl bg-neutral-800/70 border border-neutral-700 hover:border-mint-500/50 text-sm font-extrabold text-neutral-100 flex items-center justify-center gap-2"><i class="fa-solid fa-camera text-mint-400"></i> <span data-t="Foto">Foto</span> <i data-lock="photo" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
-                <button type="button" onclick="openFridge()" class="py-3 rounded-2xl bg-neutral-800/70 border border-neutral-700 hover:border-mint-500/50 text-sm font-extrabold text-neutral-100 flex items-center justify-center gap-2"><i class="fa-solid fa-snowflake text-mint-400"></i> <span data-t="Nevera">Nevera</span> <i data-lock="fridge" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
+                <button type="button" data-action="openVoiceLog" class="py-3 rounded-2xl bg-neutral-800/70 border border-neutral-700 hover:border-mint-500/50 text-sm font-extrabold text-neutral-100 flex items-center justify-center gap-2"><i class="fa-solid fa-microphone text-mint-400"></i> <span data-t="Voz">Voz</span> <i data-lock="voice" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
+                <button type="button" data-action="openPhotoLog" class="py-3 rounded-2xl bg-neutral-800/70 border border-neutral-700 hover:border-mint-500/50 text-sm font-extrabold text-neutral-100 flex items-center justify-center gap-2"><i class="fa-solid fa-camera text-mint-400"></i> <span data-t="Foto">Foto</span> <i data-lock="photo" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
+                <button type="button" data-action="openFridge" class="py-3 rounded-2xl bg-neutral-800/70 border border-neutral-700 hover:border-mint-500/50 text-sm font-extrabold text-neutral-100 flex items-center justify-center gap-2"><i class="fa-solid fa-snowflake text-mint-400"></i> <span data-t="Nevera">Nevera</span> <i data-lock="fridge" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
             </div>
 
             <div id="diary-meals" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
@@ -476,19 +476,19 @@
         <section id="sec-coach" class="max-w-3xl mx-auto space-y-4">
             <div class="flex items-center justify-between gap-3">
                 <h2 class="text-3xl font-extrabold text-neutral-100 tracking-tight flex items-center gap-2">Coach <span class="nd-pro-badge">Beta</span></h2>
-                <button onclick="openPrefs()" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-sliders text-mint-400"></i> <span data-t="Preferencias">Preferencias</span></button>
+                <button data-action="openPrefs" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-sliders text-mint-400"></i> <span data-t="Preferencias">Preferencias</span></button>
             </div>
             <div data-t-al="Vistas del Coach" id="coach-seg" class="nd-seg" role="tablist" aria-label="Vistas del Coach">
-                <button role="tab" data-cv="chat" onclick="coachView('chat')"><i class="fa-solid fa-comment-dots"></i> <span data-t="Coach">Coach</span></button>
-                <button role="tab" data-cv="menu" onclick="coachView('menu')"><i class="fa-solid fa-calendar-day"></i> <span data-t="Menú">Menú</span> <i data-lock="menu" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
-                <button role="tab" data-cv="shop" onclick="coachView('shop')"><i class="fa-solid fa-basket-shopping"></i> <span data-t="Compra">Compra</span> <i data-lock="shop" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
+                <button role="tab" data-cv="chat"><i class="fa-solid fa-comment-dots"></i> <span data-t="Coach">Coach</span></button>
+                <button role="tab" data-cv="menu"><i class="fa-solid fa-calendar-day"></i> <span data-t="Menú">Menú</span> <i data-lock="menu" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
+                <button role="tab" data-cv="shop"><i class="fa-solid fa-basket-shopping"></i> <span data-t="Compra">Compra</span> <i data-lock="shop" class="fa-solid fa-lock text-[10px] text-amber-300 hidden" aria-label="PRO"></i></button>
             </div>
             <div id="cv-chat" class="space-y-4">
                 <div id="coach-ctx"></div>
                 <div id="chat-log" class="space-y-3" aria-live="polite"></div>
                 <div id="chat-sugg" class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 nd-noscroll"></div>
-                <form id="chat-form" class="nd-composer" onsubmit="event.preventDefault(); coachSend()">
-                    <button data-t-al="Hablar" type="button" id="chat-mic" onclick="coachMic()" class="w-11 h-11 shrink-0 rounded-full bg-neutral-800 text-mint-400 hover:bg-neutral-700" aria-label="Hablar"><i class="fa-solid fa-microphone"></i></button>
+                <form id="chat-form" class="nd-composer">
+                    <button data-t-al="Hablar" type="button" id="chat-mic" data-action="coachMic" class="w-11 h-11 shrink-0 rounded-full bg-neutral-800 text-mint-400 hover:bg-neutral-700" aria-label="Hablar"><i class="fa-solid fa-microphone"></i></button>
                     <input id="chat-in" type="text" autocomplete="off" enterkeyhint="send" maxlength="300" placeholder="Pregunta o di lo que has comido…" data-t-ph="Pregunta o di lo que has comido…" class="flex-1 min-w-0 bg-transparent px-2 py-3 text-[15px] font-semibold outline-none" aria-label="Mensaje para el Coach">
                     <button data-t-al="Enviar" type="submit" class="w-11 h-11 shrink-0 rounded-full bg-mint-600 hover:bg-mint-700 text-white" aria-label="Enviar"><i class="fa-solid fa-arrow-up"></i></button>
                 </form>
@@ -502,7 +502,7 @@
         <div id="tab-progress" data-panel="progress" class="hidden space-y-6">
         <div class="flex items-center justify-between gap-3">
             <h2 data-t="Mi progreso" class="text-2xl sm:text-3xl font-extrabold text-neutral-100 tracking-tight whitespace-nowrap">Mi progreso</h2>
-            <button onclick="openReminder()" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-regular fa-bell text-mint-400"></i> <span data-t="Recordatorio">Recordatorio</span></button>
+            <button data-action="openReminder" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-regular fa-bell text-mint-400"></i> <span data-t="Recordatorio">Recordatorio</span></button>
         </div>
         <div id="prog-summary" class="space-y-4"></div>
         <!-- Peso (registro, gráfica con media de 7 días y objetivo) y medidas -->
@@ -516,8 +516,8 @@
             <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end text-xs">
                 <div><label data-t="Fecha" class="font-bold text-neutral-300" for="trk-date">Fecha</label><input id="trk-date" type="date" class="w-full p-3 bg-neutral-800/60 border border-neutral-800 rounded-xl font-bold"></div>
                 <div><label data-t="Peso (kg)" class="font-bold text-neutral-300" for="trk-w">Peso (kg)</label><input data-t-ph="Ej: 69,4" id="trk-w" type="number" inputmode="decimal" step="0.1" min="30" max="300" placeholder="Ej: 69,4" class="w-full p-3 bg-neutral-800/60 border border-neutral-800 rounded-xl font-bold"></div>
-                <button data-t="+ Añadir registro" onclick="addWeight()" class="px-5 py-3 rounded-xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold cta-glow">+ Añadir registro</button>
-                <div class="sm:ml-auto"><label data-t="Peso objetivo" class="font-bold text-neutral-300" for="trk-goal">Peso objetivo</label><input data-t-ph="Opcional" id="trk-goal" type="number" inputmode="decimal" step="0.1" min="35" max="250" placeholder="Opcional" onchange="setGoalWeight(this.value)" class="w-full sm:w-32 p-3 bg-neutral-800/60 border border-neutral-800 rounded-xl font-bold"></div>
+                <button data-t="+ Añadir registro" data-action="addWeight" class="px-5 py-3 rounded-xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold cta-glow">+ Añadir registro</button>
+                <div class="sm:ml-auto"><label data-t="Peso objetivo" class="font-bold text-neutral-300" for="trk-goal">Peso objetivo</label><input data-t-ph="Opcional" id="trk-goal" type="number" inputmode="decimal" step="0.1" min="35" max="250" placeholder="Opcional" class="w-full sm:w-32 p-3 bg-neutral-800/60 border border-neutral-800 rounded-xl font-bold"></div>
             </div>
             <div id="trk-stats" class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs"></div>
             <div id="trk-chart"></div>
@@ -537,7 +537,7 @@
                         <div><label data-t="Brazo" for="ms-arm" class="font-bold text-neutral-300">Brazo</label><input id="ms-arm" type="number" inputmode="decimal" step="0.1" placeholder="0" class="w-full p-3 bg-neutral-800/60 border border-neutral-800 rounded-xl font-bold"></div>
                         <div><label data-t="Muslo" for="ms-thigh" class="font-bold text-neutral-300">Muslo</label><input id="ms-thigh" type="number" inputmode="decimal" step="0.1" placeholder="0" class="w-full p-3 bg-neutral-800/60 border border-neutral-800 rounded-xl font-bold"></div>
                     </div>
-                    <button data-t="+ Guardar medidas" onclick="addMeasures()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-xs font-extrabold">+ Guardar medidas</button>
+                    <button data-t="+ Guardar medidas" data-action="addMeasures" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-xs font-extrabold">+ Guardar medidas</button>
                     <div id="ms-chart-box" class="space-y-3"></div>
                     <div id="ms-list" class="space-y-2"></div>
                 </div>
@@ -555,8 +555,8 @@
             <div class="flex items-center justify-between gap-3">
                 <h2 data-t="Entrenar" class="text-3xl font-extrabold text-neutral-100 tracking-tight">Entrenar</h2>
                 <div class="flex gap-2">
-                    <button onclick="openGymSettings()" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-gear text-mint-400"></i> <span data-t="Ajustes">Ajustes</span></button>
-                    <button onclick="openPdfModal('gym')" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-file-pdf"></i> <span data-t="PDF">PDF</span></button>
+                    <button data-action="openGymSettings" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-gear text-mint-400"></i> <span data-t="Ajustes">Ajustes</span></button>
+                    <button data-action="openPdfModal" data-arg="gym" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-neutral-800 border border-neutral-700 text-neutral-100 hover:border-mint-500/50 whitespace-nowrap"><i class="fa-solid fa-file-pdf"></i> <span data-t="PDF">PDF</span></button>
                 </div>
             </div>
             <div id="gym-app" class="space-y-5"></div>
@@ -568,36 +568,36 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-[11px] text-neutral-400 leading-relaxed space-y-1">
             <p><strong data-t="Aviso importante:">Aviso importante:</strong> <span data-t="FitDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria, diabetes con medicación, enfermedad renal u otras patologías: en esos casos consulta a un profesional sanitario.">FitDL es una herramienta educativa y orientativa; no sustituye el consejo de un médico o dietista-nutricionista. No está indicada para embarazo, lactancia, menores de 18 años, trastornos de la conducta alimentaria, diabetes con medicación, enfermedad renal u otras patologías: en esos casos consulta a un profesional sanitario.</span></p>
             <p data-t="Tus datos se guardan solo en tu navegador; no se envían a ningún servidor. Al escanear un producto solo se consulta su código de barras en Open Food Facts. Si usas la voz, tu navegador puede enviar el audio a su servicio de dictado (Google en Chrome, Apple en Safari) para convertirlo en texto. Las cantidades estimadas (foto, raciones por defecto) son aproximadas.">Tus datos se guardan solo en tu navegador; no se envían a ningún servidor. Al escanear un producto solo se consulta su código de barras en Open Food Facts. Si usas la voz, tu navegador puede enviar el audio a su servicio de dictado (Google en Chrome, Apple en Safari) para convertirlo en texto. Las cantidades estimadas (foto, raciones por defecto) son aproximadas.</p>
-            <p class="nd-foot-links flex flex-wrap gap-x-4 gap-y-1 pt-1"><button data-install onclick="installApp()" class="underline underline-offset-2 hover:text-neutral-200 font-bold text-mint-300"><i class="fa-solid fa-mobile-screen-button"></i> <span data-t="Instalar la app">Instalar la app</span></button><a data-t="Calorías de los alimentos" href="alimentos/" class="underline underline-offset-2 hover:text-neutral-200">Calorías de los alimentos</a><a href="privacidad.html" data-t-hr="privacy.html" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Privacidad">Privacidad</span></a><a data-t="Términos de uso" data-t-hr="terms.html" href="terminos.html" class="underline underline-offset-2 hover:text-neutral-200">Términos de uso</a><a href="mailto:aannggeelltrabajos@gmail.com" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Contacto">Contacto</span></a><button data-t="Informe de errores" onclick="openReport()" class="underline underline-offset-2 hover:text-neutral-200">Informe de errores</button><button onclick="openPro()" class="underline underline-offset-2 hover:text-neutral-200">FitDL PRO</button><button data-t="Borrar todos mis datos" onclick="wipeAll()" class="underline underline-offset-2 hover:text-neutral-200">Borrar todos mis datos</button><span>FitDL <span id="app-version"></span></span></p>
+            <p class="nd-foot-links flex flex-wrap gap-x-4 gap-y-1 pt-1"><button data-install data-action="installApp" class="underline underline-offset-2 hover:text-neutral-200 font-bold text-mint-300"><i class="fa-solid fa-mobile-screen-button"></i> <span data-t="Instalar la app">Instalar la app</span></button><a data-t="Calorías de los alimentos" href="alimentos/" class="underline underline-offset-2 hover:text-neutral-200">Calorías de los alimentos</a><a href="privacidad.html" data-t-hr="privacy.html" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Privacidad">Privacidad</span></a><a data-t="Términos de uso" data-t-hr="terms.html" href="terminos.html" class="underline underline-offset-2 hover:text-neutral-200">Términos de uso</a><a href="mailto:aannggeelltrabajos@gmail.com" class="underline underline-offset-2 hover:text-neutral-200"><span data-t="Contacto">Contacto</span></a><button data-t="Informe de errores" data-action="openReport" class="underline underline-offset-2 hover:text-neutral-200">Informe de errores</button><button data-action="openPro" class="underline underline-offset-2 hover:text-neutral-200">FitDL PRO</button><button data-t="Borrar todos mis datos" data-action="wipeAll" class="underline underline-offset-2 hover:text-neutral-200">Borrar todos mis datos</button><span>FitDL <span id="app-version"></span></span></p>
         </div>
     </footer>
 
     <div id="nd-celebrate" role="status" aria-live="polite" class="no-print"></div>
     <div id="toast" role="status" aria-live="polite" class="toast no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-4 py-3 rounded-2xl bg-mint-600 text-white text-xs font-bold shadow-xl opacity-0 pointer-events-none"></div>
 
-    <div id="nd-sheet" class="no-print hidden fixed inset-0 z-[82] bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="nd-sheet-title" onclick="if(event.target===this) closeSheet()">
+    <div id="nd-sheet" class="no-print hidden fixed inset-0 z-[82] bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="nd-sheet-title" data-backdrop="closeSheet">
         <div class="w-full sm:max-w-lg max-h-[92vh] flex flex-col rounded-t-3xl sm:rounded-3xl bg-neutral-900 border border-neutral-800 shadow-2xl" style="padding-bottom: env(safe-area-inset-bottom, 0px)">
             <div class="flex items-center justify-between gap-3 p-5 border-b border-neutral-800">
                 <h2 id="nd-sheet-title" class="text-lg font-extrabold text-neutral-100 min-w-0 truncate"></h2>
-                <button data-t-al="Cerrar" onclick="closeSheet()" class="w-9 h-9 shrink-0 rounded-xl bg-neutral-800 text-neutral-300 hover:text-white" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+                <button data-t-al="Cerrar" data-action="closeSheet" class="w-9 h-9 shrink-0 rounded-xl bg-neutral-800 text-neutral-300 hover:text-white" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="nd-sheet-body" class="p-5 overflow-y-auto overscroll-contain"></div>
         </div>
     </div>
     <div id="rest-bar" class="no-print hidden fixed z-[45] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md rounded-2xl bg-neutral-900/95 backdrop-blur border border-mint-500/40 shadow-2xl px-4 py-3 space-y-2" role="timer" aria-live="off">
         <div class="flex items-center gap-2">
-            <button data-t-al="Quitar 15 segundos" onclick="restAdd(-15)" class="w-12 py-2 rounded-xl bg-neutral-800 text-sm font-extrabold text-neutral-200" aria-label="Quitar 15 segundos">−15</button>
+            <button data-t-al="Quitar 15 segundos" data-action="restAdd" data-arg="-15" class="w-12 py-2 rounded-xl bg-neutral-800 text-sm font-extrabold text-neutral-200" aria-label="Quitar 15 segundos">−15</button>
             <div class="flex-1 text-center"><div data-t="Descanso" class="text-[10px] font-bold uppercase text-neutral-400">Descanso</div><div id="rest-time" class="text-2xl font-extrabold text-neutral-100 leading-tight tabular-nums">0:00</div></div>
-            <button onclick="restAdd(15)" class="w-12 py-2 rounded-xl bg-neutral-800 text-sm font-extrabold text-neutral-200" aria-label="Añadir 15 segundos" data-t-al="Añadir 15 segundos">+15</button>
-            <button data-t="Listo" onclick="restStop()" class="px-3 py-2 rounded-xl bg-mint-600 text-white text-sm font-extrabold">Listo</button>
+            <button data-action="restAdd" data-arg="15" class="w-12 py-2 rounded-xl bg-neutral-800 text-sm font-extrabold text-neutral-200" aria-label="Añadir 15 segundos" data-t-al="Añadir 15 segundos">+15</button>
+            <button data-t="Listo" data-action="restStop" class="px-3 py-2 rounded-xl bg-mint-600 text-white text-sm font-extrabold">Listo</button>
         </div>
         <div class="h-1.5 rounded-full bg-neutral-800 overflow-hidden"><div id="rest-prog" class="h-full rounded-full bg-mint-500" style="width:100%"></div></div>
     </div>
-    <div id="gym-records" class="no-print hidden fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="rec-title" onclick="if(event.target===this) closeRecords()">
+    <div id="gym-records" class="no-print hidden fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="rec-title" data-backdrop="closeRecords">
         <div class="w-full sm:max-w-lg max-h-[90vh] flex flex-col rounded-t-3xl sm:rounded-3xl bg-neutral-900 border border-neutral-800 shadow-2xl" style="padding-bottom: env(safe-area-inset-bottom, 0px)">
             <div class="flex items-center justify-between gap-3 p-5 border-b border-neutral-800">
                 <h2 id="rec-title" class="text-lg font-extrabold text-neutral-100"><i class="fa-solid fa-trophy text-amber-300"></i> <span data-t="Mis pesos más altos">Mis pesos más altos</span></h2>
-                <button data-t-al="Cerrar" data-close onclick="closeRecords()" class="w-9 h-9 rounded-xl bg-neutral-800 text-neutral-300 hover:text-white" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+                <button data-t-al="Cerrar" data-close data-action="closeRecords" class="w-9 h-9 rounded-xl bg-neutral-800 text-neutral-300 hover:text-white" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="gym-records-list" class="p-4 space-y-2 overflow-y-auto overscroll-contain"></div>
         </div>
@@ -612,13 +612,13 @@
     <div id="sticky-cta" class="no-print lg:hidden fixed bottom-0 inset-x-0 z-40 bg-neutral-900/95 backdrop-blur border-t border-neutral-800 shadow-[0_-8px_20px_-10px_rgba(0,0,0,0.15)]" style="padding-bottom: env(safe-area-inset-bottom)">
         <!-- Barra inferior tipo app: 3 pestañas -->
         <nav data-t-al="Secciones" id="tabbar-bottom" class="grid grid-cols-5 text-[11px] font-extrabold" aria-label="Secciones">
-            <button data-tab="home" onclick="showTab('home')" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-house text-lg"></i><span data-t="Hoy">Hoy</span></button>
-            <button data-tab="food" onclick="showTab('food')" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-utensils text-lg"></i><span data-t="Diario">Diario</span></button>
-            <button data-tab="coach" onclick="showTab('coach')" class="py-2.5 flex flex-col items-center gap-1"><span class="nd-coach-tab"><i class="fa-solid fa-wand-magic-sparkles text-lg"></i></span><span data-t="Coach">Coach</span></button>
-            <button data-tab="progress" onclick="showTab('progress')" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-chart-line text-lg"></i><span data-t="Progreso">Progreso</span></button>
-            <button data-tab="gym" onclick="showTab('gym')" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-dumbbell text-lg"></i><span data-t="Gym">Gym</span></button>
+            <button data-tab="home" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-house text-lg"></i><span data-t="Hoy">Hoy</span></button>
+            <button data-tab="food" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-utensils text-lg"></i><span data-t="Diario">Diario</span></button>
+            <button data-tab="coach" class="py-2.5 flex flex-col items-center gap-1"><span class="nd-coach-tab"><i class="fa-solid fa-wand-magic-sparkles text-lg"></i></span><span data-t="Coach">Coach</span></button>
+            <button data-tab="progress" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-chart-line text-lg"></i><span data-t="Progreso">Progreso</span></button>
+            <button data-tab="gym" class="py-2.5 flex flex-col items-center gap-1"><i class="fa-solid fa-dumbbell text-lg"></i><span data-t="Gym">Gym</span></button>
         </nav>
-        <button id="sticky-cta-btn" onclick="stickyAction()" class="hidden"></button>
+        <button id="sticky-cta-btn" data-action="stickyAction" class="hidden"></button>
     </div>
 
     <!-- Confirmación propia (algunos navegadores bloquean la ventana nativa "¿Seguro?") -->
@@ -633,13 +633,13 @@
     </div>
 
     <!-- Añadido: descargar el plan en PDF -->
-    <div id="pdf-modal" class="no-print hidden fixed inset-0 z-[85] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pdf-title" onclick="if(event.target===this) closePdfModal()">
+    <div id="pdf-modal" class="no-print hidden fixed inset-0 z-[85] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pdf-title" data-backdrop="closePdfModal">
         <div class="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex items-start justify-between gap-3">
                 <div>
                     <h2 id="pdf-title" class="text-lg font-extrabold text-neutral-100"><i class="fa-solid fa-file-pdf text-mint-400"></i> <span data-t="Descargar plan en PDF">Descargar plan en PDF</span></h2>
                 </div>
-                <button data-t-al="Cerrar" onclick="closePdfModal()" class="w-9 h-9 shrink-0 rounded-xl hover:bg-neutral-800 text-neutral-400" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+                <button data-t-al="Cerrar" data-action="closePdfModal" class="w-9 h-9 shrink-0 rounded-xl hover:bg-neutral-800 text-neutral-400" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="space-y-1.5">
                 <label data-t="Nombre del cliente" for="pdf-name" class="block text-xs font-bold text-neutral-300 uppercase tracking-wider">Nombre del cliente</label>
@@ -652,26 +652,26 @@
             </div>
             <div id="pdf-result"></div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button onclick="makePdf('download')" class="py-3 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold flex items-center justify-center gap-2"><i class="fa-solid fa-download"></i> <span data-t="Descargar PDF">Descargar PDF</span></button>
-                <button id="pdf-share" onclick="makePdf('share')" class="hidden py-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-100 text-sm font-extrabold flex items-center justify-center gap-2"><i class="fa-solid fa-share-nodes"></i> <span data-t="Compartir PDF">Compartir PDF</span></button>
-                <button onclick="printFromPdfModal()" class="py-3 rounded-xl border border-neutral-800 hover:bg-neutral-800 text-neutral-300 text-sm font-bold flex items-center justify-center gap-2"><i class="fa-solid fa-print"></i> <span data-t="Imprimir">Imprimir</span></button>
+                <button data-action="makePdf" data-arg="download" class="py-3 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold flex items-center justify-center gap-2"><i class="fa-solid fa-download"></i> <span data-t="Descargar PDF">Descargar PDF</span></button>
+                <button id="pdf-share" data-action="makePdf" data-arg="share" class="hidden py-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-100 text-sm font-extrabold flex items-center justify-center gap-2"><i class="fa-solid fa-share-nodes"></i> <span data-t="Compartir PDF">Compartir PDF</span></button>
+                <button data-action="printFromPdfModal" class="py-3 rounded-xl border border-neutral-800 hover:bg-neutral-800 text-neutral-300 text-sm font-bold flex items-center justify-center gap-2"><i class="fa-solid fa-print"></i> <span data-t="Imprimir">Imprimir</span></button>
             </div>
         </div>
     </div>
 
     <!-- Añadido: hoja para buscar y apuntar alimentos (diario tipo FatSecret) -->
-    <div id="food-sheet" class="no-print hidden fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="fs-title" onclick="if(event.target===this) closeFoodSheet()">
+    <div id="food-sheet" class="no-print hidden fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="fs-title" data-backdrop="closeFoodSheet">
         <div class="bg-neutral-900 border border-neutral-800 w-full sm:max-w-xl rounded-t-3xl sm:rounded-3xl shadow-2xl h-[92dvh] sm:h-[82vh] flex flex-col overflow-hidden">
             <div class="p-4 pb-3 border-b border-neutral-800 space-y-3 shrink-0">
                 <div class="flex items-center gap-2">
-                    <button id="fs-back" type="button" onclick="fsBack()" class="hidden w-10 h-10 shrink-0 rounded-xl hover:bg-neutral-800 text-neutral-300" aria-label="Volver a la búsqueda" data-t-al="Volver a la búsqueda"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button id="fs-back" type="button" data-action="fsBack" class="hidden w-10 h-10 shrink-0 rounded-xl hover:bg-neutral-800 text-neutral-300" aria-label="Volver a la búsqueda" data-t-al="Volver a la búsqueda"><i class="fa-solid fa-chevron-left"></i></button>
                     <h2 data-t="Añadir alimento" id="fs-title" class="min-w-0 text-base font-extrabold text-neutral-100 truncate">Añadir alimento</h2>
-                    <select id="fs-slot" onchange="fs.slot=this.value;fsRenderTitle()" class="mr-auto p-2 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold" aria-label="Comida del día" data-t-al="Comida del día"></select>
-                    <button data-t-al="Cerrar" type="button" onclick="closeFoodSheet()" class="w-10 h-10 shrink-0 rounded-xl hover:bg-neutral-800 text-neutral-400" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+                    <select id="fs-slot" class="mr-auto p-2 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold" aria-label="Comida del día" data-t-al="Comida del día"></select>
+                    <button data-t-al="Cerrar" type="button" data-action="closeFoodSheet" class="w-10 h-10 shrink-0 rounded-xl hover:bg-neutral-800 text-neutral-400" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div id="fs-searchbar" class="relative">
                     <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 text-sm"></i>
-                    <input id="fs-q" type="search" enterkeyhint="search" autocomplete="off" placeholder="Buscar: spaghetti hacendado, pechuga de pavo…" data-t-ph="Buscar: spaghetti hacendado, pechuga de pavo…" oninput="fs.q=this.value;fsRender()" class="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-2xl font-semibold focus:outline-none focus:ring-2 focus:ring-mint-500" aria-label="Buscar alimento">
+                    <input id="fs-q" type="search" enterkeyhint="search" autocomplete="off" placeholder="Buscar: spaghetti hacendado, pechuga de pavo…" data-t-ph="Buscar: spaghetti hacendado, pechuga de pavo…" class="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-2xl font-semibold focus:outline-none focus:ring-2 focus:ring-mint-500" aria-label="Buscar alimento">
                 </div>
                 <div id="fs-tabs" class="flex gap-2 text-xs font-bold"></div>
             </div>
@@ -683,12 +683,12 @@
     <div id="wizard" class="no-print hidden fixed inset-0 z-[70] bg-slateDark-950/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="wz-title">
         <div class="bg-neutral-900 w-full sm:max-w-2xl rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[94vh] flex flex-col">
             <div class="p-4 sm:p-5 border-b border-neutral-800 flex items-center gap-3">
-                <button id="wz-back" onclick="wzBack()" class="w-9 h-9 rounded-xl hover:bg-neutral-700 text-neutral-400" aria-label="Atrás" data-t-al="Atrás"><i class="fa-solid fa-arrow-left"></i></button>
+                <button id="wz-back" data-action="wzBack" class="w-9 h-9 rounded-xl hover:bg-neutral-700 text-neutral-400" aria-label="Atrás" data-t-al="Atrás"><i class="fa-solid fa-arrow-left"></i></button>
                 <div class="flex-1">
                     <div class="h-2 bg-neutral-800 rounded-full overflow-hidden"><div id="wz-bar" class="h-full bg-gradient-to-r from-mint-500 to-mint-400 wz-bar" style="width:0%"></div></div>
                     <div class="text-[10px] font-bold text-neutral-500 mt-1" id="wz-count"></div>
                 </div>
-                <button data-t-al="Cerrar" onclick="closeWizard()" class="w-9 h-9 rounded-xl hover:bg-neutral-700 text-neutral-400" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+                <button data-t-al="Cerrar" data-action="closeWizard" class="w-9 h-9 rounded-xl hover:bg-neutral-700 text-neutral-400" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="wz-body" class="p-5 sm:p-7 overflow-y-auto flex-1"></div>
             <div id="wz-foot" class="p-4 sm:p-5 border-t border-neutral-800"></div>

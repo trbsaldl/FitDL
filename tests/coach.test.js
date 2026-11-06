@@ -164,7 +164,7 @@ test('Semana de lunes a domingo e historial de entrenos completo', () => {
     assert.equal(new Date(W.days[0] + 'T12:00:00').getDay(), 1, 'empieza en lunes');
     run("state.workouts = Array.from({ length: 300 }, (_, i) => ({ id: i + 1, d: shiftISO(todayISO(), -i), t: 'Día', di: 0, ex: [{ id: 'x', name: 'Sentadilla', sets: [{ kg: 50, reps: 5 }] }] }))");
     run("gh.n = 1000");
-    assert.equal(run("gymHistoryHtml().split('openWorkout(').length - 1"), 300, 'se ven los 300 entrenos');
+    assert.equal(run("gymHistoryHtml().split('data-h=\"').length - 1"), 300, 'se ven los 300 entrenos');
 });
 
 test('Seguridad: una copia trucada no puede colar código en la página', () => {

@@ -69,11 +69,12 @@ test('Coach: cambiar un alimento mantiene las calorías y solo toca el diario al
     const before = today();
     assert.equal(before.length, 1);
     const r = ask('Quiero cambiar el arroz por patata');
-    assert.match(r.html, /coachSwap/);
+    // Con delegación ND los args van en closures; el botón lleva data-h="hN"
+    assert.match(r.html, /data-h=/, 'botón con el cambio');
     assert.deepEqual(today(), before, 'sin confirmar no cambia nada');
-    const m = r.html.match(/coachSwap\(&quot;([^&]+)&quot;,&quot;([^&]+)&quot;,(\d+)\)/);
-    assert.ok(m, 'botón con el cambio');
-    run(`coachSwap('${m[1]}', '${m[2]}', ${m[3]})`);
+    const hid = r.html.match(/data-h="(h\d+)"/);
+    assert.ok(hid, 'botón encontrado');
+    run(`ND._h.get('${hid[1]}')()`);
     const after = today();
     assert.equal(after.length, 1);
     assert.equal(after[0].id, before[0].id, 'misma entrada');

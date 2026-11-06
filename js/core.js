@@ -2,12 +2,55 @@
 'use strict';
 
 // =====================================================================
+//  HANDLER REGISTRY — event delegation sin onclick inline
+// =====================================================================
+const ND = window.ND = {};
+ND._h = new Map();
+ND._n = 0;
+/** Registra fn como handler de clic; devuelve el atributo data-h="…" para insertar en HTML dinámico. */
+ND.on = function (fn) {
+    const id = 'h' + (++ND._n);
+    ND._h.set(id, fn);
+    return 'data-h="' + id + '"';
+};
+/** Registra fn como handler de oninput; devuelve data-ih="…". */
+ND.oninput = function (fn) {
+    const id = 'h' + (++ND._n);
+    ND._h.set(id, fn);
+    return 'data-ih="' + id + '"';
+};
+/** Registra fn como handler de onchange; devuelve data-ch="…". */
+ND.onchange = function (fn) {
+    const id = 'h' + (++ND._n);
+    ND._h.set(id, fn);
+    return 'data-ch="' + id + '"';
+};
+/** Registra fn como handler de onsubmit; devuelve data-sh="…". */
+ND.onsubmit = function (fn) {
+    const id = 'h' + (++ND._n);
+    ND._h.set(id, fn);
+    return 'data-sh="' + id + '"';
+};
+/** Registra fn como handler de onkeydown; devuelve data-kd="…". */
+ND.onkeydown = function (fn) {
+    const id = 'h' + (++ND._n);
+    ND._h.set(id, fn);
+    return 'data-kd="' + id + '"';
+};
+/** Registra fn como handler de onblur/focusout; devuelve data-bh="…". */
+ND.onblur = function (fn) {
+    const id = 'h' + (++ND._n);
+    ND._h.set(id, fn);
+    return 'data-bh="' + id + '"';
+};
+
+// =====================================================================
 //  CONFIGURACIÓN
 // =====================================================================
 const KCAL_PER_KG = 7700;
 const STORAGE_KEY = 'nutridl_v2';
 const PROFILES_KEY = 'nutridl_profiles';
-const APP_VERSION = '3.28.0';
+const APP_VERSION = '3.29.0';
 const ERR_KEY = 'nutridl_errors', USAGE_KEY = 'nutridl_usage';
 // Estado de la persona activa (se guarda en su perfil)
 const DEFAULT_STATE = {

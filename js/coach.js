@@ -50,23 +50,23 @@ function pendHtml(id) {
     const rows = P.items.map((it, i) => {
         const f = getFood(it.fid); if (!f) return '';
         const m = macrosOf(f, it.g);
-        const alts = it.open ? `<div class="flex flex-wrap gap-1.5 pt-2">${it.alts.map(a => getFood(a)).filter(Boolean).map(a => `<button type="button" onclick="pendSwap('${id}',${i},'${a.id}')" class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(a)} ${esc(foodName(a))}</button>`).join('')}
-            <input type="search" placeholder="${tr('Buscar otro…')}" oninput="pendSearch('${id}',${i},this.value)" class="w-full mt-1 px-3 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-sm" aria-label="${tr('Buscar otro alimento')}"><div id="${id}-s${i}" class="w-full flex flex-wrap gap-1.5"></div></div>` : '';
+        const alts = it.open ? `<div class="flex flex-wrap gap-1.5 pt-2">${it.alts.map(a => getFood(a)).filter(Boolean).map(a => { const aid = a.id; return `<button type="button" ${ND.on(() => pendSwap(id, i, aid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(a)} ${esc(foodName(a))}</button>`; }).join('')}
+            <input type="search" placeholder="${tr('Buscar otro…')}" ${ND.oninput(e => pendSearch(id, i, e.target.value))} class="w-full mt-1 px-3 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-sm" aria-label="${tr('Buscar otro alimento')}"><div id="${id}-s${i}" class="w-full flex flex-wrap gap-1.5"></div></div>` : '';
         return `<div class="nd-crow">
             <div class="flex items-start gap-2">
                 <div class="min-w-0 flex-1">
-                    <button type="button" onclick="pendOpen('${id}',${i})" class="text-left text-sm font-bold text-neutral-100 leading-snug" aria-label="${tr('Cambiar {x}', { x: esc(foodName(f)) })}">${emo(f)} ${esc(foodName(f))}${f.brand ? ` <span class="text-mint-300/90 font-semibold">${esc(f.brand)}</span>` : ''} <i class="fa-solid fa-chevron-down text-[10px] text-neutral-500"></i></button>
+                    <button type="button" ${ND.on(() => pendOpen(id, i))} class="text-left text-sm font-bold text-neutral-100 leading-snug" aria-label="${tr('Cambiar {x}', { x: esc(foodName(f)) })}">${emo(f)} ${esc(foodName(f))}${f.brand ? ` <span class="text-mint-300/90 font-semibold">${esc(f.brand)}</span>` : ''} <i class="fa-solid fa-chevron-down text-[10px] text-neutral-500"></i></button>
                     <div id="${id}-m${i}" class="text-xs text-neutral-400">${kcalMacros(m)}${f.raw ? ' · ' + tr('en crudo') : ''}${it.est ? ' · <span class="nd-est">' + tr('≈ estimado') + '</span>' : ''}</div>
                 </div>
-                <label class="nd-gin"><input type="number" inputmode="decimal" min="1" max="3000" value="${it.g}" oninput="pendG('${id}',${i},this.value)" aria-label="${tr('Cantidad de {n}', { n: esc(foodName(f)) })}"><span>${f.ml ? 'ml' : 'g'}</span></label>
-                <button type="button" onclick="pendDel('${id}',${i})" class="w-9 h-9 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400 hover:bg-neutral-800" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button>
+                <label class="nd-gin"><input type="number" inputmode="decimal" min="1" max="3000" value="${it.g}" ${ND.oninput(e => pendG(id, i, e.target.value))} aria-label="${tr('Cantidad de {n}', { n: esc(foodName(f)) })}"><span>${f.ml ? 'ml' : 'g'}</span></label>
+                <button type="button" ${ND.on(() => pendDel(id, i))} class="w-9 h-9 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400 hover:bg-neutral-800" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button>
             </div>${alts}</div>`;
     }).join('');
     return `<div class="space-y-2">${rows}</div>
         <div id="${id}-tot" class="text-xs font-bold text-neutral-300 pt-1">${pendTotals(id)}</div>
         <div class="flex gap-2 pt-1">
-            <select onchange="pend['${id}'].slot=this.value" class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold" aria-label="${tr('Comida del día')}">${DSLOTS.map(([k, n]) => `<option value="${k}" ${k === P.slot ? 'selected' : ''}>${tr(n)}</option>`).join('')}</select>
-            <button type="button" onclick="pendAdd('${id}')" class="flex-1 py-2.5 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold"><i class="fa-solid fa-check"></i> ${P.items.length === 1 ? tr('Añadir al diario') : tr('Añadir {k} al diario', { k: P.items.length })}</button>
+            <select ${ND.onchange(e => { pend[id].slot = e.target.value; })} class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold" aria-label="${tr('Comida del día')}">${DSLOTS.map(([k, n]) => `<option value="${k}" ${k === P.slot ? 'selected' : ''}>${tr(n)}</option>`).join('')}</select>
+            <button type="button" ${ND.on(() => pendAdd(id))} class="flex-1 py-2.5 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold"><i class="fa-solid fa-check"></i> ${P.items.length === 1 ? tr('Añadir al diario') : tr('Añadir {k} al diario', { k: P.items.length })}</button>
         </div>`;
 }
 function pendTotals(id) {
@@ -88,7 +88,7 @@ function pendOpen(id, i) { const it = pend[id].items[i]; it.open = !it.open; ref
 function pendSwap(id, i, fid) { const it = pend[id].items[i]; const old = it.fid; it.alts = [old, ...it.alts.filter(a => a !== fid)].slice(0, 6); it.fid = fid; it.open = false; refreshPend(id); persistChatPend(id); }
 function pendSearch(id, i, q) {
     const box = $(`${id}-s${i}`); if (!box) return;
-    box.innerHTML = q.trim().length < 2 ? '' : matchFoods(q, 6).map(a => `<button type="button" onclick="pendSwap('${id}',${i},'${a.id}')" class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(a)} ${esc(foodName(a))}${a.brand ? ' · ' + esc(a.brand) : ''}</button>`).join('');
+    box.innerHTML = q.trim().length < 2 ? '' : matchFoods(q, 6).map(a => { const aid = a.id; return `<button type="button" ${ND.on(() => pendSwap(id, i, aid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(a)} ${esc(foodName(a))}${a.brand ? ' · ' + esc(a.brand) : ''}</button>`; }).join('');
 }
 function pendAdd(id) {
     const P = pend[id]; if (!P || P.done || !P.items.length) return;
@@ -117,7 +117,7 @@ function coachView(v) {
 function renderCoach() { coachView(coachV); }
 function renderCoachCtx() {
     const box = $('coach-ctx'); if (!box) return;
-    if (!calc.target) { box.innerHTML = `<div class="nd-card p-4 flex items-center justify-between gap-3"><span class="text-sm text-neutral-300">${tr('Completa tu plan para que el Coach conozca tu objetivo.')}</span><button onclick="${profiles.current ? "showTab('calc')" : 'newProfile()'}" class="px-3 py-2 rounded-xl bg-mint-600 text-white text-xs font-extrabold whitespace-nowrap">${tr('Completar')}</button></div>`; return; }
+    if (!calc.target) { box.innerHTML = `<div class="nd-card p-4 flex items-center justify-between gap-3"><span class="text-sm text-neutral-300">${tr('Completa tu plan para que el Coach conozca tu objetivo.')}</span><button ${ND.on(() => { profiles.current ? showTab('calc') : newProfile(); })} class="px-3 py-2 rounded-xl bg-mint-600 text-white text-xs font-extrabold whitespace-nowrap">${tr('Completar')}</button></div>`; return; }
     const R = remainingToday();
     const chip = (l, v, u) => `<div class="nd-ctx"><span>${l}</span><b>${v < 0 ? '+' + fmt(-v) : fmt(v)}${u}</b></div>`;
     box.innerHTML = `<div class="grid grid-cols-4 gap-2">${chip(R.kcal >= 0 ? tr('Quedan') : tr('De más'), Math.abs(R.kcal), ' kcal')}${chip(tr('Proteína'), Math.max(0, R.p), ' g')}${chip(tr('Hidratos'), Math.max(0, R.c), ' g')}${chip(tr('Grasas'), Math.max(0, R.f), ' g')}</div>`;
@@ -143,7 +143,7 @@ function renderChat(scroll) {
     const L = state.chat || [];
     const hello = `<div class="nd-msg-c">${tagPill('rec')}<p>${profiles.current ? tr('Hola, {n}.', { n: esc(profiles.list[profiles.current].name) }) : tr('Hola.')} ${tr('Soy tu Coach. Dime lo que has comido y lo apunto, pregúntame qué comer o cómo vas. Respondo con tus datos de FitDL.')}</p></div>`;
     log.innerHTML = (L.length ? '' : hello) + L.map(msgHtml).join('');
-    $('chat-sugg').innerHTML = chatSuggestions().map(s => `<button type="button" onclick="coachAsk(${esc(JSON.stringify(s))})" class="shrink-0 px-3.5 py-2 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-bold text-neutral-200 hover:border-mint-500/50">${esc(tr(s))}</button>`).join('');
+    $('chat-sugg').innerHTML = chatSuggestions().map(s => `<button type="button" ${ND.on(() => coachAsk(s))} class="shrink-0 px-3.5 py-2 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-bold text-neutral-200 hover:border-mint-500/50">${esc(tr(s))}</button>`).join('');
     // La respuesta nueva se ve desde su principio (sin quedar detrás de la caja de texto)
     if (scroll) { const last = log.lastElementChild; if (last) requestAnimationFrame(() => last.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })); }
 }
@@ -151,9 +151,9 @@ function msgHtml(m) {
     if (m.r === 'u') return `<div class="nd-msg-u">${esc(m.t)}</div>`;
     if (m.p) pend[m.id] = m.p;
     return `<div class="nd-msg-c" data-msg="${m.id}">${m.tags ? m.tags.map(tagPill).join('') : ''}${deEmoji(m.html)}
-        ${m.logged && !m.p ? (m.logged.undone === 1 ? '<div class="nd-done"><i class="fa-solid fa-rotate-left"></i> ' + tr('Deshecho') + '</div>' : `<div class="grid grid-cols-2 gap-2 mt-3"><button type="button" onclick="logAdjust('${m.id}')" class="nd-mbtn"><i class="fa-solid fa-sliders"></i> ${tr('Ajustar')}</button><button type="button" onclick="logUndo('${m.id}')" class="nd-mbtn"><i class="fa-solid fa-rotate-left"></i> ${tr('Deshacer')}</button></div>`) : ''}
+        ${m.logged && !m.p ? (m.logged.undone === 1 ? '<div class="nd-done"><i class="fa-solid fa-rotate-left"></i> ' + tr('Deshecho') + '</div>' : `<div class="grid grid-cols-2 gap-2 mt-3"><button type="button" ${ND.on(() => logAdjust(m.id))} class="nd-mbtn"><i class="fa-solid fa-sliders"></i> ${tr('Ajustar')}</button><button type="button" ${ND.on(() => logUndo(m.id))} class="nd-mbtn"><i class="fa-solid fa-rotate-left"></i> ${tr('Deshacer')}</button></div>`) : ''}
         ${m.p ? `<div data-pend="${m.id}" class="mt-3">${pendHtml(m.id)}</div>` : ''}
-        ${m.opts ? `<div class="mt-3 space-y-2">${m.opts.map((o, i) => mealCard(o, { add: `coachAddOpt('${m.id}',${i})`, added: (m.added || []).includes(i), slot: m.slot, key: m.id + i })).join('')}</div>` : ''}</div>`;
+        ${m.opts ? `<div class="mt-3 space-y-2">${m.opts.map((o, i) => mealCard(o, { add: ND.on(() => coachAddOpt(m.id, i)), added: (m.added || []).includes(i), slot: m.slot, key: m.id + i })).join('')}</div>` : ''}</div>`;
 }
 function chatSuggestions() {
     const h = new Date().getHours(), slot = h < 11 ? tk('¿Qué desayuno?') : h < 16 ? tk('¿Qué como hoy?') : h < 19 ? tk('¿Qué meriendo?') : tk('¿Qué ceno?');
@@ -185,8 +185,8 @@ function coachSend(text, read) {
 function clearChat() { state.chat = []; save(); renderChat(); }
 // Botones con una frase guardada en español: se ve traducida y el Coach la lee en español
 const coachAsk = s => coachSend(tr(s), s);
-// El mismo botón dentro de un mensaje (atributo onclick ya escapado)
-const askBtn = s => `onclick="coachAsk(${esc(JSON.stringify(s))})"`;
+// El mismo botón dentro de un mensaje (handler ND)
+const askBtn = s => ND.on(() => coachAsk(s));
 
 // ---------- Entender la pregunta ----------
 // Cada patrón reconoce la pregunta en español Y en inglés, para que el Coach funcione igual en los dos idiomas.
@@ -287,7 +287,7 @@ function coachReply(raw) {
     if (fu) { q = fu; raw = fu; }
     if (RX.safety.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('En tu situación las necesidades cambian y conviene que lo valore un profesional sanitario: tu médico o un dietista-nutricionista. FitDL es orientativa y no puede adaptar un plan con seguridad en ese caso.')}</p><p class="mt-2">${tr('Sí puedo ayudarte a apuntar lo que comes para que lo compartas con tu profesional.')}</p>` };
     if (RX.tooLow.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('Comer tan poco no es seguro sin supervisión médica: aumenta la pérdida de músculo y el riesgo de déficit de nutrientes. Tu plan nunca baja de {k} kcal. Si quieres avanzar más rápido, suma pasos y entrenamiento de fuerza.', { k: fmt(calc.male ? 1500 : 1200) })}</p>` };
-    if (!calc.target && !RX.logged.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('Para responderte con tus números necesito tu plan (2 minutos): objetivo, datos y actividad.')}</p><button onclick="${profiles.current ? "showTab('calc')" : 'newProfile()'}" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Completar mi plan')}</button>` };
+    if (!calc.target && !RX.logged.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('Para responderte con tus números necesito tu plan (2 minutos): objetivo, datos y actividad.')}</p><button ${ND.on(() => { profiles.current ? showTab('calc') : newProfile(); })} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Completar mi plan')}</button>` };
     // Dolor o lesión: primero la seguridad
     if (RX.dolor.test(q) && !RX.logged.test(q)) return replyDolor();
     // «Quiero perder 5 kilos en un mes»: si es realista y cuánto tardarías a tu ritmo
@@ -366,7 +366,7 @@ function coachReply(raw) {
             .sort((a, b) => b.length - a.length).map(w => matchFoods(w, 1)[0]).find(Boolean);
     if (guess) {
         // Se ve en el idioma activo; el Coach lee la frase en español con el nombre de la base
-        const ask = (ver, leer) => `onclick="coachSend(${esc(JSON.stringify(ver))},${esc(JSON.stringify(leer))})"`;
+        const ask = (ver, leer) => ND.on(() => coachSend(ver, leer));
         const gn = foodName(guess);
         const leer = [`¿Cuántas calorías tiene ${guess.name}?`, `¿Puedo comer ${guess.name}?`, `He comido ${guess.name}`]; // i18n-ignore (frase interna que lee el Coach)
         return { r: 'c', tags: ['base'], html: `<p>${tr('No estoy seguro de qué me preguntas, pero veo que hablas de {x}. ¿Te refieres a esto?', { x: `${emo(guess)} <b>${esc(gn)}</b>` })}</p>
@@ -381,7 +381,7 @@ function replyLeft() {
     const R = remainingToday(), nm = nextMeal();
     let html = `<p>${tr('Hoy llevas <b>{a}</b> de {b} kcal.', { a: fmt(R.t.kcal), b: fmt(calc.target) })} ${tr('Proteína: <b>{a}</b> de {b} g.', { a: fmt(R.t.p), b: fmt(calc.prot) })} ${R.kcal >= 0 ? tr('Te quedan <b>{k} kcal</b>: {p} g de proteína, {c} g de hidratos y {f} g de grasa.', { k: fmt(R.kcal), p: fmt(Math.max(0, R.p)), c: fmt(Math.max(0, R.c)), f: fmt(Math.max(0, R.f)) }) : tr('Vas <b>{k} kcal</b> por encima. No pasa nada por un día: lo que cuenta es la media de la semana.', { k: fmt(-R.kcal) })}</p>`;
     const tags = ['dato'];
-    if (nm && nm.slot && nm.tg.kcal > 120) { const ofr = 'que tomo de ' + slotEs(nm.slot); remember('left', '', { offer: ofr }); html += `<p class="mt-2">${tr('Para {x} te recomiendo unas <b>{k} kcal</b> con <b>{p} g de proteína</b>.', { x: slotArt(nm.slot), k: fmt(nm.tg.kcal), p: fmt(nm.tg.p) })}</p><button onclick="coachSend(${esc(JSON.stringify(tr('¿Qué tomo de {x}?', { x: slotLow(nm.slot) })))},'${ofr}')" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Ver opciones')}</button>`; tags.push('rec'); } // i18n-ignore (frase interna que lee el Coach)
+    if (nm && nm.slot && nm.tg.kcal > 120) { const ofr = 'que tomo de ' + slotEs(nm.slot); remember('left', '', { offer: ofr }); const verMsg = tr('¿Qué tomo de {x}?', { x: slotLow(nm.slot) }); html += `<p class="mt-2">${tr('Para {x} te recomiendo unas <b>{k} kcal</b> con <b>{p} g de proteína</b>.', { x: slotArt(nm.slot), k: fmt(nm.tg.kcal), p: fmt(nm.tg.p) })}</p><button ${ND.on(() => coachSend(verMsg, ofr))} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Ver opciones')}</button>`; tags.push('rec'); } // i18n-ignore (frase interna que lee el Coach)
     return { r: 'c', tags, html };
 }
 function replyLog(raw, quiet) {
@@ -403,7 +403,7 @@ function replyLog(raw, quiet) {
         html: `<p>${tr('✓ Apuntado {x}:', { x: toSlot(slot) })}</p><ul class="nd-list">${lines}</ul><p class="mt-2">${tr('Total <b>{k} kcal</b> · {p} g de proteína.', { k: fmt(tot.k), p: fmt(tot.p) })} ${leftLine()}</p>${est ? '<p class="text-xs text-neutral-400 mt-1">' + tr('≈ = ración habitual (no dijiste cantidad). Si no cuadra, pulsa «Ajustar».') + '</p>' : ''}${unk}` };
 }
 // Algo que no está en la base: se apunta con una estimación de calorías (y macros de un plato mixto), marcado como estimado
-const quickKcalBtns = (name, slot) => `<div class="flex flex-wrap gap-1.5 mt-2">${[200, 350, 500, 700, 900].map(k => `<button type="button" onclick="quickKcal(${esc(JSON.stringify(name))},'${slot}',${k})" class="px-3 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-extrabold text-neutral-100 hover:border-mint-500/60">≈ ${k} kcal</button>`).join('')}<button type="button" onclick="quickKcalOther(${esc(JSON.stringify(name))},'${slot}')" class="px-3 py-2 rounded-lg border border-dashed border-neutral-700 text-xs font-bold text-neutral-300">${tr('Otra cantidad')}</button></div>`;
+const quickKcalBtns = (name, slot) => `<div class="flex flex-wrap gap-1.5 mt-2">${[200, 350, 500, 700, 900].map(k => `<button type="button" ${ND.on(() => quickKcal(name, slot, k))} class="px-3 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-extrabold text-neutral-100 hover:border-mint-500/60">≈ ${k} kcal</button>`).join('')}<button type="button" ${ND.on(() => quickKcalOther(name, slot))} class="px-3 py-2 rounded-lg border border-dashed border-neutral-700 text-xs font-bold text-neutral-300">${tr('Otra cantidad')}</button></div>`;
 function unknownDish(name, slot) {
     return { r: 'c', tags: ['est'], html: `<p>${tr('No tengo «{x}» en la base de alimentos. Para que no se pierda, apúntalo con una estimación (luego puedes corregirla en el diario):', { x: esc(name || tr('eso')) })}</p>${quickKcalBtns(name || tr('Comida|plato'), slot)}<p class="text-xs text-neutral-400 mt-2">${tr('Orientación: un plato combinado ronda 600-800 kcal; un bocadillo, 400-600; un postre, 250-400.')}</p>` };
 }
@@ -441,7 +441,7 @@ function replyFridge(raw, q) {
     if (!opts.length) return { r: 'c', tags: ['rec'], html: `<p>${tr('Con {x} no me sale un plato completo. Añade alguna proteína (huevos, pollo, atún, legumbres…) y algún hidrato (arroz, pasta, patata, pan…).', { x: esc(ids.map(id => foodName(getFood(id)).toLowerCase()).join(', ')) })}</p>` };
     return { r: 'c', tags: ['rec', 'base'], slot, opts, html: `<p>${tr('Con lo que tienes, para {x} (≈ <b>{k} kcal</b> y <b>{p} g de proteína</b>):', { x: slotArt(slot), k: fmt(tg.kcal), p: fmt(tg.p) })}</p>` };
 }
-const proReply = feature => ({ r: 'c', tags: ['rec'], html: `<p>${tr('{n} es de FitDL PRO: {w}', { n: '<b>' + esc(tr(PRO_FEATURES[feature][0])) + '</b>', w: esc(tr(PRO_FEATURES[feature][1]).toLowerCase()) })}</p><button onclick="openPaywall('${feature}')" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${proData().trialUsed ? tr('Ver FitDL PRO') : tr('Probar 7 días gratis')}</button>` });
+const proReply = feature => ({ r: 'c', tags: ['rec'], html: `<p>${tr('{n} es de FitDL PRO: {w}', { n: '<b>' + esc(tr(PRO_FEATURES[feature][0])) + '</b>', w: esc(tr(PRO_FEATURES[feature][1]).toLowerCase()) })}</p><button ${ND.on(() => openPaywall(feature))} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${proData().trialUsed ? tr('Ver FitDL PRO') : tr('Probar 7 días gratis')}</button>` });
 function slotFromText(q) {
     if (/desayun|breakfast/.test(q)) return 'B';
     if (/media manana|almuerz|mid morning/.test(q)) return planSlots().includes('M') ? 'M' : 'S';
@@ -477,7 +477,7 @@ function replySwap(q) {
     const html = `<p>${tr('{a} de {x} ({k} kcal) equivalen a unos <b>{b} de {y}</b> con las mismas calorías.', { a: amountText(from, g1), x: esc(foodName(from)), k: fmt(k1), b: amountText(to, g2), y: esc(foodName(to)) })}</p>
         <p class="text-xs text-neutral-400 mt-1">${tr('Proteína {a} → {b} g · hidratos {c} → {d} g · grasa {e} → {f} g', { a: fmt(a.p), b: fmt(m2.p), c: fmt(a.c), d: fmt(m2.c), e: fmt(a.f), f: fmt(m2.f) })}</p>`;
     if (!e) return { r: 'c', tags: ['base'], html: html + `<p class="text-xs text-neutral-400 mt-1">${tr('Hoy no tienes {x} en el diario, así que no he cambiado nada.', { x: esc(foodName(from)) })}</p>` };
-    return { r: 'c', tags: ['base'], html: html + `<button type="button" onclick="coachSwap(${esc(JSON.stringify(e.id))},${esc(JSON.stringify(to.id))},${g2})" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold"><i class="fa-solid fa-arrows-rotate"></i> ${tr('Cambiarlo en el diario')}</button>` };
+    return { r: 'c', tags: ['base'], html: html + `<button type="button" ${ND.on(() => coachSwap(e.id, to.id, g2))} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold"><i class="fa-solid fa-arrows-rotate"></i> ${tr('Cambiarlo en el diario')}</button>` };
 }
 function coachSwap(eid, fid, g) {
     const d = todayISO(), list = state.diary[d] || [], i = list.findIndex(x => x.id === eid), f = getFood(fid);
@@ -514,7 +514,7 @@ function replySuggest(q, extra = {}) {
     if (tg.kcal < 90) return { r: 'c', tags: ['dato', 'rec'], html: `<p>${tr('Ya casi has completado tu día ({x}). Si tienes hambre, elige algo muy ligero: una infusión, verduras crudas, un yogur natural o una pieza de fruta.', { x: leftLine() })}</p>` };
     const cheap = RX.barato.test(q), prefs = extra.prefs || (cheap ? { ...myPrefs(), budget: 'low' } : null);
     const opts = suggestMeals(slot, tg, { n: 3, seed: Date.now() % 100000, ...(prefs ? { prefs } : {}) });
-    if (!opts.length) return { r: 'c', tags: ['rec'], html: '<p>' + tr('Con tus preferencias no encuentro platos para esa comida. Revisa tus alergias y los alimentos que no te gustan en Preferencias.') + '</p><button onclick="openPrefs()" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">' + tr('Preferencias') + '</button>' };
+    if (!opts.length) return { r: 'c', tags: ['rec'], html: '<p>' + tr('Con tus preferencias no encuentro platos para esa comida. Revisa tus alergias y los alimentos que no te gustan en Preferencias.') + '</p><button ' + ND.on(openPrefs) + ' class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">' + tr('Preferencias') + '</button>' };
     tags.push('rec', 'base');
     ev('suggest_' + slot);
     remember('suggest', q, { slot });
@@ -539,7 +539,7 @@ function replyProtein() {
     return { r: 'c', tags: ['dato', 'base', 'rec'], html: `<p>${tr('Te faltan <b>{p} g de proteína</b> y te quedan {k} kcal. Para sumar {n} g gastando pocas calorías:', { p: fmt(R.p), k: fmt(Math.max(0, R.kcal)), n: fmt(need) })}</p>
         <ul class="nd-list">${L.map(x => `<li>${emo(x.f)} ${tr('{a} de {n}', { a: amountText(x.f, x.g), n: esc(foodName(x.f).toLowerCase()) })} → ${fmt(x.k)} kcal</li>`).join('')}</ul>
         <p class="mt-2">${tr('Consejo: reparte la proteína en 3-4 tomas y empieza cada comida por ella.')}</p>
-        <button onclick="coachSend(${esc(JSON.stringify(tr('Me quedan {k} kcal y necesito mucha proteína', { k: kq })))},${esc(JSON.stringify(leer))})" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Proponme un plato')}</button>` };
+        <button ${ND.on(() => coachSend(tr('Me quedan {k} kcal y necesito mucha proteína', { k: kq }), leer))} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold">${tr('Proponme un plato')}</button>` };
 }
 function replyInfo(q) {
     const name = q.replace(RX.info, ' ').replace(/\b(tiene|hay en|un|una|el|la|los|las|de|del|por|has|have|in|is|are|the|a|an|of|per|does|do)\b/g, ' ').replace(/[?¿!.]/g, ' ').trim();
@@ -549,7 +549,7 @@ function replyInfo(q) {
     return { r: 'c', tags: ['base'], html: `<p>${emo(f)} <b>${esc(foodName(f))}</b>${f.brand ? ' · ' + esc(f.brand) : ''}</p>
         <p class="mt-1">${portionLabel(d.unit, d.n, f)}: <b>${fmt(m.kcal)} kcal</b> · ${macroWords(m)}</p>
         <p class="text-xs text-neutral-400 mt-1">${tr('Por 100 {u}:', { u: f.ml ? 'ml' : 'g' })} ${fmt(k)} kcal · ${tr('P')} ${fmt(f.p, 1)} · ${tr('HC')} ${fmt(f.c, 1)} · ${tr('G')} ${fmt(f.f, 1)}${f.raw ? ' ' + tr('(en crudo)') : ''}</p>
-        <button onclick="openFoodSheet(); fsOpen('${f.id}')" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Apuntarlo')}</button>` };
+        <button ${ND.on(() => { openFoodSheet(); fsOpen(f.id); })} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Apuntarlo')}</button>` };
 }
 // «proteína 30 g · hidratos 12 g · grasa 5 g»
 const macroWords = m => tr('proteína {p} g · hidratos {c} g · grasa {f} g', { p: fmt(m.p, 1), c: fmt(m.c, 1), f: fmt(m.f, 1) });
@@ -584,7 +584,7 @@ function replyPuedo(q) {
     return { r: 'c', tags: ['dato', 'base', 'rec'], html: `<p>${head} ${emo(f)} <b>${esc(foodName(f))}</b>, ${portionLabel(d.unit, d.n, f)}: <b>${fmt(m.kcal)} kcal</b>${pct ? ' ' + tr('(un {p} de tu día)', { p: pctTxt(pct) }) : ''} · ${tr('proteína {p} g', { p: fmt(m.p, 1) })}.</p>
         <p class="mt-2">${cabe ? tr('Te cabe hoy sin pasarte: te quedan <b>{k} kcal</b>.', { k: fmt(R.kcal) }) : tr('Hoy te quedan {k} kcal, así que te pasarías un poco. No es grave: toma media ración o ajusta mañana.', { k: fmt(Math.max(0, R.kcal)) })}</p>
         <p class="mt-2 text-neutral-300">${tr(vary([tk('Ningún alimento engorda por sí solo: lo hace el total.'), tk('Un capricho planeado se sostiene mucho mejor que uno prohibido.'), tk('Lo que cuenta es la media de la semana, no un día.')]))}</p>
-        <button onclick="openFoodSheet(); fsOpen('${f.id}')" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Apuntarlo')}</button>` };
+        <button ${ND.on(() => { openFoodSheet(); fsOpen(f.id); })} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Apuntarlo')}</button>` };
 }
 function replyComparar(q) {
     const seg = q.replace(/^.*\b(mejor|peor|diferencia entre|diferencia|better|worse|healthier|difference between)\b/, ' ').replace(/[?¡¿!.,;]/g, ' ');
@@ -693,13 +693,13 @@ function replyDel(q) {
     const d = todayISO(), list = state.diary[d] || [], f = matchFoods(name, 1)[0], w = norm(name);
     const hit = e => (f && e.fid === f.id) || norm(e.name).includes(w) || (e.fid && norm(foodName(getFood(e.fid) || e)).includes(w));
     const idx = list.map((e, i) => [e, i]).reverse().find(([e]) => hit(e));
-    if (!idx) return { r: 'c', tags: ['dato'], html: `<p>${tr('Hoy no tienes «{x}» en el diario, así que no he quitado nada.', { x: esc(name) })}</p><button onclick="showTab('diary')" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Abrir el diario')}</button>` };
+    if (!idx) return { r: 'c', tags: ['dato'], html: `<p>${tr('Hoy no tienes «{x}» en el diario, así que no he quitado nada.', { x: esc(name) })}</p><button ${ND.on(() => showTab('diary'))} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Abrir el diario')}</button>` };
     const [e, i] = idx;
     list.splice(i, 1); if (!list.length) delete state.diary[d];
     coachLastDel = { d, i, e };
     afterLog();
     toastUndo(tr('Quitado: {n}', { n: e.name }), coachUndoDel);
-    return { r: 'c', tags: ['dato'], html: `<p>${tr('Quitado del diario: <b>{n}</b> · {k} kcal.', { n: esc(e.fid && getFood(e.fid) ? foodName(getFood(e.fid)) : e.name), k: fmt(e.kcal || 0) })} ${leftLine()}</p><button onclick="coachUndoDel()" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold"><i class="fa-solid fa-rotate-left"></i> ${tr('Deshacer')}</button>` };
+    return { r: 'c', tags: ['dato'], html: `<p>${tr('Quitado del diario: <b>{n}</b> · {k} kcal.', { n: esc(e.fid && getFood(e.fid) ? foodName(getFood(e.fid)) : e.name), k: fmt(e.kcal || 0) })} ${leftLine()}</p><button ${ND.on(coachUndoDel)} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold"><i class="fa-solid fa-rotate-left"></i> ${tr('Deshacer')}</button>` };
 }
 function coachUndoDel() {
     const x = coachLastDel; if (!x) { toast('Ya estaba deshecho'); return; }
@@ -709,7 +709,7 @@ function coachUndoDel() {
 }
 function replyGym() {
     const g = myGym(), N = gymDays();
-    const btn = (t, i) => `<button onclick="${i != null ? `gymDay=${i};gymAutoDay=true;` : ''}showTab('gym')" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold"><i class="fa-solid fa-dumbbell"></i> ${t}</button>`;
+    const btn = (t, i) => `<button ${ND.on(() => { if (i != null) { gymDay = i; gymAutoDay = true; } showTab('gym'); })} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold"><i class="fa-solid fa-dumbbell"></i> ${t}</button>`;
     if (!N || !g.plan.length) return { r: 'c', tags: ['rec'], html: `<p>${tr('Aún no tienes tu rutina. En el apartado Gym eliges cuántos días entrenas y añades tus ejercicios; te recomiendo algunos para empezar.')}</p>${btn(tr('Ir a mi rutina'))}` };
     const W = weekInfo(), dow = todayDow(), wd = g.wd || [];
     if (W.done >= N) return { r: 'c', tags: ['dato', 'rec'], html: `<p>${tr('Ya has hecho todos los entrenos de esta semana ({k}). Hoy toca <b>descansar</b>: el músculo crece mientras recuperas. Si te apetece moverte, camina.', { k: N })}</p>` };
@@ -757,7 +757,7 @@ function replyDolor() {
         <li>${tr('<b>Agujetas</b> (dolor muscular repartido 1-3 días después de entrenar): son normales y se pasan solas.')}</li>
         <li>${tr('Mientras te recuperas, entrena lo que no duela. En el gym puedes cambiar o quitar ese ejercicio del día.')}</li>
         <li>${tr('Sigue comiendo tu proteína: ayuda a recuperar.')}</li></ul>
-        <button onclick="showTab('gym')" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ir al gym')}</button>` };
+        <button ${ND.on(() => showTab('gym'))} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ir al gym')}</button>` };
 }
 const NUMW = { un: 1, una: 1, a: 1, one: 1, dos: 2, two: 2, tres: 3, three: 3, cuatro: 4, four: 4, seis: 6, six: 6 };
 function replyMeta(q) {
@@ -780,7 +780,7 @@ function replyMeta(q) {
         const w = Math.ceil(kg / rate), when = new Date(Date.now() + w * 7 * 864e5).toLocaleDateString(locale(), { day: 'numeric', month: 'long' });
         out.push(tr('A tu ritmo actual (<b>{r} kg por semana</b>) lo conseguirías en unas <b>{w} semanas</b>, hacia el {d}.', { r: fmt(rate, 2), w, d: when }));
     } else out.push(tr('Ahora tu plan no va en esa dirección. Cambia tu objetivo en «Mi plan» y recalculo tus calorías.'));
-    return { r: 'c', tags: ['dato', 'rec'], html: out.map((t, i) => `<p${i ? ' class="mt-2"' : ''}>${t}</p>`).join('') + `<p class="mt-2 text-neutral-300">${tr('Las primeras semanas la báscula se mueve más por el agua; fíate de la tendencia, no del día suelto.')}</p><button onclick="showTab('calc')" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ver mi plan')}</button>` };
+    return { r: 'c', tags: ['dato', 'rec'], html: out.map((t, i) => `<p${i ? ' class="mt-2"' : ''}>${t}</p>`).join('') + `<p class="mt-2 text-neutral-300">${tr('Las primeras semanas la báscula se mueve más por el agua; fíate de la tendencia, no del día suelto.')}</p><button ${ND.on(() => showTab('calc'))} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ver mi plan')}</button>` };
 }
 function replyPeso(q) {
     const w = parseFloat(q.match(RX.peso)[1].replace(',', '.'));
@@ -788,7 +788,7 @@ function replyPeso(q) {
     const L = state.weights || [], last = L.length ? L[L.length - 1] : null, dif = last ? Math.round((w - last.w) * 10) / 10 : 0;
     const vs = last && last.d !== todayISO() && dif ? ' ' + tr(dif < 0 ? '{k} kg menos que la última vez.' : '{k} kg más que la última vez.', { k: fmt(Math.abs(dif), 1) }) : '';
     return { r: 'c', tags: ['dato'], html: `<p>${tr('¿Guardo <b>{w} kg</b> como tu peso de hoy?', { w: fmt(w, w % 1 ? 1 : 0) })}${vs}</p>
-        <button type="button" onclick="coachWeight(${w}, this)" class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold"><i class="fa-solid fa-weight-scale"></i> ${tr('Guardar mi peso')}</button>
+        <button type="button" ${ND.on(e => coachWeight(w, e.target))} class="mt-3 px-4 py-2.5 rounded-xl bg-mint-600 text-white text-sm font-extrabold"><i class="fa-solid fa-weight-scale"></i> ${tr('Guardar mi peso')}</button>
         <p class="mt-2 text-xs text-neutral-400">${tr('Un día suelto no dice mucho: lo que cuenta es la tendencia de las semanas.')}</p>` };
 }
 function coachWeight(w, btn) {
@@ -802,7 +802,7 @@ function replyUndo() {
     if (coachLastDel) { const n = coachLastDel.e.name; coachUndoDel(); return { r: 'c', tags: ['dato'], html: `<p>${tr('Hecho: he vuelto a poner <b>{n}</b> en el diario.', { n: esc(n) })} ${leftLine()}</p>` }; }
     const m = [...(state.chat || [])].reverse().find(x => x.logged && !x.logged.undone);
     if (m) { const n = m.logged.items.map(it => foodName(getFood(it.fid) || {})).filter(Boolean).join(', '); logUndo(m.id); return { r: 'c', tags: ['dato'], html: `<p>${tr('Hecho: he quitado lo último que apunté ({n}).', { n: esc(n) })} ${leftLine()}</p>` }; }
-    return { r: 'c', tags: ['dato'], html: `<p>${tr('Para deshacer algo que he apuntado, pulsa «Deshacer» en ese mensaje o quítalo desde el diario.')}</p><button onclick="showTab('diary')" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Abrir el diario')}</button>` };
+    return { r: 'c', tags: ['dato'], html: `<p>${tr('Para deshacer algo que he apuntado, pulsa «Deshacer» en ese mensaje o quítalo desde el diario.')}</p><button ${ND.on(() => showTab('diary'))} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Abrir el diario')}</button>` };
 }
 function replyProtNeed() {
     const t = diaryTotals(todayISO()), n = planSlots().length || 4;
@@ -830,7 +830,7 @@ function replyVeces() {
     return { r: 'c', tags: ['rec'], html: `<p>${tr('Las que mejor te vengan: <b>3, 4 o 5 comidas dan el mismo resultado</b> si el total del día cuadra. Comer cada 3 horas no acelera el metabolismo.')}</p>
         <p class="mt-2">${tr('Tu plan está repartido en {n} comidas. Si te viene mejor otro número, cámbialo en las preferencias del Coach.', { n })}</p>
         <p class="mt-2 text-neutral-300">${tr('Lo que sí ayuda: que cada comida lleve algo de proteína.')}</p>
-        <button onclick="openPrefs()" class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Preferencias')}</button>` };
+        <button ${ND.on(openPrefs)} class="mt-3 px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Preferencias')}</button>` };
 }
 function replyCansado(q) {
     if (/(duermo|dormir|insomnio|sueno|sleep|insomnia)/.test(q)) return { r: 'c', tags: ['rec'], html: `<p>${tr('Dormir poco lo complica todo: da más hambre, más ganas de dulce y recuperas peor del entreno. Lo que más ayuda:')}</p><ul class="nd-list">
@@ -871,7 +871,7 @@ function replyMusculo() {
         <li>${tr('<b>Calorías</b>: un superávit pequeño (5-10 %) si estás delgado; si te sobra grasa, recomposición: comer en mantenimiento con mucha proteína.')}</li>
         <li>${tr('<b>Dormir</b> 7-9 horas: el músculo se construye descansando.')}</li></ol>
         <p class="mt-2 text-neutral-300">${tr('Ganar músculo sin nada de grasa no es realista si subes de peso, pero con un superávit pequeño la grasa es mínima.')}${g ? ' ' + tr('Tu objetivo ahora: {g}.', { g: tr(g) }) : ''}</p>
-        <div class="flex flex-wrap gap-2 mt-3"><button onclick="showTab('calc')" class="px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ver mi plan')}</button><button onclick="showTab('gym')" class="px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ir al gym')}</button></div>` };
+        <div class="flex flex-wrap gap-2 mt-3"><button ${ND.on(() => showTab('calc'))} class="px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ver mi plan')}</button><button ${ND.on(() => showTab('gym'))} class="px-4 py-2.5 rounded-xl bg-neutral-800 text-sm font-extrabold">${tr('Ir al gym')}</button></div>` };
 }
 function replyCardio() {
     return { r: 'c', tags: ['rec'], html: `<p>${tr('Las dos suman, pero si quieres cambiar tu cuerpo, <b>prioriza las pesas</b>: hacen que lo que pierdas sea grasa y no músculo.')}</p>
@@ -925,9 +925,9 @@ function mealCard(meal, o = {}) {
         <div class="flex gap-3 text-xs font-bold text-neutral-300"><span><span class="nd-dot" style="background:#c49a6c"></span>${tr('P')} ${fmt(meal.m.p)} g</span><span><span class="nd-dot" style="background:#e6d3b3"></span>${tr('HC')} ${fmt(meal.m.c)} g</span><span><span class="nd-dot" style="background:#f59e0b"></span>${tr('G')} ${fmt(meal.m.f)} g</span>${meal.min ? `<span class="text-neutral-500"><i class="fa-regular fa-clock"></i> ${meal.min} min</span>` : ''}</div>
         ${open ? `<div class="nd-recipe"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400">${tr('Ingredientes')}</div><ul class="nd-list">${ing.map(x => `<li>${emo(x.f)} ${esc(x.txt)} · ${esc(foodName(x.f))}</li>`).join('')}</ul><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400 pt-2">${tr('Pasos')}</div><ol class="nd-steps">${mealText(meal).steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol></div>` : ''}
         <div class="grid ${o.swap ? 'grid-cols-3' : 'grid-cols-2'} gap-2">
-            ${o.added ? '<div class="nd-done col-span-1"><i class="fa-solid fa-circle-check"></i> ' + tr('Añadido') + '</div>' : (o.add ? `<button type="button" onclick="${o.add}" class="nd-mbtn nd-mbtn-main"><i class="fa-solid fa-plus"></i> ${tr('Añadir')}</button>` : '')}
-            ${o.swap ? `<button type="button" onclick="${o.swap}" class="nd-mbtn"><i class="fa-solid fa-rotate"></i> ${tr('Cambiar')}</button>` : ''}
-            <button type="button" onclick="toggleRecipe('${key}')" class="nd-mbtn"><i class="fa-solid fa-book-open"></i> ${open ? tr('Ocultar') : tr('Receta')}</button>
+            ${o.added ? '<div class="nd-done col-span-1"><i class="fa-solid fa-circle-check"></i> ' + tr('Añadido') + '</div>' : (o.add ? `<button type="button" ${o.add} class="nd-mbtn nd-mbtn-main"><i class="fa-solid fa-plus"></i> ${tr('Añadir')}</button>` : '')}
+            ${o.swap ? `<button type="button" ${o.swap} class="nd-mbtn"><i class="fa-solid fa-rotate"></i> ${tr('Cambiar')}</button>` : ''}
+            <button type="button" ${ND.on(() => toggleRecipe(key))} class="nd-mbtn"><i class="fa-solid fa-book-open"></i> ${open ? tr('Ocultar') : tr('Receta')}</button>
         </div>
     </div>`;
 }
@@ -972,10 +972,10 @@ function renderWte() {
     const box = $('wte-body'); if (!box) return;
     const slots = planSlots();
     box.innerHTML = `<div class="space-y-4">
-        <div class="flex gap-2 overflow-x-auto nd-noscroll -mx-1 px-1">${slots.map(s => `<button type="button" onclick="wteSlot('${s}')" class="shrink-0 px-3.5 py-2 rounded-full text-xs font-extrabold border ${s === wte.slot ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800 border-neutral-700 text-neutral-300'}">${tr(SLOT_NAME[s])}</button>`).join('')}</div>
+        <div class="flex gap-2 overflow-x-auto nd-noscroll -mx-1 px-1">${slots.map(s => `<button type="button" ${ND.on(() => wteSlot(s))} class="shrink-0 px-3.5 py-2 rounded-full text-xs font-extrabold border ${s === wte.slot ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800 border-neutral-700 text-neutral-300'}">${tr(SLOT_NAME[s])}</button>`).join('')}</div>
         <div class="nd-card p-4 flex items-center justify-between gap-3"><div><div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">${tr('Para {x}', { x: slotArt(wte.slot) })}</div><div class="text-lg font-extrabold text-neutral-50">${tr('{k} kcal · {p} g de proteína', { k: fmt(wte.tg.kcal), p: fmt(wte.tg.p) })}</div></div>${tagPill('rec')}</div>
-        ${wte.opts.length ? wte.shown.map((idx, pos) => mealCard(wte.opts[idx], { key: 'w' + wte.opts[idx].id, add: `wteAdd(${pos})`, added: wte.added.includes(idx), swap: `wteSwap(${pos})` })).join('') : `<p class="text-sm text-neutral-300">${wte.tg.kcal < 90 ? tr('Ya casi has completado tu día. Si tienes hambre, algo muy ligero: infusión, verdura cruda, un yogur natural o fruta.') : tr('Con tus preferencias no encuentro platos para esta comida.')}</p>`}
-        <p class="text-[11px] text-neutral-500">${tr('Calorías y macros calculados con la base de alimentos (USDA / BEDCA) para esas cantidades.')} <button type="button" onclick="closeSheet();openPrefs()" class="underline">${tr('Preferencias')}</button></p>
+        ${wte.opts.length ? wte.shown.map((idx, pos) => mealCard(wte.opts[idx], { key: 'w' + wte.opts[idx].id, add: ND.on(() => wteAdd(pos)), added: wte.added.includes(idx), swap: ND.on(() => wteSwap(pos)) })).join('') : `<p class="text-sm text-neutral-300">${wte.tg.kcal < 90 ? tr('Ya casi has completado tu día. Si tienes hambre, algo muy ligero: infusión, verdura cruda, un yogur natural o fruta.') : tr('Con tus preferencias no encuentro platos para esta comida.')}</p>`}
+        <p class="text-[11px] text-neutral-500">${tr('Calorías y macros calculados con la base de alimentos (USDA / BEDCA) para esas cantidades.')} <button type="button" ${ND.on(() => { closeSheet(); openPrefs(); })} class="underline">${tr('Preferencias')}</button></p>
     </div>`;
 }
 
@@ -990,7 +990,7 @@ function renderMenuView() {
     if (!calc.target) { box.innerHTML = emptyPlan(tk('generar tu menú')); return; }
     const mn = state.menu;
     if (!mn || !mn.meals || !mn.meals.length) {
-        box.innerHTML = `<div class="nd-card p-6 sm:p-8 text-center space-y-4"><div class="nd-ic-xl mx-auto">${icon('🍽️')}</div><h3 class="text-xl font-extrabold text-neutral-50">${tr('Tu día completo, con gramos exactos')}</h3><p class="text-sm text-neutral-400 max-w-sm mx-auto">${tr('{n} comidas que suman tus {k} kcal y tus {p} g de proteína, según tus preferencias.', { n: myPrefs().meals, k: fmt(calc.target), p: calc.prot })}</p><button onclick="genMenu()" class="nd-btn-primary mx-auto"><i class="fa-solid fa-wand-magic-sparkles"></i> ${tr('Generar mi menú')}</button></div>`;
+        box.innerHTML = `<div class="nd-card p-6 sm:p-8 text-center space-y-4"><div class="nd-ic-xl mx-auto">${icon('🍽️')}</div><h3 class="text-xl font-extrabold text-neutral-50">${tr('Tu día completo, con gramos exactos')}</h3><p class="text-sm text-neutral-400 max-w-sm mx-auto">${tr('{n} comidas que suman tus {k} kcal y tus {p} g de proteína, según tus preferencias.', { n: myPrefs().meals, k: fmt(calc.target), p: calc.prot })}</p><button ${ND.on(genMenu)} class="nd-btn-primary mx-auto"><i class="fa-solid fa-wand-magic-sparkles"></i> ${tr('Generar mi menú')}</button></div>`;
         return;
     }
     const T = menuTotals(mn);
@@ -999,16 +999,16 @@ function renderMenuView() {
             <div class="flex items-end justify-between gap-3"><div><div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">${tr('Total del menú')}</div><div class="text-3xl font-extrabold text-neutral-50">${fmt(T.kcal)} <span class="text-sm text-neutral-400">/ ${fmt(calc.target)} kcal</span></div></div>${tagPill('rec')}</div>
             <div class="grid grid-cols-3 gap-3">${bar(tr('Proteína'), T.p, calc.prot, '#c49a6c')}${bar(tr('Hidratos'), T.c, calc.carbs, '#e6d3b3')}${bar(tr('Grasas'), T.f, calc.fat, '#f59e0b')}</div>
             <div class="grid ${proMenu ? 'grid-cols-3' : 'grid-cols-2'} gap-2">
-                ${proMenu ? `<button onclick="genMenu()" class="nd-mbtn"><i class="fa-solid fa-rotate"></i> ${tr('Regenerar')}</button>` : ''}
-                <button onclick="menuAddAll()" class="nd-mbtn nd-mbtn-main"><i class="fa-solid fa-plus"></i> ${tr('Añadir todo')}</button>
-                <button onclick="coachView('shop')" class="nd-mbtn"><i class="fa-solid fa-basket-shopping"></i> ${tr('Compra')}</button>
+                ${proMenu ? `<button ${ND.on(genMenu)} class="nd-mbtn"><i class="fa-solid fa-rotate"></i> ${tr('Regenerar')}</button>` : ''}
+                <button ${ND.on(menuAddAll)} class="nd-mbtn nd-mbtn-main"><i class="fa-solid fa-plus"></i> ${tr('Añadir todo')}</button>
+                <button ${ND.on(() => coachView('shop'))} class="nd-mbtn"><i class="fa-solid fa-basket-shopping"></i> ${tr('Compra')}</button>
             </div>
         </div>
-        ${!proMenu ? `<div class="nd-card p-4 flex items-center gap-3"><span class="nd-ic shrink-0">${icon('👑')}</span><div class="min-w-0"><p class="text-sm text-neutral-200">${tr('Tu último menú se queda aquí para consultarlo y apuntarlo. Para crear uno nuevo necesitas PRO.')}</p><button type="button" onclick="openPaywall('menu')" class="mt-1 text-sm font-extrabold text-mint-300 underline">${tr('Ver FitDL PRO')}</button></div></div>` : ''}
-        ${mn.meals.map((ml, i) => mealCard(ml, { key: 'mn' + i + ml.id, slotLabel: tr(SLOT_NAME[ml.slot]), swap: proMenu ? `menuSwap(${i})` : '', add: `menuAdd(${i})`, added: (mn.added || []).includes(i) })).join('')}
+        ${!proMenu ? `<div class="nd-card p-4 flex items-center gap-3"><span class="nd-ic shrink-0">${icon('👑')}</span><div class="min-w-0"><p class="text-sm text-neutral-200">${tr('Tu último menú se queda aquí para consultarlo y apuntarlo. Para crear uno nuevo necesitas PRO.')}</p><button type="button" ${ND.on(() => openPaywall('menu'))} class="mt-1 text-sm font-extrabold text-mint-300 underline">${tr('Ver FitDL PRO')}</button></div></div>` : ''}
+        ${mn.meals.map((ml, i) => mealCard(ml, { key: 'mn' + i + ml.id, slotLabel: tr(SLOT_NAME[ml.slot]), swap: proMenu ? ND.on(() => menuSwap(i)) : '', add: ND.on(() => menuAdd(i)), added: (mn.added || []).includes(i) })).join('')}
         <p class="text-[11px] text-neutral-500">${tr('Generado el {d}. Cantidades en crudo salvo que se indique. Calculado con la base de alimentos; las etiquetas pueden variar.', { d: new Date(mn.at || Date.now()).toLocaleDateString(locale(), { day: 'numeric', month: 'long' }) })}</p>`;
 }
-const emptyPlan = what => `<div class="nd-card p-6 text-center space-y-3"><p class="text-sm text-neutral-300">${tr('Completa tu plan para {x}.', { x: tr(what) })}</p><button onclick="${profiles.current ? "showTab('calc')" : 'newProfile()'}" class="nd-btn-primary mx-auto">${tr('Completar mi plan')}</button></div>`;
+const emptyPlan = what => `<div class="nd-card p-6 text-center space-y-3"><p class="text-sm text-neutral-300">${tr('Completa tu plan para {x}.', { x: tr(what) })}</p><button ${ND.on(() => { profiles.current ? showTab('calc') : newProfile(); })} class="nd-btn-primary mx-auto">${tr('Completar mi plan')}</button></div>`;
 function genMenu() {
     if (needPro('menu')) return;
     const mn = makeDayMenu(Date.now() % 1000000);
@@ -1035,14 +1035,14 @@ async function menuAddAll() {
 // =====================================================================
 function prefsHtml() {
     const p = myPrefs();
-    const chip = (on, click, label) => `<button type="button" onclick="${click}" aria-pressed="${on}" class="px-3 py-2 rounded-xl border text-xs font-bold ${on ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-800 hover:bg-neutral-700'}">${label}</button>`;
-    const lst = (k, ph) => `<div class="flex flex-wrap gap-1.5">${p[k].map(id => getFood(id)).filter(Boolean).map(f => `<span class="inline-flex items-center gap-1 pl-2.5 pr-1 py-1 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200">${emo(f)} ${esc(foodName(f))}<button type="button" onclick="prefDel('${k}','${f.id}')" class="w-6 h-6 rounded text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button></span>`).join('')}</div>
-        <input type="search" placeholder="${tr(ph)}" oninput="prefSearch('${k}',this.value)" class="w-full px-3 py-2.5 rounded-xl bg-neutral-800/60 border border-neutral-800 text-sm font-semibold" aria-label="${tr(ph)}"><div id="pref-s-${k}" class="flex flex-wrap gap-1.5"></div>`;
+    const chip = (on, fn, label) => `<button type="button" ${ND.on(fn)} aria-pressed="${on}" class="px-3 py-2 rounded-xl border text-xs font-bold ${on ? 'bg-mint-600 text-white border-mint-600' : 'bg-neutral-800/60 text-neutral-300 border-neutral-800 hover:bg-neutral-700'}">${label}</button>`;
+    const lst = (k, ph) => `<div class="flex flex-wrap gap-1.5">${p[k].map(id => getFood(id)).filter(Boolean).map(f => { const fid = f.id; return `<span class="inline-flex items-center gap-1 pl-2.5 pr-1 py-1 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200">${emo(f)} ${esc(foodName(f))}<button type="button" ${ND.on(() => prefDel(k, fid))} class="w-6 h-6 rounded text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button></span>`; }).join('')}</div>
+        <input type="search" placeholder="${tr(ph)}" ${ND.oninput(e => prefSearch(k, e.target.value))} class="w-full px-3 py-2.5 rounded-xl bg-neutral-800/60 border border-neutral-800 text-sm font-semibold" aria-label="${tr(ph)}"><div id="pref-s-${k}" class="flex flex-wrap gap-1.5"></div>`;
     const head = l => `<div class="text-xs font-bold text-neutral-300 uppercase tracking-wider">${tr(l)}</div>`;
-    return `<div class="space-y-2">${head(tk('Cómo comes'))}<div class="flex flex-wrap gap-2">${Object.entries(DIETS).map(([k, l]) => chip(p.diet === k, `setPref('diet','${k}')`, tr(l))).join('')}</div></div>
-        <div class="space-y-2">${head(tk('Alergias e intolerancias'))}<div class="flex flex-wrap gap-2">${Object.entries(ALLERGENS).map(([k, [l]]) => chip(p.allergies.includes(k), `togglePref('allergies','${k}')`, tr(l))).join('')}</div></div>
-        <div class="grid grid-cols-1 min-[360px]:grid-cols-2 gap-4"><div class="space-y-2">${head(tk('Comidas al día'))}<div class="flex flex-wrap gap-2">${[3, 4, 5].map(n => chip(p.meals === n, `setPref('meals',${n})`, n)).join('')}</div></div>
-        <div class="space-y-2">${head(tk('Presupuesto'))}<div class="flex flex-wrap gap-2">${chip(p.budget === 'low', "setPref('budget','low')", tr('Ajustado'))}${chip(p.budget !== 'low', "setPref('budget','normal')", tr('Normal'))}</div></div></div>
+    return `<div class="space-y-2">${head(tk('Cómo comes'))}<div class="flex flex-wrap gap-2">${Object.entries(DIETS).map(([k, l]) => chip(p.diet === k, () => setPref('diet', k), tr(l))).join('')}</div></div>
+        <div class="space-y-2">${head(tk('Alergias e intolerancias'))}<div class="flex flex-wrap gap-2">${Object.entries(ALLERGENS).map(([k, [l]]) => chip(p.allergies.includes(k), () => togglePref('allergies', k), tr(l))).join('')}</div></div>
+        <div class="grid grid-cols-1 min-[360px]:grid-cols-2 gap-4"><div class="space-y-2">${head(tk('Comidas al día'))}<div class="flex flex-wrap gap-2">${[3, 4, 5].map(n => chip(p.meals === n, () => setPref('meals', n), n)).join('')}</div></div>
+        <div class="space-y-2">${head(tk('Presupuesto'))}<div class="flex flex-wrap gap-2">${chip(p.budget === 'low', () => setPref('budget', 'low'), tr('Ajustado'))}${chip(p.budget !== 'low', () => setPref('budget', 'normal'), tr('Normal'))}</div></div></div>
         <div class="space-y-2">${head(tk('No me gusta'))}${lst('dislikes', tk('Buscar un alimento que no te guste…'))}</div>
         <div class="space-y-2">${head(tk('Tengo en casa'))}${lst('pantry', tk('Buscar lo que tienes en la nevera…'))}</div>
         <p class="text-[11px] text-neutral-500">${tr('Se usan para «¿Qué como?», el menú y la lista de la compra. Revisa siempre las etiquetas si tienes una alergia.')}</p>`;
@@ -1058,7 +1058,7 @@ function prefDel(k, id) { const p = myPrefs(); p[k] = p[k].filter(x => x !== id)
 function prefAdd(k, id) { const p = myPrefs(); if (!p[k].includes(id)) p[k].push(id); save(); renderPrefs(); }
 function prefSearch(k, q) {
     const box = $('pref-s-' + k); if (!box) return;
-    box.innerHTML = q.trim().length < 2 ? '' : matchFoods(q, 6).filter(f => !f.brand).map(f => `<button type="button" onclick="prefAdd('${k}','${f.id}')" class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f))}</button>`).join('');
+    box.innerHTML = q.trim().length < 2 ? '' : matchFoods(q, 6).filter(f => !f.brand).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => prefAdd(k, fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f))}</button>`; }).join('');
 }
 
 // =====================================================================
@@ -1074,7 +1074,7 @@ function askVoiceConsent(then) {
     openSheet('<i class="fa-solid fa-microphone text-mint-400"></i> ' + tr('Usar el micrófono'), `<div class="space-y-4 text-sm text-neutral-300">
         <p>${tr('Para convertir tu voz en texto, tu navegador usa su propio servicio de dictado. En Chrome el audio se procesa en los servidores de Google, y en Safari, en los de Apple.')}</p>
         <p>${tr('FitDL no guarda ni envía el audio: solo recibe el texto, que se procesa en tu dispositivo.')}</p>
-        <div class="grid grid-cols-2 gap-2"><button onclick="closeSheet();openVoiceLog(true)" class="py-3 rounded-xl border border-neutral-700 font-bold">${tr('Prefiero escribir')}</button><button id="vc-ok" class="py-3 rounded-xl bg-mint-600 text-white font-extrabold">${tr('Aceptar y hablar')}</button></div></div>`);
+        <div class="grid grid-cols-2 gap-2"><button ${ND.on(() => { closeSheet(); openVoiceLog(true); })} class="py-3 rounded-xl border border-neutral-700 font-bold">${tr('Prefiero escribir')}</button><button id="vc-ok" class="py-3 rounded-xl bg-mint-600 text-white font-extrabold">${tr('Aceptar y hablar')}</button></div></div>`);
     $('vc-ok').onclick = () => { setConsent('voice', true); closeSheet(); then(); };
 }
 function listen(onText, onState) {
@@ -1105,9 +1105,9 @@ function openVoiceLog(typeOnly) {
     if (!typeOnly && SR && !consent('voice')) return askVoiceConsent(() => openVoiceLog());
     voicePid = null;
     openSheet('<i class="fa-solid fa-microphone text-mint-400"></i> ' + tr('Registrar comida'), `<div class="space-y-4">
-        ${SR && !typeOnly ? `<div class="text-center space-y-3 py-2"><button id="vl-mic" onclick="voiceStart()" class="nd-bigmic" aria-label="${tr('Hablar')}"><i class="fa-solid fa-microphone"></i></button><div id="vl-state" class="text-sm font-bold text-neutral-300">${tr('Pulsa y di lo que has comido')}</div></div>` : `<p class="text-sm text-neutral-400">${SR ? '' : tr('Tu navegador no permite dictado aquí. Escríbelo (o usa el micrófono de tu teclado).')}</p>`}
+        ${SR && !typeOnly ? `<div class="text-center space-y-3 py-2"><button id="vl-mic" ${ND.on(voiceStart)} class="nd-bigmic" aria-label="${tr('Hablar')}"><i class="fa-solid fa-microphone"></i></button><div id="vl-state" class="text-sm font-bold text-neutral-300">${tr('Pulsa y di lo que has comido')}</div></div>` : `<p class="text-sm text-neutral-400">${SR ? '' : tr('Tu navegador no permite dictado aquí. Escríbelo (o usa el micrófono de tu teclado).')}</p>`}
         <textarea id="vl-text" rows="3" maxlength="400" placeholder="${tr('Ej: 200 g de pechuga de pollo, 100 g de arroz y una ensalada')}" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-semibold text-[15px]" aria-label="${tr('Lo que has comido')}"></textarea>
-        <button onclick="voiceParse()" class="w-full py-3 rounded-xl bg-neutral-800 border border-neutral-700 font-extrabold text-sm"><i class="fa-solid fa-wand-magic-sparkles text-mint-400"></i> ${tr('Entender')}</button>
+        <button ${ND.on(voiceParse)} class="w-full py-3 rounded-xl bg-neutral-800 border border-neutral-700 font-extrabold text-sm"><i class="fa-solid fa-wand-magic-sparkles text-mint-400"></i> ${tr('Entender')}</button>
         <div id="vl-out"></div></div>`, () => { try { if (rec) rec.abort(); } catch (e) { } });
     if (!SR || typeOnly) setTimeout(() => { const t = $('vl-text'); if (t) t.focus(); }, 80);
     track('voice_open');
@@ -1146,10 +1146,10 @@ function openPhotoLog() {
     if (needPro('photo')) return;
     // (el estado de la foto se crea después de abrir la hoja: abrir una hoja cierra la anterior y su limpieza)
     openSheet('<i class="fa-solid fa-camera text-mint-400"></i> ' + tr('Foto del plato'), `<div class="space-y-4">
-        <label class="nd-photo" id="ph-drop"><input id="ph-file" type="file" accept="image/*" capture="environment" class="sr-only" onchange="photoPicked(this)"><span id="ph-prev" class="flex flex-col items-center gap-2 text-neutral-400"><i class="fa-solid fa-camera text-3xl text-mint-400"></i><span class="text-sm font-bold">${tr('Hacer o elegir una foto')}</span><span class="text-xs">${tr('Opcional: te ayuda a recordar el plato. No sale de tu móvil.')}</span></span></label>
+        <label class="nd-photo" id="ph-drop"><input id="ph-file" type="file" accept="image/*" capture="environment" class="sr-only" ${ND.onchange(e => photoPicked(e.target))}><span id="ph-prev" class="flex flex-col items-center gap-2 text-neutral-400"><i class="fa-solid fa-camera text-3xl text-mint-400"></i><span class="text-sm font-bold">${tr('Hacer o elegir una foto')}</span><span class="text-xs">${tr('Opcional: te ayuda a recordar el plato. No sale de tu móvil.')}</span></span></label>
         <div class="space-y-2"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400">${tr('¿Qué hay en el plato?')}</div>
-            <div class="flex flex-wrap gap-1.5">${PLATE_QUICK.map(getFood).filter(Boolean).map(f => `<button type="button" onclick="photoAdd('${f.id}')" class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f).replace(/ \((ya cocido|hecha|lata|cooked|canned)\)/, ''))}</button>`).join('')}</div>
-            <input type="search" placeholder="${tr('Buscar otro alimento…')}" oninput="photoSearch(this.value)" class="w-full px-3 py-2.5 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-semibold" aria-label="${tr('Buscar alimento del plato')}"><div id="ph-s" class="flex flex-wrap gap-1.5"></div>
+            <div class="flex flex-wrap gap-1.5">${PLATE_QUICK.map(getFood).filter(Boolean).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => photoAdd(fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f).replace(/ \((ya cocido|hecha|lata|cooked|canned)\)/, ''))}</button>`; }).join('')}</div>
+            <input type="search" placeholder="${tr('Buscar otro alimento…')}" ${ND.oninput(e => photoSearch(e.target.value))} class="w-full px-3 py-2.5 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-semibold" aria-label="${tr('Buscar alimento del plato')}"><div id="ph-s" class="flex flex-wrap gap-1.5"></div>
         </div>
         <div id="ph-items" class="space-y-2"></div>
         <div id="ph-foot"></div>
@@ -1164,7 +1164,7 @@ function photoPicked(inp) {
     $('ph-prev').innerHTML = `<img src="${photo.url}" alt="${tr('Foto de tu plato')}" class="w-full max-h-64 object-cover rounded-2xl">`;
     $('ph-drop').classList.add('has');
 }
-function photoSearch(q) { if (!photo) return; $('ph-s').innerHTML = q.trim().length < 2 ? '' : matchFoods(q, 8).map(f => `<button type="button" onclick="photoAdd('${f.id}')" class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f))}${f.brand ? ' · ' + esc(f.brand) : ''}</button>`).join(''); }
+function photoSearch(q) { if (!photo) return; $('ph-s').innerHTML = q.trim().length < 2 ? '' : matchFoods(q, 8).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => photoAdd(fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f))}${f.brand ? ' · ' + esc(f.brand) : ''}</button>`; }).join(''); }
 function photoAdd(id) {
     if (!photo) return;
     const f0 = getFood(id); if (!f0) return;
@@ -1179,9 +1179,9 @@ function renderPhoto() {
     const box = $('ph-items'); if (!box) return;
     box.innerHTML = photo.items.map((it, i) => {
         const f = getFood(it.fid), ps = portionSet(f);
-        return `<div class="nd-crow space-y-2"><div class="flex items-center gap-2"><div class="flex-1 min-w-0 text-sm font-bold text-neutral-100">${emo(f)} ${esc(foodName(f))}</div><span id="ph-k${i}" class="text-xs font-bold text-neutral-400">≈ ${fmt(macrosOf(f, it.g).kcal)} kcal</span><button type="button" onclick="photoDel(${i})" class="w-8 h-8 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button></div>
-            <div class="flex items-center gap-1.5">${ps.map((p, pi) => `<button type="button" onclick="photoPortion(${i},${pi})" class="flex-1 py-2 rounded-lg text-xs font-bold border ${it.pi === pi ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800 border-neutral-700 text-neutral-300'}">${p.l}</button>`).join('')}
-            <label class="nd-gin"><input type="number" inputmode="decimal" min="1" max="3000" value="${it.g}" oninput="photoG(${i},this.value)" aria-label="${tr('Gramos de {n}', { n: esc(foodName(f)) })}"><span>${f.ml ? 'ml' : 'g'}</span></label></div></div>`;
+        return `<div class="nd-crow space-y-2"><div class="flex items-center gap-2"><div class="flex-1 min-w-0 text-sm font-bold text-neutral-100">${emo(f)} ${esc(foodName(f))}</div><span id="ph-k${i}" class="text-xs font-bold text-neutral-400">≈ ${fmt(macrosOf(f, it.g).kcal)} kcal</span><button type="button" ${ND.on(() => photoDel(i))} class="w-8 h-8 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button></div>
+            <div class="flex items-center gap-1.5">${ps.map((p, pi) => `<button type="button" ${ND.on(() => photoPortion(i, pi))} class="flex-1 py-2 rounded-lg text-xs font-bold border ${it.pi === pi ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800 border-neutral-700 text-neutral-300'}">${p.l}</button>`).join('')}
+            <label class="nd-gin"><input type="number" inputmode="decimal" min="1" max="3000" value="${it.g}" ${ND.oninput(e => photoG(i, e.target.value))} aria-label="${tr('Gramos de {n}', { n: esc(foodName(f)) })}"><span>${f.ml ? 'ml' : 'g'}</span></label></div></div>`;
     }).join('');
     photoFoot();
 }
@@ -1193,7 +1193,7 @@ function photoFoot() {
     box.innerHTML = `<div class="nd-card p-4 space-y-3"><div class="flex items-center justify-between"><div><div class="text-[11px] font-bold uppercase tracking-wider text-amber-300">${tr('Estimación aproximada')}</div><div class="text-xl font-extrabold text-neutral-50">≈ ${fmt(k)} kcal</div></div>${tagPill('est')}</div>
         <p class="text-xs text-neutral-400">${tr('Pesos ya cocinados. Si puedes pesarlo, cambia los gramos: será más exacto.')}</p>
         <div class="flex gap-2"><select id="ph-slot" class="p-2.5 bg-neutral-800 border border-neutral-700 rounded-xl text-sm font-bold" aria-label="${tr('Comida del día')}">${DSLOTS.map(([kk, n]) => `<option value="${kk}" ${kk === slotByHour() ? 'selected' : ''}>${tr(n)}</option>`).join('')}</select>
-        <button type="button" onclick="photoSave()" class="flex-1 py-2.5 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold"><i class="fa-solid fa-check"></i> ${tr('Añadir al diario')}</button></div></div>`;
+        <button type="button" ${ND.on(photoSave)} class="flex-1 py-2.5 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-sm font-extrabold"><i class="fa-solid fa-check"></i> ${tr('Añadir al diario')}</button></div></div>`;
 }
 function photoSave() {
     if (!photo || !photo.items.length) return;
@@ -1210,7 +1210,7 @@ function openReminder() {
     openSheet('<i class="fa-regular fa-bell text-mint-400"></i> ' + tr('Recordatorio diario'), `<div class="space-y-4">
         <p class="text-sm text-neutral-300">${tr('Añade a tu calendario un aviso diario para apuntar tus comidas. Lo controlas tú: puedes cambiarlo o borrarlo desde el calendario.')}</p>
         <label class="block"><span class="text-xs font-bold text-neutral-400">${tr('Hora del aviso')}</span><input id="rm-time" type="time" value="21:00" class="w-full p-3 bg-neutral-800 border border-neutral-700 rounded-xl font-bold"></label>
-        <button onclick="downloadReminder()" class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-solid fa-calendar-plus"></i> ${tr('Añadir a mi calendario')}</button>
+        <button ${ND.on(downloadReminder)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-solid fa-calendar-plus"></i> ${tr('Añadir a mi calendario')}</button>
         <p class="text-[11px] text-neutral-500">${tr('Se descarga un archivo de calendario (.ics) que abre tu app de calendario.')}</p></div>`);
 }
 function downloadReminder() {

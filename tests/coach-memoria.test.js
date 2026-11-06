@@ -81,7 +81,7 @@ test('Coach: si no entiende pero ve un alimento, ofrece algo útil', () => {
     conPlan(run);
     const r = json("coachReply('oye una cosa rara sobre el salmón ese')");
     assert.match(txt(r), /salmón/i);
-    assert.match(String(r.html), /coachSend/, 'ofrece botones para seguir');
+    assert.match(String(r.html), /data-h=/, 'ofrece botones para seguir');
 });
 
 test('Coach: una pregunta nunca se apunta sola en el diario', () => {
@@ -106,13 +106,9 @@ test('Coach: un alimento con apóstrofo o comillas no rompe ni cuela código en 
         { id: 'c_test2', name: "Tarta '); alert(1);//", cat: 'custom', role: 'carb', meals: 'BSLD', p: 2, f: 10, c: 40, fib: 0, min: 0, max: 0, flags: '', custom: 1 }];
         syncCustomFoods();`);
     const h = String(json(`coachReply("¿mmm el o'brien ese?")`).html);
-    assert.match(h, /O&#39;Brien|O\u0027Brien|O&#x27;Brien/, 'el apóstrofo va escapado dentro del onclick');
-    // Lo decisivo: al decodificar el atributo como hace el navegador, el argumento sigue siendo UNA cadena cerrada
-    const arg = h.match(/onclick="coachSend\((.*?)\)"/);
-    assert.ok(arg, 'el botón se genera');
-    const decoded = arg[1].replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
-    // (lo que se ve y la frase que lee el Coach): cada uno es una cadena JSON cerrada, nada de código suelto
-    let args; assert.doesNotThrow(() => { args = JSON.parse('[' + decoded + ']'); }, 'los argumentos son cadenas JSON válidas, no código suelto');
-    assert.ok(args.length >= 1 && args.every(a => typeof a === 'string'), 'solo cadenas');
-    assert.doesNotMatch(decoded, /alert\(/);
+    // Con delegación ND los valores van en closures, no en atributos HTML: no hay onclick que inyectar
+    assert.match(h, /O&#39;Brien|O\u0027Brien|O&#x27;Brien|O'Brien/, 'el nombre aparece en el botón');
+    // Sin onclick en el HTML, no hay superficie para inyección de código vía atributos
+    assert.doesNotMatch(h, /onclick=/, 'sin onclick: la delegación ND elimina el vector de inyección');
+    assert.match(h, /data-h=/, 'el botón se genera');
 });
