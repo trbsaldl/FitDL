@@ -59,6 +59,8 @@ const CANON = { pollo: 'pollo', pechuga: 'pollo', arroz: 'arroz', pasta: 'pasta'
     atun: 'atun', huevo: 'huevo', aceite: 'aove', patata: 'patata', ternera: 'ternera', galleta: 'galletas', galletas: 'galletas', cerveza: 'cerveza', vino: 'vino',
     cafe: 'cafeleche', salmon: 'salmon', merluza: 'merluza', jamon: 'jamon', pavo: 'pavo', cerdo: 'cerdo', lomo: 'cerdo', avena: 'avena', ensalada: 'ensalada',
     chocolate: 'choco', zumo: 'zumo', hamburguesa: 'hamburguesacomp', tostada: 'pan', sushi: 'sushi', kebab: 'kebab', queso: 'burgos', tortilla: 'tortilla', lentejas: 'lentguisadas', garbanzos: 'garbanzos', fruta: 'manzana', pizza: 'pizza' };
+// Colombia y Latinoamérica
+Object.assign(CANON, { papa: 'patata', papas: 'patata', banano: 'platano', jugo: 'zumo' });
 // Lo mismo en inglés
 Object.assign(CANON, { chicken: 'pollo', breast: 'pollo', rice: 'arroz', pasta: 'pasta', bread: 'pan', milk: 'leche', yogurt: 'yognat', yoghurt: 'yognat',
     tuna: 'atun', egg: 'huevo', eggs: 'huevo', oil: 'aove', potato: 'patata', potatoes: 'patata', beef: 'ternera', steak: 'ternera', biscuits: 'galletas', cookies: 'galletas',
@@ -94,7 +96,9 @@ function matchFoods(q, max = 6) {
     const res = [];
     for (const f of FOODS) {
         const enName = enNameOf(f);
-        const words = norm(`${f.name} ${enName} ${f.brand || ''} ${f.alias || ''}`).split(/[^a-z0-9ñ%-]+/).filter(Boolean);
+        // foodText (diary.js) añade las palabras de Colombia/Latinoamérica: «papa» también es «patata»
+        const base = typeof foodText === 'function' ? foodText(f) : norm(`${f.name} ${f.brand || ''} ${f.alias || ''}`);
+        const words = `${base} ${norm(enName)}`.split(/[^a-z0-9ñ%-]+/).filter(Boolean);
         let score = 0, hits = 0;
         toks.forEach((t, i) => {
             const best = Math.max(0, ...alt(t).flatMap(a => words.map(w => tokMatch(a, w))));

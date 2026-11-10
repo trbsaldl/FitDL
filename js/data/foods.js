@@ -456,7 +456,7 @@ CHAIN_FOODS.forEach(([id, name, brand, kcal, p, c, f, fib, sug, serv, ml, src]) 
     FOODS.push({ id, name, brand, cat: 'marca', fast: 1, role, meals: 'BSLD', p, f, c, fib, kcal, min: 0, max: 0, flags: '', diaryOnly: 1, ...(serv ? { serv } : {}), ...(sug != null ? { sug } : {}), ...(ml ? { ml: 1 } : {}), src });
 });
 // </cadenas>
-// <usda> (lo genera tools/genericos/embed.js · USDA FoodData Central: SR Legacy y FNDDS, dominio público · ICBF: Tabla de Composición de Alimentos Colombianos 2018 · 2026-10-23)
+// <usda> (lo genera tools/genericos/embed.js · USDA FoodData Central: SR Legacy y FNDDS, dominio público · ICBF: Tabla de Composición de Alimentos Colombianos 2018 · 2026-11-09)
 // Alimentos crudos y cocinados con su ficha oficial (fdc = ficha del USDA · icbf = código de la tabla colombiana). HC sin fibra, como las etiquetas de la UE.
 D("u_pollo_asado_sin", "Pechuga de pollo asada (sin piel)", 'prot', 31, 3.6, 0, 0, [120,"filete","filetes"], '', 'M', {"sug":0,"fdc":171477});
 D("u_pollo_guisado", "Pechuga de pollo guisada / hervida", 'prot', 29, 3, 0, 0, [120,"filete","filetes"], '', 'M', {"sug":0,"fdc":171478});
@@ -1003,6 +1003,32 @@ D("u_vino_blanco", "Vino blanco", 'bebida', 0.1, 0, 2.6, 0, [150,"copa","copas"]
 D("u_vino_chenin", "Vino blanco Chenin Blanc", 'bebida', 0.1, 0, 3.3, 0, [150,"copa","copas"], '', 'N', {"ml":1,"fdc":173195});
 D("u_vino_borgona", "Vino tinto Borgoña", 'bebida', 0.1, 0, 3.7, 0, [150,"copa","copas"], '', 'N', {"ml":1,"fdc":173208});
 D("u_whey_isolate", "Proteína whey aislada (polvo)", 'vprot', 58.1, 1.2, 29.1, 0, [30,"cacito","cacitos"], '', 'VL', {"sug":1.2,"fdc":173177});
+D("u_lulo", "Lulo (pulpa)", 'fruta', 0.4, 0.2, 4.8, 1.1, [100,"ración","raciones"], '', 'N', {"sug":3.7,"fdc":167790});
+D("u_guanabana", "Guanábana", 'fruta', 1, 0.3, 13.5, 3.3, [150,"ración","raciones"], '', 'N', {"sug":13.5,"fdc":167761});
+D("u_jugo_maracuya", "Jugo de maracuyá natural (sin azúcar)", 'bebida', 0.7, 0.2, 14.2, 0.2, [250,"vaso","vasos"], '', 'N', {"ml":1,"sug":14.2,"fdc":169110});
+D("u_uchuva", "Uchuva", 'fruta', 1.9, 0.7, 11.2, 0, [100,"ración","raciones"], '', 'N', {"fdc":173043});
+D("u_feijoa", "Feijoa", 'fruta', 0.7, 0.4, 8.8, 6.4, [50,"feijoa","feijoas"], '', 'N', {"sug":8.2,"fdc":168176});
+D("u_zapote", "Zapote / mamey", 'fruta', 1.5, 0.5, 26.7, 5.4, [150,"ración","raciones"], '', 'N', {"sug":20.1,"fdc":167760});
+D("u_patacon", "Patacón (plátano verde frito)", 'hc', 1.5, 11.8, 45.7, 3.5, [60,"patacón","patacones"], '', 'N', {"sug":3.6,"fdc":168199});
+D("u_maduro_frito", "Tajadas de plátano maduro fritas", 'hc', 1.4, 7.5, 37.6, 3.2, [100,"ración","raciones"], '', 'N', {"sug":21.8,"fdc":168200});
+D("u_platano_verde_cocido", "Plátano verde cocido", 'hc', 1.1, 0.1, 26.6, 2.6, [150,"ración","raciones"], '', 'N', {"sug":2.3,"fdc":168216});
+D("u_chips_yuca", "Chips de yuca", 'hc', 1.3, 25.9, 65.5, 3.7, [30,"paquete pequeño","paquetes pequeños"], '', 'N', {"sug":3.4,"fdc":173152});
+D("u_arroz_frijol_negro", "Arroz con fríjoles negros", 'platos', 4.6, 3.9, 21, 3.4, [250,"plato","platos"], '', '', {"sug":0.9,"fdc":168064});
+D("u_arroz_frijol_rojo", "Arroz con fríjoles rojos", 'platos', 4, 3.5, 21.1, 2.6, [250,"plato","platos"], '', '', {"sug":0.2,"fdc":168065});
+D("u_arroz_guandul", "Arroz con guandú", 'platos', 3.5, 5, 29.4, 1.4, [250,"plato","platos"], '', 'M', {"fdc":168066});
+D("u_sopa_mondongo", "Sopa de mondongo", 'platos', 8.6, 2.6, 4.1, 0, [400,"plato","platos"], '', 'M', {"fdc":168069});
+D("u_sopa_frijol_negro", "Sopa de fríjoles negros", 'platos', 5.1, 2.6, 9.9, 4.9, [300,"plato","platos"], '', '', {"sug":0.9,"fdc":168068});
+D("u_mondongo_cocido", "Mondongo / callos de res cocidos", 'prot', 11.7, 4.1, 2, 0, [150,"ración","raciones"], '', 'M', {"sug":0,"fdc":174769});
+D("u_morcilla", "Morcilla / rellena", 'prot', 14.6, 34.5, 1.3, 0, [100,"ración","raciones"], '', 'M', {"sug":1.3,"fdc":171618});
+D("u_sobrebarriga", "Sobrebarriga (falda de res) guisada", 'prot', 27, 16.4, 0, 0, [150,"ración","raciones"], '', 'M', {"sug":0,"fdc":169434});
+D("u_queso_blanco_latino", "Queso blanco latino (parecido al campesino)", 'lacteo', 20.4, 24.3, 2.5, 0, [40,"tajada","tajadas"], '', 'VL', {"sug":1.8,"fdc":172224});
+D("u_queso_fresco_latino", "Queso fresco latino", 'lacteo', 18.1, 23.8, 3, 0, [40,"tajada","tajadas"], '', 'VL', {"sug":2.3,"fdc":172223});
+D("u_crema_cacahuete_natural", "Crema de cacahuete 100 % (sin sal ni azúcar)", 'grasa', 22.2, 51.4, 17.3, 5, [15,"cucharada","cucharadas"], '', 'N', {"sug":10.5,"fdc":172470});
+D("u_pitahaya", "Pitahaya", 'fruta', 0.7, 0.2, 14.4, 1.8, [75,"pitahaya","pitahayas"], '', 'N', {"sug":12,"fdc":2709234});
+D("u_mote_maiz", "Maíz pelado / mote cocido", 'hc', 1.5, 2.9, 11.4, 2.4, [85,"ración","raciones"], '', 'N', {"sug":1.5,"fdc":2709933});
+D("u_chicharron_cerdo", "Chicharrón de cerdo", 'prot', 45, 41.7, 0, 0, [90,"ración","raciones"], '', 'M', {"sug":0,"fdc":2705895});
+D("u_pescado_frito", "Pescado frito", 'prot', 16, 17.2, 11.2, 0.5, [90,"ración","raciones"], '', 'P', {"sug":0.2,"fdc":2706227});
+D("u_chocolate_leche", "Chocolate caliente con leche", 'bebida', 2.7, 1.5, 16.5, 0, [248,"taza","tazas"], '', 'VL', {"ml":1,"sug":15.2,"fdc":2705473});
 // </usda>
 // <marcas> Los productos de marca viven ahora en js/data/foods-marcas.js, que se carga
 // después del primer dibujado (misma lista, solo llega un poco más tarde). // </marcas>

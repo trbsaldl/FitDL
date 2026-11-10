@@ -1,0 +1,442 @@
+[
+ {
+  "id": "lulo",
+  "name": "Lulo (pulpa)",
+  "cat": "fruta",
+  "fdc": 167790,
+  "usda": "Naranjilla (lulo) pulp, frozen, unsweetened",
+  "kcal": 25,
+  "p": 0.4,
+  "f": 0.2,
+  "c": 4.8,
+  "fib": 1.1,
+  "alc": 0,
+  "sug": 3.7,
+  "serv": [
+   100,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "guanabana",
+  "name": "Guanábana",
+  "cat": "fruta",
+  "fdc": 167761,
+  "usda": "Soursop, raw",
+  "kcal": 66,
+  "p": 1,
+  "f": 0.3,
+  "c": 13.5,
+  "fib": 3.3,
+  "alc": 0,
+  "sug": 13.5,
+  "serv": [
+   150,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "jugo_maracuya",
+  "name": "Jugo de maracuyá natural (sin azúcar)",
+  "cat": "bebida",
+  "fdc": 169110,
+  "usda": "Passion-fruit juice, yellow, raw",
+  "kcal": 60,
+  "p": 0.7,
+  "f": 0.2,
+  "c": 14.2,
+  "fib": 0.2,
+  "alc": 0,
+  "sug": 14.2,
+  "serv": [
+   250,
+   "vaso",
+   "vasos"
+  ],
+  "flags": "N ml"
+ },
+ {
+  "id": "uchuva",
+  "name": "Uchuva",
+  "cat": "fruta",
+  "fdc": 173043,
+  "usda": "Groundcherries, (cape-gooseberries or poha), raw",
+  "kcal": 53,
+  "p": 1.9,
+  "f": 0.7,
+  "c": 11.2,
+  "fib": 0,
+  "alc": 0,
+  "sug": null,
+  "serv": [
+   100,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "feijoa",
+  "name": "Feijoa",
+  "cat": "fruta",
+  "fdc": 168176,
+  "usda": "Feijoa, raw",
+  "kcal": 61,
+  "p": 0.7,
+  "f": 0.4,
+  "c": 8.8,
+  "fib": 6.4,
+  "alc": 0,
+  "sug": 8.2,
+  "serv": [
+   50,
+   "feijoa",
+   "feijoas"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "zapote",
+  "name": "Zapote / mamey",
+  "cat": "fruta",
+  "fdc": 167760,
+  "usda": "Sapote, mamey, raw",
+  "kcal": 124,
+  "p": 1.5,
+  "f": 0.5,
+  "c": 26.7,
+  "fib": 5.4,
+  "alc": 0,
+  "sug": 20.1,
+  "serv": [
+   150,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "patacon",
+  "name": "Patacón (plátano verde frito)",
+  "cat": "hc",
+  "fdc": 168199,
+  "usda": "Plantains, green, fried",
+  "kcal": 309,
+  "p": 1.5,
+  "f": 11.8,
+  "c": 45.7,
+  "fib": 3.5,
+  "alc": 0,
+  "sug": 3.6,
+  "serv": [
+   60,
+   "patacón",
+   "patacones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "maduro_frito",
+  "name": "Tajadas de plátano maduro fritas",
+  "cat": "hc",
+  "fdc": 168200,
+  "usda": "Plantains, yellow, fried, Latino restaurant",
+  "kcal": 236,
+  "p": 1.4,
+  "f": 7.5,
+  "c": 37.6,
+  "fib": 3.2,
+  "alc": 0,
+  "sug": 21.8,
+  "serv": [
+   100,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "platano_verde_cocido",
+  "name": "Plátano verde cocido",
+  "cat": "hc",
+  "fdc": 168216,
+  "usda": "Plantains, green, boiled",
+  "kcal": 121,
+  "p": 1.1,
+  "f": 0.1,
+  "c": 26.6,
+  "fib": 2.6,
+  "alc": 0,
+  "sug": 2.3,
+  "serv": [
+   150,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "chips_yuca",
+  "name": "Chips de yuca",
+  "cat": "hc",
+  "fdc": 173152,
+  "usda": "Snacks, yucca (cassava) chips, salted",
+  "kcal": 515,
+  "p": 1.3,
+  "f": 25.9,
+  "c": 65.5,
+  "fib": 3.7,
+  "alc": 0,
+  "sug": 3.4,
+  "serv": [
+   30,
+   "paquete pequeño",
+   "paquetes pequeños"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "arroz_leche_latino",
+  "name": "Arroz con leche",
+  "cat": "platos",
+  "fdc": 168063,
+  "usda": "Restaurant, Latino, arroz con leche (rice pudding)",
+  "kcal": 146,
+  "p": 3.2,
+  "f": 3.7,
+  "c": 24.4,
+  "fib": 0.5,
+  "alc": 0,
+  "sug": 15.3,
+  "serv": [
+   150,
+   "ración",
+   "raciones"
+  ],
+  "flags": "V L"
+ },
+ {
+  "id": "arroz_frijol_negro",
+  "name": "Arroz con fríjoles negros",
+  "cat": "platos",
+  "fdc": 168064,
+  "usda": "Restaurant, Latino, Arroz con frijoles negros (rice and black beans)",
+  "kcal": 151,
+  "p": 4.6,
+  "f": 3.9,
+  "c": 21,
+  "fib": 3.4,
+  "alc": 0,
+  "sug": 0.9,
+  "serv": [
+   250,
+   "plato",
+   "platos"
+  ],
+  "flags": ""
+ },
+ {
+  "id": "arroz_frijol_rojo",
+  "name": "Arroz con fríjoles rojos",
+  "cat": "platos",
+  "fdc": 168065,
+  "usda": "Restaurant, Latino, Arroz con habichuelas colorados (Rice And Red Beans)",
+  "kcal": 142,
+  "p": 4,
+  "f": 3.5,
+  "c": 21.1,
+  "fib": 2.6,
+  "alc": 0,
+  "sug": 0.2,
+  "serv": [
+   250,
+   "plato",
+   "platos"
+  ],
+  "flags": ""
+ },
+ {
+  "id": "arroz_guandul",
+  "name": "Arroz con guandú",
+  "cat": "platos",
+  "fdc": 168066,
+  "usda": "Restaurant, Latino, Arroz con grandules (rice and pigeonpeas)",
+  "kcal": 182,
+  "p": 3.5,
+  "f": 5,
+  "c": 29.4,
+  "fib": 1.4,
+  "alc": 0,
+  "sug": null,
+  "serv": [
+   250,
+   "plato",
+   "platos"
+  ],
+  "flags": "M"
+ },
+ {
+  "id": "sopa_mondongo",
+  "name": "Sopa de mondongo",
+  "cat": "platos",
+  "fdc": 168069,
+  "usda": "Restaurant, Latino, tripe soup",
+  "kcal": 74,
+  "p": 8.6,
+  "f": 2.6,
+  "c": 4.1,
+  "fib": 0,
+  "alc": 0,
+  "sug": null,
+  "serv": [
+   400,
+   "plato",
+   "platos"
+  ],
+  "flags": "M"
+ },
+ {
+  "id": "sopa_frijol_negro",
+  "name": "Sopa de fríjoles negros",
+  "cat": "platos",
+  "fdc": 168068,
+  "usda": "Restaurant, Latino, black bean soup",
+  "kcal": 103,
+  "p": 5.1,
+  "f": 2.6,
+  "c": 9.9,
+  "fib": 4.9,
+  "alc": 0,
+  "sug": 0.9,
+  "serv": [
+   300,
+   "plato",
+   "platos"
+  ],
+  "flags": ""
+ },
+ {
+  "id": "mondongo_cocido",
+  "name": "Mondongo / callos de res cocidos",
+  "cat": "prot",
+  "fdc": 174769,
+  "usda": "Beef, variety meats and by-products, tripe, cooked, simmered",
+  "kcal": 94,
+  "p": 11.7,
+  "f": 4.1,
+  "c": 2,
+  "fib": 0,
+  "alc": 0,
+  "sug": 0,
+  "serv": [
+   150,
+   "ración",
+   "raciones"
+  ],
+  "flags": "M"
+ },
+ {
+  "id": "morcilla",
+  "name": "Morcilla / rellena",
+  "cat": "prot",
+  "fdc": 171618,
+  "usda": "Blood sausage",
+  "kcal": 379,
+  "p": 14.6,
+  "f": 34.5,
+  "c": 1.3,
+  "fib": 0,
+  "alc": 0,
+  "sug": 1.3,
+  "serv": [
+   100,
+   "ración",
+   "raciones"
+  ],
+  "flags": "M"
+ },
+ {
+  "id": "sobrebarriga",
+  "name": "Sobrebarriga (falda de res) guisada",
+  "cat": "prot",
+  "fdc": 169434,
+  "usda": "Beef, flank, steak, separable lean and fat, trimmed to 0\" fat, choice, cooked, braised",
+  "kcal": 263,
+  "p": 27,
+  "f": 16.4,
+  "c": 0,
+  "fib": 0,
+  "alc": 0,
+  "sug": 0,
+  "serv": [
+   150,
+   "ración",
+   "raciones"
+  ],
+  "flags": "M"
+ },
+ {
+  "id": "queso_blanco_latino",
+  "name": "Queso blanco latino (parecido al campesino)",
+  "cat": "lacteo",
+  "fdc": 172224,
+  "usda": "Cheese, white, queso blanco",
+  "kcal": 310,
+  "p": 20.4,
+  "f": 24.3,
+  "c": 2.5,
+  "fib": 0,
+  "alc": 0,
+  "sug": 1.8,
+  "serv": [
+   40,
+   "tajada",
+   "tajadas"
+  ],
+  "flags": "V L"
+ },
+ {
+  "id": "queso_fresco_latino",
+  "name": "Queso fresco latino",
+  "cat": "lacteo",
+  "fdc": 172223,
+  "usda": "Cheese, fresh, queso fresco",
+  "kcal": 299,
+  "p": 18.1,
+  "f": 23.8,
+  "c": 3,
+  "fib": 0,
+  "alc": 0,
+  "sug": 2.3,
+  "serv": [
+   40,
+   "tajada",
+   "tajadas"
+  ],
+  "flags": "V L"
+ },
+ {
+  "id": "crema_cacahuete_natural",
+  "name": "Crema de cacahuete 100 % (sin sal ni azúcar)",
+  "cat": "grasa",
+  "fdc": 172470,
+  "usda": "Peanut butter, smooth style, without salt",
+  "kcal": 598,
+  "p": 22.2,
+  "f": 51.4,
+  "c": 17.3,
+  "fib": 5,
+  "alc": 0,
+  "sug": 10.5,
+  "serv": [
+   15,
+   "cucharada",
+   "cucharadas"
+  ],
+  "flags": "N"
+ }
+]

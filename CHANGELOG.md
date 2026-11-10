@@ -1,5 +1,14 @@
 # Cambios de FitDL
 
+## 3.30.0 · 9 de noviembre de 2026
+
+**Colombia: más alimentos y la búsqueda entiende cómo se habla allí**
+
+- 26 alimentos nuevos con su ficha oficial del USDA (dominio público): lulo, guanábana, uchuva, feijoa, zapote, pitahaya, jugo de maracuyá, patacón, tajadas de maduro, plátano verde cocido, chips de yuca, mote, arroz con fríjoles negros/rojos, arroz con guandú, sopa de mondongo, sopa de fríjoles negros, mondongo, morcilla, sobrebarriga, chicharrón, pescado frito, queso blanco y queso fresco latinos, chocolate caliente con leche y crema de cacahuete 100 %.
+- El buscador y el lector de frases entienden papa, jugo, banano, fríjoles, arveja, habichuela, ahuyama, gaseosa, durazno, carne de res, carne molida, torta, ponqué, tinto, arequipe, pimentón, camarones, pan tajado y pericos (encuentran los nombres escritos como en España).
+- Fuera a propósito: buñuelo (el del USDA es de trigo, no el colombiano de queso) y panela/aguapanela (no están en el USDA). La tabla del ICBF 2018 está en PDF escaneado y protegido, sin texto que se pueda leer.
+- `tests/colombia.test.js`: 3 pruebas nuevas. 94 pruebas pasan (3 de navegador se omiten sin Playwright). 4.189 páginas «Calorías de…».
+
 ## 3.29.1 · 6 de noviembre de 2026
 
 **Arreglo: botones que no respondían y pasta/arroz ya cocidos**

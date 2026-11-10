@@ -1,0 +1,102 @@
+[
+ {
+  "id": "pitahaya",
+  "name": "Pitahaya",
+  "cat": "fruta",
+  "fdc": 2709234,
+  "usda": "Dragon fruit",
+  "kcal": 68,
+  "p": 0.7,
+  "f": 0.2,
+  "c": 14.4,
+  "fib": 1.8,
+  "alc": 0,
+  "sug": 12,
+  "serv": [
+   75,
+   "pitahaya",
+   "pitahayas"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "mote_maiz",
+  "name": "Maíz pelado / mote cocido",
+  "cat": "hc",
+  "fdc": 2709933,
+  "usda": "Hominy, cooked",
+  "kcal": 88,
+  "p": 1.5,
+  "f": 2.9,
+  "c": 11.4,
+  "fib": 2.4,
+  "alc": 0,
+  "sug": 1.5,
+  "serv": [
+   85,
+   "ración",
+   "raciones"
+  ],
+  "flags": "N"
+ },
+ {
+  "id": "chicharron_cerdo",
+  "name": "Chicharrón de cerdo",
+  "cat": "prot",
+  "fdc": 2705895,
+  "usda": "Pork, cracklings",
+  "kcal": 569,
+  "p": 45,
+  "f": 41.7,
+  "c": 0,
+  "fib": 0,
+  "alc": 0,
+  "sug": 0,
+  "serv": [
+   90,
+   "ración",
+   "raciones"
+  ],
+  "flags": "M"
+ },
+ {
+  "id": "pescado_frito",
+  "name": "Pescado frito",
+  "cat": "prot",
+  "fdc": 2706227,
+  "usda": "Fish, NS as to type, fried",
+  "kcal": 269,
+  "p": 16,
+  "f": 17.2,
+  "c": 11.2,
+  "fib": 0.5,
+  "alc": 0,
+  "sug": 0.2,
+  "serv": [
+   90,
+   "ración",
+   "raciones"
+  ],
+  "flags": "P"
+ },
+ {
+  "id": "chocolate_leche",
+  "name": "Chocolate caliente con leche",
+  "cat": "bebida",
+  "fdc": 2705473,
+  "usda": "Hot chocolate / cocoa, made with whole or reduced fat (2%) milk",
+  "kcal": 91,
+  "p": 2.7,
+  "f": 1.5,
+  "c": 16.5,
+  "fib": 0,
+  "alc": 0,
+  "sug": 15.2,
+  "serv": [
+   248,
+   "taza",
+   "tazas"
+  ],
+  "flags": "V L ml"
+ }
+]

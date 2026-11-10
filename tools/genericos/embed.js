@@ -11,7 +11,7 @@ vm.runInContext(base + ';this.FOODS=FOODS', ctx);
 const ids = new Set(ctx.FOODS.map(f => f.id));
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 const names = new Set(ctx.FOODS.filter(f => !f.brand).map(f => norm(f.name)));
-const U = ['usda.json', 'platos.json', 'icbf.json', 'usda_v2.json'].filter(f => fs.existsSync(path.join(__dirname, f))).flatMap(f => JSON.parse(fs.readFileSync(path.join(__dirname, f), 'utf8')));
+const U = ['usda.json', 'platos.json', 'icbf.json', 'usda_v2.json', 'usda_v3.json', 'platos_v3.json'].filter(f => fs.existsSync(path.join(__dirname, f))).flatMap(f => JSON.parse(fs.readFileSync(path.join(__dirname, f), 'utf8')));
 const rows = [], skip = [];
 for (const u of U) {
     let id = 'u_' + u.id;

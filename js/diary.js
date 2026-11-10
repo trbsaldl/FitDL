@@ -357,7 +357,18 @@ function copyMealFromYesterday(slot) {
 const fs = { slot: 'B', tab: 'recent', q: '', mode: 'list', food: null, editId: null };
 // Sinónimos y escrituras frecuentes, para que la búsqueda encuentre lo que la gente escribe
 const SYN = { espagueti: 'spaghetti', espaguetis: 'spaghetti', spagetti: 'spaghetti', macarron: 'macarrones', yogurt: 'yogur', yoghurt: 'yogur', cacahuate: 'cacahuete', mani: 'cacahuete', whey: 'whey', proteina: 'prote', proteinas: 'prote', hacendao: 'hacendado', mercadona: 'hacendado', cocacola: 'coca', 'coca-cola': 'coca', jamon: 'jamon', atun: 'atun' };
-const foodText = f => norm(`${f.name} ${f.brand || ''} ${f.alias || ''}`);
+// Palabras de Colombia y Latinoamérica para nombres escritos como en España («papa» encuentra «Patata cocida»)
+const REGION_WORDS = [
+    [/\bpatata/, 'papa papas'], [/\bzumo/, 'jugo'], [/\balubia/, 'frijol frijoles'], [/\bjudias? verdes?/, 'habichuela habichuelas'],
+    [/\bguisante/, 'arveja arvejas'], [/\bcalabaza/, 'ahuyama'], [/\brefresco/, 'gaseosa'], [/\bmelocoton/, 'durazno'],
+    [/\bternera|\bvacuno/, 'carne res'], [/\btarta\b/, 'torta'], [/\bbizcocho/, 'ponque'], [/^cafe solo/, 'tinto'], [/^dulce de leche/, 'arequipe'],
+    [/\bpimiento/, 'pimenton'], [/^carne picada vacuno/, 'molida'], [/\bgambas?\b|\blangostino/, 'camaron camarones'], [/\bpan de molde/, 'pan tajado'], [/^huevos revueltos/, 'pericos'],
+    [/^platano(?!.*(macho|verde|maduro|patacon|frit|chips|cocido|asado))/, 'banano banana'],
+];
+const foodText = f => {
+    const t = norm(`${f.name} ${f.brand || ''} ${f.alias || ''}`);
+    return f.brand ? t : REGION_WORDS.reduce((s, [re, w]) => re.test(t) ? s + ' ' + w : s, t);
+};
 function searchFoods(q) {
     const toks = norm(q).split(/\s+/).filter(Boolean).map(t => SYN[t] || t);
     if (!toks.length) return [];
