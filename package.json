@@ -1,6 +1,6 @@
 {
   "name": "fitdl-app",
-  "version": "3.30.0",
+  "version": "3.31.0",
   "private": true,
   "description": "FitDL: tu entrenador de fitness personal (calorías, macros, diario, Coach, menú, lista de la compra, progreso y gym)",
   "scripts": {

@@ -1,5 +1,14 @@
 # Cambios de FitDL
 
+## 3.31.0 · 10 de noviembre de 2026
+
+**Raciones reales en los productos de marca**
+
+- 321 productos de marca que tenían la ración genérica «1 ración = 100 g» pasan a la ración que declara el fabricante en Open Food Facts (ODbL), con su unidad cuando se sabe: una Oreo es «1 galleta (11 g)», el pan de molde «1 rebanada», el pavo «1 loncha». Antes, pulsar «+» en unas galletas apuntaba 100 g.
+- Se dejan en 100 g, sin inventar: los que no tienen ración en Open Food Facts (1.189), los que dicen «100 g» (es la referencia, no una ración: 297) y los que dan una cifra sin sentido (41: menos de 5 g, el envase entero o el batido ya preparado).
+- Lo ya apuntado no cambia (el diario guarda gramos y calorías). Kcal, macros e ids de los productos no se tocan.
+- Nuevo `tools/marcas/off_raciones.js` → `raciones.json`, que aplica `off_embed.js`. `tests/raciones-marca.test.js` (2 pruebas). 96 pruebas pasan.
+
 ## 3.30.0 · 9 de noviembre de 2026
 
 **Colombia: más alimentos y la búsqueda entiende cómo se habla allí**
