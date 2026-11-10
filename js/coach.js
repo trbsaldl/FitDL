@@ -934,6 +934,7 @@ function mealCard(meal, o = {}) {
 function toggleRecipe(key) {
     openRecipes.has(key) ? openRecipes.delete(key) : openRecipes.add(key);
     if (!$('nd-sheet').classList.contains('hidden') && wte.slot) renderWte();
+    if ($('fr-out') && typeof renderFridgeOut === 'function') renderFridgeOut();
     if (state.tab === 'coach') { if (coachV === 'chat') renderChat(); if (coachV === 'menu') renderMenuView(); }
     if (!openRecipes.has(key)) return; track('recipe_open');
 }
@@ -989,6 +990,7 @@ function renderMenuView() {
     if (!proMenu && !menuGuardado) { box.innerHTML = proTeaser('menu'); return; }
     if (!calc.target) { box.innerHTML = emptyPlan(tk('generar tu menú')); return; }
     const mn = state.menu;
+    menuNewDay();
     if (!mn || !mn.meals || !mn.meals.length) {
         box.innerHTML = `<div class="nd-card p-6 sm:p-8 text-center space-y-4"><div class="nd-ic-xl mx-auto">${icon('🍽️')}</div><h3 class="text-xl font-extrabold text-neutral-50">${tr('Tu día completo, con gramos exactos')}</h3><p class="text-sm text-neutral-400 max-w-sm mx-auto">${tr('{n} comidas que suman tus {k} kcal y tus {p} g de proteína, según tus preferencias.', { n: myPrefs().meals, k: fmt(calc.target), p: calc.prot })}</p><button ${ND.on(genMenu)} class="nd-btn-primary mx-auto"><i class="fa-solid fa-wand-magic-sparkles"></i> ${tr('Generar mi menú')}</button></div>`;
         return;
@@ -1013,15 +1015,23 @@ function genMenu() {
     if (needPro('menu')) return;
     const mn = makeDayMenu(Date.now() % 1000000);
     if (!mn || !mn.meals.length) { toast('Con tus preferencias no encuentro platos: revisa Preferencias'); return; }
-    state.menu = { ...mn, at: Date.now(), added: [] }; save(); renderMenuView(); track('menu_generated'); checkAchievements();
+    state.menu = { ...mn, at: Date.now(), added: [], addedDay: todayISO() }; save(); renderMenuView(); track('menu_generated'); checkAchievements();
+}
+// Lo «Añadido» es de un día: el menú de ayer se puede volver a apuntar hoy
+function menuNewDay() {
+    const mn = state.menu; if (!mn || !mn.meals) return;
+    const day = mn.addedDay || new Date(mn.at || 0).toLocaleDateString('sv');
+    if (day !== todayISO()) { mn.added = []; mn.addedDay = todayISO(); save(); }
 }
 function menuSwap(i) { if (swapMenuMeal(state.menu, i, Date.now() % 1000000)) { state.menu.added = (state.menu.added || []).filter(x => x !== i); save(); renderMenuView(); } else toast('No hay más opciones para esa comida'); }
 function menuAdd(i) {
+    menuNewDay();
     const ml = state.menu.meals[i]; mealToDiary(ml, ml.slot, todayISO());
     state.menu.added = [...(state.menu.added || []), i]; track('food_logged'); ev('food_logged_menu'); afterLog(); renderMenuView();
     toast(`✓ ${mealText(ml).name} → ${slotLow(ml.slot)}`);
 }
 async function menuAddAll() {
+    menuNewDay();
     const left = state.menu.meals.map((_, i) => i).filter(i => !(state.menu.added || []).includes(i));
     if (!left.length) { toast('Ya está todo en tu diario'); return; }
     if (!(await askConfirm(tr('¿Añadir {x} del menú a tu diario de hoy?', { x: tp(left.length, 'comida|plato', 'comidas|plato') }), 'Añadir'))) return;
@@ -1148,7 +1158,7 @@ function openPhotoLog() {
     openSheet('<i class="fa-solid fa-camera text-mint-400"></i> ' + tr('Foto del plato'), `<div class="space-y-4">
         <label class="nd-photo" id="ph-drop"><input id="ph-file" type="file" accept="image/*" capture="environment" class="sr-only" ${ND.onchange(e => photoPicked(e.target))}><span id="ph-prev" class="flex flex-col items-center gap-2 text-neutral-400"><i class="fa-solid fa-camera text-3xl text-mint-400"></i><span class="text-sm font-bold">${tr('Hacer o elegir una foto')}</span><span class="text-xs">${tr('Opcional: te ayuda a recordar el plato. No sale de tu móvil.')}</span></span></label>
         <div class="space-y-2"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400">${tr('¿Qué hay en el plato?')}</div>
-            <div class="flex flex-wrap gap-1.5">${PLATE_QUICK.map(getFood).filter(Boolean).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => photoAdd(fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f).replace(/ \((ya cocido|hecha|lata|cooked|canned)\)/, ''))}</button>`; }).join('')}</div>
+            <div class="flex flex-wrap gap-1.5">${(typeof withUsual === 'function' ? withUsual(PLATE_QUICK, 6) : PLATE_QUICK).map(getFood).filter(Boolean).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => photoAdd(fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f).replace(/ \((ya cocido|hecha|lata|cooked|canned)\)/, ''))}</button>`; }).join('')}</div>
             <input type="search" placeholder="${tr('Buscar otro alimento…')}" ${ND.oninput(e => photoSearch(e.target.value))} class="w-full px-3 py-2.5 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-semibold" aria-label="${tr('Buscar alimento del plato')}"><div id="ph-s" class="flex flex-wrap gap-1.5"></div>
         </div>
         <div id="ph-items" class="space-y-2"></div>

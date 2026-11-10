@@ -1,5 +1,16 @@
 # Cambios de FitDL
 
+## 3.32.0 · 10 de noviembre de 2026
+
+**Coach, Nevera, Foto, Menú y Compra: pensados para el uso de cada día**
+
+- Mi nevera: el botón «Añadir» de los platos no hacía nada (desde la 3.29 quedaba como texto suelto) y «Receta» no se abría. Arreglados; el plato apuntado se marca «Añadido».
+- Próxima comida por la noche: si ya habías empezado la cena, la app proponía «Otros» con todo lo que quedaba del día (p. ej. 2.317 kcal de golpe, y en la nevera «5 wraps y 540 g de pollo»). Ahora completa la cena y nunca propone más que una comida normal.
+- Menú: lo «Añadido» era para siempre; ahora es de cada día, así el menú de ayer se puede volver a apuntar hoy.
+- Compra: una compra nueva de otro día ya no hereda las marcas de la anterior (lo que apuntaste tú y no compraste se queda). Lo que tienes en casa va al final, en «Ya lo tienes en casa».
+- Nevera y Foto: primero salen tus alimentos habituales (los que más apuntas). La foto de la nevera pasa a un botón pequeño y lo importante (marcar lo que tienes y «¿Qué cocino?») cabe en una pantalla.
+- `tests/uso-diario.test.js` (4 pruebas). 100 pruebas pasan.
+
 ## 3.31.0 · 10 de noviembre de 2026
 
 **Raciones reales en los productos de marca**

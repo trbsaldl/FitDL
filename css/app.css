@@ -268,6 +268,7 @@ button.w-5.h-5::after, button.w-6.h-6::after, button.w-7.h-7::after { content: '
 @keyframes nd-ring { from { transform: scale(.9); opacity: 1; } to { transform: scale(1.25); opacity: 0; } }
 .nd-photo { display: flex; align-items: center; justify-content: center; min-height: 9rem; padding: 1.25rem; border-radius: 1.25rem; border: 2px dashed #3a3530; cursor: pointer; text-align: center; }
 .nd-photo.has { padding: 0; border-style: solid; overflow: hidden; }
+.nd-photo-sm { min-height: 0; padding: .75rem 1rem; justify-content: flex-start; }
 .nd-photo:focus-within { border-color: #c59a6d; }
 .nd-ach { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .25rem; padding: .8rem .5rem; border-radius: 1rem; background: #151312; border: 1px solid var(--nd-line); opacity: .55; }
 .nd-ach.on { opacity: 1; background: rgba(111, 207, 151, .07); border-color: rgba(111, 207, 151, .32); }

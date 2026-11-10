@@ -946,6 +946,8 @@ const LANG_EN = {
     "Marcar lo que ya tengo en la nevera": "Tick what I already have in the fridge",
     "Comprado: {n}": "Bought: {n}",
     "en casa": "at home",
+    "Ya lo tienes en casa": "Already at home",
+    "Míralo antes de salir: si no te queda suficiente, cómpralo también.": "Check before you go: if you don't have enough, buy it too.",
     "≈ {k} {u} al día": "≈ {k} {u} a day",
     "sin {x}": "no {x}",
     "económica": "budget",

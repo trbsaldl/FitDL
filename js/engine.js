@@ -59,11 +59,16 @@ function nextMeal(date = todayISO(), hour = new Date().getHours()) {
     const share = SLOT_SHARE[myPrefs().meals];
     const nowIdx = date === todayISO() ? SLOT_ORDER.indexOf(slotForHour(hour)) : 0;
     let slots = planSlots().filter(s => !logged.has(s) && SLOT_ORDER.indexOf(s) >= nowIdx);
-    if (!slots.length && R.kcal > 150) slots = [SLOT_ORDER.indexOf('S') >= nowIdx && share.S ? 'S' : 'X'];
+    // Ya están apuntadas todas las comidas que quedaban: se completa la de ahora (p. ej. la cena) o, si no es del plan, la merienda u «Otros»
+    const cur = SLOT_ORDER[nowIdx], extra = !slots.length && R.kcal > 150;
+    if (extra) slots = [share[cur] ? cur : SLOT_ORDER.indexOf('S') >= nowIdx && share.S ? 'S' : 'X'];
     if (!slots.length) return { R, slot: null, tg: null, slots: [] };
     const sum = slots.reduce((a, s) => a + (share[s] || .12), 0);
     const k = (share[slots[0]] || .12) / sum;
-    const tg = { kcal: Math.max(0, R.kcal * k), p: Math.max(8, R.p * k), f: Math.max(4, R.f * k), c: Math.max(5, R.c * k) };
+    let tg = { kcal: Math.max(0, R.kcal * k), p: Math.max(8, R.p * k), f: Math.max(4, R.f * k), c: Math.max(5, R.c * k) };
+    // Nunca se propone de golpe más que la comida más grande del plan (lo que sobra del día no se come todo a la vez)
+    const cap = calc.target * Math.max(...Object.values(share));
+    if (extra && tg.kcal > cap) { const r = cap / tg.kcal; tg = { kcal: cap, p: Math.max(8, tg.p * r), f: Math.max(4, tg.f * r), c: Math.max(5, tg.c * r) }; }
     return { R, slot: slots[0], tg, slots };
 }
 function slotForHour(h) { return h < 11 ? 'B' : h < 13 ? 'M' : h < 16 ? 'L' : h < 19 ? 'S' : 'D'; }

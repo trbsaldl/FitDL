@@ -9,16 +9,22 @@ const FRIDGE_QUICK = ['huevo', 'pollo', 'pavo', 'ternera', 'picada', 'salmon', '
     'arroz', 'pasta', 'patata', 'boniato', 'pan', 'avena', 'wrap', 'lentejas', 'garbanzos', 'brocoli', 'espinacas', 'calabacin', 'pimiento', 'tomate', 'lechuga', 'champi', 'zanahoria', 'cebolla',
     'aguacate', 'platano', 'manzana', 'fresas', 'nueces', 'aove'];
 const fr = { slot: null, url: null };
+// Lo que más apuntas en el diario, primero: lo de cada día queda a un toque
+function usualFoods(n, ok = () => true) {
+    const c = foodFreq();
+    return Object.keys(c).filter(id => c[id] >= 2).sort((a, b) => c[b] - c[a]).map(getFood).filter(f => f && ok(f)).slice(0, n);
+}
+const withUsual = (ids, n, ok) => [...new Set(usualFoods(n, ok).map(f => f.id).concat(ids))];
 const pantry = () => myPrefs().pantry;
 function openFridge(slot) {
     if (needPro('fridge')) return;
     if (!calc.target) { toast('Primero completa tu plan'); return; }
     fr.slot = slot || (nextMeal() || {}).slot || slotByHour();
     openSheet('<i class="fa-solid fa-snowflake text-mint-400"></i> ' + tr('Mi nevera'), `<div class="space-y-4">
-        <label class="nd-photo" id="fr-drop"><input type="file" accept="image/*" capture="environment" class="sr-only" ${ND.onchange(e => fridgePhoto(e.target))}><span id="fr-prev" class="flex flex-col items-center gap-2 text-neutral-400"><i class="fa-solid fa-camera text-3xl text-mint-400"></i><span class="text-sm font-bold">${tr('Foto de tu nevera (opcional)')}</span><span class="text-xs">${tr('Te sirve de guía para marcar lo que tienes. No sale de tu móvil.')}</span></span></label>
         <form ${ND.onsubmit(fridgeText)} class="flex gap-2"><input id="fr-q" autocomplete="off" placeholder="${tr('Escribe lo que tienes: pollo, huevos, arroz…')}" class="flex-1 min-w-0 px-3 py-3 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-semibold" aria-label="${tr('Lo que tienes en la nevera')}"><button class="px-4 rounded-xl bg-neutral-800 border border-neutral-700 text-sm font-extrabold">${tr('Añadir')}</button></form>
         <div id="fr-have"></div>
         <details class="nd-faq" ${pantry().length < 3 ? 'open' : ''}><summary>${tr('Toca lo que tienes')}<i class="fa-solid fa-chevron-down chev"></i></summary><div id="fr-chips" class="px-3 pb-3 flex flex-wrap gap-1.5"></div></details>
+        <label class="nd-photo nd-photo-sm" id="fr-drop"><input type="file" accept="image/*" capture="environment" class="sr-only" ${ND.onchange(e => fridgePhoto(e.target))}><span id="fr-prev" class="flex items-center gap-3 text-left text-neutral-400"><i class="fa-solid fa-camera text-xl text-mint-400"></i><span><span class="block text-sm font-bold">${tr('Foto de tu nevera (opcional)')}</span><span class="block text-xs">${tr('Te sirve de guía para marcar lo que tienes. No sale de tu móvil.')}</span></span></span></label>
         <div class="space-y-2"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400">${tr('¿Para qué comida?')}</div><div id="fr-slots" class="flex gap-2 overflow-x-auto nd-noscroll"></div></div>
         <button ${ND.on(fridgeCook)} class="w-full py-3.5 rounded-2xl bg-mint-600 hover:bg-mint-700 text-white font-extrabold"><i class="fa-solid fa-utensils"></i> ${tr('¿Qué cocino?')}</button>
         <div id="fr-out" class="space-y-3"></div>
@@ -38,7 +44,7 @@ function renderFridge() {
     have.innerHTML = P.length ? `<div class="flex items-center justify-between gap-2 mb-2"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400">${tr('Tienes ({k})', { k: P.length })}</div><button type="button" ${ND.on(fridgeClear)} class="text-xs font-bold text-neutral-400 underline">${tr('Vaciar')}</button></div>
         <div class="flex flex-wrap gap-1.5">${P.map(getFood).filter(Boolean).map(f => { const fid = f.id; return `<span class="inline-flex items-center gap-1 pl-2.5 pr-1 py-1 rounded-lg bg-mint-600/20 border border-mint-500/40 text-xs font-bold text-neutral-100">${emo(f)} ${esc(foodName(f))}<button type="button" ${ND.on(() => fridgeToggle(fid))} class="w-6 h-6 rounded text-neutral-400 hover:text-roseAccent-400" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button></span>`; }).join('')}</div>`
         : '<p class="text-sm text-neutral-400">' + tr('Aún no has marcado nada.') + '</p>';
-    $('fr-chips').innerHTML = FRIDGE_QUICK.map(getFood).filter(f => f && !inPantry(f.id, P)).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => fridgeToggle(fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f).replace(/ \(.*\)$/, ''))}</button>`; }).join('');
+    $('fr-chips').innerHTML = withUsual(FRIDGE_QUICK, 8, f => !f.brand).map(getFood).filter(f => f && !inPantry(f.id, P)).map(f => { const fid = f.id; return `<button type="button" ${ND.on(() => fridgeToggle(fid))} class="px-2.5 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-200 hover:border-mint-500/60">${emo(f)} ${esc(foodName(f).replace(/ \(.*\)$/, ''))}</button>`; }).join('');
     $('fr-slots').innerHTML = planSlots().map(s => `<button type="button" ${ND.on(() => { fr.slot = s; renderFridge(); })} class="shrink-0 px-3.5 py-2 rounded-full text-xs font-extrabold border ${s === fr.slot ? 'bg-mint-600 border-mint-600 text-white' : 'bg-neutral-800 border-neutral-700 text-neutral-300'}">${tr(SLOT_NAME[s])}</button>`).join('');
 }
 function fridgeToggle(id) { const p = myPrefs(); p.pantry = p.pantry.includes(id) ? p.pantry.filter(x => x !== id) : p.pantry.concat(id); save(); renderFridge(); }
@@ -50,7 +56,7 @@ function fridgeText() {
     ids.forEach(id => { if (!p.pantry.includes(id)) p.pantry.push(id); });
     $('fr-q').value = ''; save(); renderFridge();
 }
-let frOpts = [];
+let frOpts = [], frTg = null, frAdded = [];
 // Platos con lo que tienes (y, si hacen falta más ideas, los que solo necesitan una cosa más)
 function fridgeMeals(slot, ids, n = 3) {
     const prefs = { ...myPrefs(), pantry: ids }, tg = targetFor(slot);
@@ -61,16 +67,21 @@ function fridgeMeals(slot, ids, n = 3) {
 }
 function fridgeCook() {
     const P = pantry(); if (!P.length) { toast('Marca primero lo que tienes'); return; }
-    const { tg, opts } = fridgeMeals(fr.slot, P); frOpts = opts;
-    $('fr-out').innerHTML = opts.length ? `<div class="nd-card p-4 flex items-center justify-between gap-3"><div><div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">${tr('Para {x}', { x: slotArt(fr.slot) })}</div><div class="text-lg font-extrabold text-neutral-50">${tr('{k} kcal · {p} g de proteína', { k: fmt(tg.kcal), p: fmt(tg.p) })}</div></div>${tagPill('rec')}</div>
-        ${opts.map((o, i) => mealCard(o, { key: 'fr' + i + o.id, add: `fridgeAdd(${i})` })).join('')}`
-        : '<p class="text-sm text-neutral-300">' + tr('Con eso no me sale un plato completo. Añade alguna proteína (huevos, pollo, atún, legumbres…) y algún hidrato (arroz, pasta, patata, pan…).') + '</p>';
+    const { tg, opts } = fridgeMeals(fr.slot, P); frOpts = opts; frTg = tg; frAdded = [];
+    renderFridgeOut();
     track('fridge_cook');
     const first = $('fr-out').firstElementChild; if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+// Pinta los platos ya calculados (abrir una receta o añadir un plato no cambia las propuestas)
+function renderFridgeOut() {
+    const out = $('fr-out'); if (!out || !frTg) return;
+    out.innerHTML = frOpts.length ? `<div class="nd-card p-4 flex items-center justify-between gap-3"><div><div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">${tr('Para {x}', { x: slotArt(fr.slot) })}</div><div class="text-lg font-extrabold text-neutral-50">${tr('{k} kcal · {p} g de proteína', { k: fmt(frTg.kcal), p: fmt(frTg.p) })}</div></div>${tagPill('rec')}</div>
+        ${frOpts.map((o, i) => mealCard(o, { key: 'fr' + i + o.id, add: ND.on(() => fridgeAdd(i)), added: frAdded.includes(i) })).join('')}`
+        : '<p class="text-sm text-neutral-300">' + tr('Con eso no me sale un plato completo. Añade alguna proteína (huevos, pollo, atún, legumbres…) y algún hidrato (arroz, pasta, patata, pan…).') + '</p>';
+}
 function fridgeAdd(i) {
-    const o = frOpts[i]; if (!o) return;
-    mealToDiary(o, fr.slot, todayISO()); track('food_logged'); afterLog();
+    const o = frOpts[i]; if (!o || frAdded.includes(i)) return;
+    mealToDiary(o, fr.slot, todayISO()); frAdded.push(i); track('food_logged'); afterLog(); renderFridgeOut();
     toast(`✓ ${mealText(o).name} → ${slotLow(fr.slot)}`);
 }
 
@@ -131,7 +142,9 @@ function shopCreate(req) {
     const menus = makeMenus(req.days, Date.now() % 1000000, { prefs: shopPrefs(req), like: req.like });
     if (!menus.length) { toast('Con esas preferencias no encuentro platos: prueba con menos restricciones'); return; }
     const old = state.shop && state.shop.v === 2 ? state.shop : null;
-    state.shop = { v: 2, req, days: req.days, start: todayISO(), at: Date.now(), menus, add: old ? old.add || [] : [], done: old ? old.done : {}, extra: old ? old.extra : [] };
+    // Lo marcado como comprado solo se conserva si rehaces la lista el mismo día; una compra de otro día empieza sin marcas
+    const sameDay = !!old && old.start === todayISO();
+    state.shop = { v: 2, req, days: req.days, start: todayISO(), at: Date.now(), menus, add: old ? old.add || [] : [], done: sameDay ? old.done : {}, extra: old ? (sameDay ? old.extra : (old.extra || []).filter(x => !x.done)) : [] };
     shopBuild(state.shop); save(); renderShopView(); track('shop_generated');
     toast(tr('Compra para {x} lista', { x: tp(req.days, 'día', 'días') }));
 }
@@ -251,13 +264,16 @@ function renderShopView() {
     if (!S || !S.items) { box.innerHTML = proShop ? ask : avisoSinPro; return; }
     const P = pantry(), all = S.items.length + (S.extra || []).length, done = S.items.filter(x => S.done[x.fid]).length + (S.extra || []).filter(x => x.done).length;
     const v2 = S.v === 2, days = S.days || 1;
-    const row = x => { const f = getFood(x.fid); if (!f) return ''; const on = !!S.done[x.fid], home = inPantry(x.fid, P); return `<div class="nd-shop ${on ? 'on' : ''}">
+    const row = x => { const f = getFood(x.fid); if (!f) return ''; const on = !!S.done[x.fid]; return `<div class="nd-shop ${on ? 'on' : ''}">
         <input type="checkbox" ${on ? 'checked' : ''} ${ND.onchange(e => shopTick(x.fid, e.target.checked))} aria-label="${tr('Comprado: {n}', { n: esc(foodName(f)) })}">
-        <span class="flex-1 min-w-0"><span class="block leading-snug">${emo(f)} ${esc(foodName(f))}${home ? ' <span class="nd-tag nd-tag-dato" style="margin:0 0 0 4px">' + tr('en casa') + '</span>' : ''}</span>${v2 && days > 1 ? `<span class="block text-[11px] text-neutral-500">${tr('≈ {k} {u} al día', { k: fmt(x.g / days), u: f.ml ? 'ml' : 'g' })}</span>` : ''}</span>
+        <span class="flex-1 min-w-0"><span class="block leading-snug">${emo(f)} ${esc(foodName(f))}</span>${v2 && days > 1 ? `<span class="block text-[11px] text-neutral-500">${tr('≈ {k} {u} al día', { k: fmt(x.g / days), u: f.ml ? 'ml' : 'g' })}</span>` : ''}</span>
         <span class="text-sm font-bold text-neutral-200 whitespace-nowrap">${shopQty(f, x.g)}</span>
         ${v2 && canUse('shop') ? `<button type="button" ${ND.on(() => shopSwapItem(x.fid))} class="w-8 h-8 shrink-0 rounded-lg text-neutral-400 hover:text-mint-300 hover:bg-neutral-800" aria-label="${tr('Cambiar {x}', { x: esc(foodName(f)) })}"><i class="fa-solid fa-right-left"></i></button><button type="button" ${ND.on(() => shopRemoveItem(x.fid))} class="w-8 h-8 shrink-0 rounded-lg text-neutral-500 hover:text-roseAccent-400 hover:bg-neutral-800" aria-label="${tr('Quitar {n}', { n: esc(foodName(f)) })}"><i class="fa-solid fa-xmark"></i></button>` : ''}
     </div>`; };
-    const groups = SHOP_GROUPS.map(([g, label, ic]) => { const L = S.items.filter(x => x.group === g); return L.length ? `<div class="space-y-0.5"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400 pt-3">${icon(ic, "text-mint-400 mr-1")} ${tr(label)}</div>${L.map(row).join('')}</div>` : ''; }).join('');
+    // Lo que ya tienes en casa va al final, aparte: en el súper no hay que ir saltándolo
+    const home = S.items.filter(x => inPantry(x.fid, P));
+    const groups = SHOP_GROUPS.map(([g, label, ic]) => { const L = S.items.filter(x => x.group === g && !inPantry(x.fid, P)); return L.length ? `<div class="space-y-0.5"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400 pt-3">${icon(ic, "text-mint-400 mr-1")} ${tr(label)}</div>${L.map(row).join('')}</div>` : ''; }).join('')
+        + (home.length ? `<div class="space-y-0.5"><div class="text-xs font-extrabold uppercase tracking-wider text-neutral-400 pt-3"><i class="fa-solid fa-house text-mint-400 mr-1" aria-hidden="true"></i> ${tr('Ya lo tienes en casa')}</div><p class="text-[11px] text-neutral-500">${tr('Míralo antes de salir: si no te queda suficiente, cómpralo también.')}</p>${home.map(row).join('')}</div>` : '');
     const extra = (S.extra || []).map((x, i) => `<label class="nd-shop ${x.done ? 'on' : ''}"><input type="checkbox" ${x.done ? 'checked' : ''} ${ND.onchange(e => shopTickExtra(i, e.target.checked))}><span class="flex-1 min-w-0">${esc(x.t)}</span><button type="button" ${ND.on(e => { e.preventDefault(); shopDelExtra(i); })} class="w-8 h-8 rounded-lg text-neutral-500 hover:text-roseAccent-400" aria-label="${tr('Quitar {n}', { n: esc(x.t) })}"><i class="fa-solid fa-xmark"></i></button></label>`).join('');
     const tot = v2 ? S.menus.map(menuTotals) : [], avgK = tot.length ? tot.reduce((a, t) => a + t.kcal, 0) / tot.length : 0, avgP = tot.length ? tot.reduce((a, t) => a + t.p, 0) / tot.length : 0;
     const R = S.req || {};
